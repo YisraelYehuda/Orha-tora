@@ -33,11 +33,12 @@
         }
 
         body {
-            font-family: 'David Libre', serif;
+            font-family: 'Georgia', 'David Libre', serif;
             background-color: var(--parchment);
             color: var(--text-dark);
-            line-height: 1.8;
+            line-height: 1.9;
             overflow-x: hidden;
+            letter-spacing: 0.3px;
         }
 
         /* Scrollbar personalizada */
@@ -582,18 +583,41 @@
         }
 
         .study-article p {
-            margin-bottom: 1.5em;
-            line-height: 1.8;
-            font-size: 1.1rem;
+            margin-bottom: 2.5em;
+            line-height: 2;
+            font-size: 1.05rem;
             text-align: justify;
+            font-family: 'Georgia', serif;
+            color: #2c2c2c;
         }
 
         .study-article strong {
-            color: var(--red-wine);
+            color: var(--blue-royal);
+            font-weight: 700;
         }
 
         .study-article em {
-            color: var(--blue-royal);
+            color: var(--red-wine);
+            font-style: italic;
+        }
+
+        /* Linha Final Padrão */
+        .study-article::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, var(--gold-deep), transparent);
+            margin: 3em auto 0;
+        }
+
+        .study-closing-line {
+            text-align: center;
+            margin-top: 2.5em;
+            font-style: italic;
+            color: var(--red-wine);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
         }
 
         /* Midrash Section */
@@ -1164,7 +1188,8 @@
                     <p>A Menorá, com seu azeite puro de olivas, simboliza a luz da Torá que deve ser mantida acesa continuamente. O azeite puro representa a pureza de intenção (Lishmá) com a qual devemos nos aproximar do estudo e cumprimento dos mandamentos. A luz da Torá não é meramente intelectual, mas uma luz espiritual que ilumina o caminho da vida.</p>
                     <p>As vestes sacerdotais, por sua vez, são descritas com riqueza de detalhes, cada elemento carregando um profundo significado espiritual. O Choshen Mishpat (Peitoral do Julgamento), com suas doze pedras preciosas, representava as doze tribos de Israel, e através dele, a vontade Divina era revelada. As vestes não eram apenas adornos, mas instrumentos que elevavam os Kohanim a um estado de santidade, permitindo-lhes servir a HaShem no Mishkan.</p>
                     <p>A ausência do nome de Moshé nesta Parashá, após seu pedido para ser apagado do Livro de HaShem (Shemot 32:32) em defesa do povo após o pecado do Bezerro de Ouro, nos ensina sobre o poder das palavras e a humildade de um verdadeiro líder. Moshé, o maior dos profetas, estava disposto a sacrificar sua própria existência para proteger seu povo, e HaShem, em Sua infinita sabedoria, honrou seu pedido de uma forma sutil, mas significativa.</p>
-                    <p>Que possamos aprender com a Parashat Tetzaveh a importância da pureza de intenção em nosso serviço a HaShem, a santidade de cada mandamento e a humildade necessária para liderar e servir com verdadeira devoção.</p>
+                    <p>Que possamos aprender com a Parashat Tetzaveh a importância da pureza de intenção em nosso serviço a HaShem, a santidade de cada mandamento e a humildade necessária para liderar e servir com verdadeira devocão.</p>
+                    <p class="study-closing-line">Baruch HaShem pela Torá e por Sua infinita sabedoria.</p>
                 </div>
             </div>
         </div>
@@ -1184,6 +1209,7 @@
                     <p>O azeite batido (כתית למאור - katit lamaor) refere-se ao azeite da primeira prensagem, que é o mais puro e claro. O Talmud e os comentaristas explicam que as olivas eram esmagadas e não moídas, para evitar que fragmentos da polpa ou do caroço se misturassem ao azeite, o que poderia diminuir sua pureza e, consequentemente, a qualidade da luz. Esta exigência de pureza máxima para a Menorá nos ensina que, em nosso serviço a HaShem, devemos sempre buscar a excelência e a ausência de impurezas, tanto físicas quanto espirituais.</p>
                     <p>A Mishná (Menachot 8:4) discute as diferentes qualidades de azeite e suas aplicações, enfatizando que apenas o azeite mais puro era adequado para a Menorá. Este rigor haláchico serve como um lembrete constante de que a Torá nos convida a elevar cada ação, mesmo as mais mundanas, a um nível de santidade e perfeição. A pureza do azeite reflete a pureza do coração que deve acompanhar a observância dos mandamentos.</p>
                     <p>Além disso, a luz da Menorá era um testemunho para o mundo de que a Shechiná (Presença Divina) residia em Israel. A manutenção contínua dessa luz, com azeite da mais alta qualidade, simboliza a perpetuidade da Torá e a responsabilidade do povo judeu de ser uma luz para as nações, através da observância fiel da Halachá. Assim, cada detalhe da lei, por menor que pareça, carrega um significado cósmico e uma lição eterna.</p>
+                    <p class="study-closing-line">Que a Halachá nos guie sempre na busca da santidade e da justiça.</p>
                 </div>
             </div>
         </div>
@@ -1203,6 +1229,7 @@
                     <p>Nossos Sábios ensinam que a Kavaná mínima para a Amidá (a oração central) é ter a intenção de que se está diante de HaShem e que as palavras que se pronunciam são um pedido de misericórdia e uma expressão de louvor. No entanto, a Kavaná ideal envolve a compreensão do significado das palavras, a meditação sobre a grandeza de HaShem e a consciência de nossa própria pequenez e dependência d'Ele.</p>
                     <p>Os Tehilim (Salmos) de David HaMelech são uma fonte inesgotável de inspiração para a Tefilá. Cada Salmo é uma janela para a alma humana, expressando alegria, tristeza, gratidão, arrependimento e esperança. Ao recitar Tehilim, nos unimos a David HaMelech em sua busca por HaShem, e suas palavras se tornam as nossas, permitindo-nos expressar sentimentos que talvez não conseguiríamos formular por conta própria.</p>
                     <p>A prática da Tefilá com Kavaná exige esforço e dedicação. É um trabalho espiritual contínuo, que nos desafia a transcender as distrações do mundo material e a focar nossa mente e coração no Infinito. Que possamos sempre buscar aprimorar nossa Kavaná, para que nossas orações sejam uma verdadeira ponte entre o céu e a terra, trazendo bênçãos para nós e para todo o mundo.</p>
+                    <p class="study-closing-line">Que nossas orações alcançem o trono de HaShem com pureza e sinceridade.</p>
                 </div>
             </div>
         </div>
@@ -1231,6 +1258,7 @@
                         <li><strong>Israel e a Tecnologia:</strong> Conhecido como a "Startup Nation", Israel é um centro de inovação tecnológica. Como a antiga sabedoria da Torá se conecta com o avanço científico e tecnológico moderno?</li>
                     </ul>
                     <p>Que o estudo da nossa história nos inspire a fortalecer nossa fé e a nos preparar para a Redenção Final, *bimherá b'yamenu* (rapidamente em nossos dias)!</p>
+                    <p class="study-closing-line">Am Israel Chai — O Povo de Israel Vive!</p>
                 </div>
             </div>
         </div>
@@ -1250,6 +1278,7 @@
                     <p>O conceito de Ein Sof (O Infinito) na Kabbalá descreve a essência de HaShem que transcende toda a compreensão humana. Para que o Infinito pudesse criar um mundo finito, foi necessário um processo de contração (Tzimtzum), onde HaShem "recolheu" Sua luz para criar um espaço para a existência. A partir desse Tzimtzum, emanaram as Sefirot, dez atributos divinos que servem como canais através dos quais a luz e a influência de HaShem se manifestam no mundo.</p>
                     <p>A Kabbalá não é um estudo separado da Torá, mas sim uma forma de aprofundar sua compreensão, revelando as conexões místicas entre os mandamentos, as letras hebraicas e os mundos espirituais. Ela nos ensina que cada mitzvá que realizamos neste mundo físico tem um impacto nos mundos superiores, restaurando a Unidade e trazendo a redenção.</p>
                     <p>Grandes pensadores como o Rambam (Maimônides) em sua obra "Guia dos Perplexos" e o Arizal (Rabino Yitzchak Luria) com seus ensinamentos cabalísticos, buscaram conciliar a razão e a fé, a filosofia e a mística, para oferecer uma visão mais completa da Torá e da relação entre HaShem e o homem. O estudo da Filosofia e Kabbalá nos convida a transcender a compreensão superficial e a mergulhar nas profundezas da sabedoria divina, buscando a Unidade em todas as coisas.</p>
+                    <p class="study-closing-line">Na profundidade da Kabbalá, encontramos a Unidade Eterna.</p>
                 </div>
             </div>
         </div>
@@ -1277,6 +1306,7 @@
                     </p>
                     <p>Além disso, é costume usar fantasias, fazer barulho com reco-recos (ra'ashanim) sempre que o nome de Haman é mencionado na leitura da Meguilá, e celebrar com grande alegria. A alegria de Purim é tão grande que nossos Sábios afirmam que, na era messiânica, todas as festas serão anuladas, exceto Purim.</p>
                     <p>Purim nos ensina que, mesmo nas situações mais desesperadoras, não devemos perder a esperança. A fé em HaShem e a união do povo judeu, através da oração e do jejum, foram as chaves para a salvação. Que possamos celebrar Purim com a mesma alegria e fé, lembrando-nos sempre que HaShem está conosco, mesmo quando Sua presença parece oculta.</p>
+                    <p class="study-closing-line">Que celebremos Purim com alegria e gratidão pelo milagre oculto de HaShem.</p>
                 </div>
             </div>
         </div>
@@ -1289,8 +1319,8 @@
                 <i class="fas fa-book"></i> Midrash e Parábolas
             </h3>
             
-            <p style="text-align: center; margin-bottom: 40px; font-size: 1.1rem;">
-                As parábolas de nossos Sages iluminam a Torá, revelando verdades profundas através de narrativas atemporais.
+            <p style="text-align: center; margin-bottom: 50px; font-size: 1.1rem; line-height: 1.9; font-family: 'Georgia', serif;">
+                As parábolas de nossos <strong>Sages</strong> iluminam a Torá, revelando verdades profundas através de narrativas atemporais que transcendem o tempo.
             </p>
 
             <div class="parable-box">
@@ -1365,9 +1395,8 @@
                 <p>Os Sete Mandamentos Universais</p>
             </div>
 
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem; line-height: 2;">
-                A Torá ensina que o ser humano não precisa ser judeu para ter uma relação santa com o Criador. 
-                Os <strong>Bnei Noach</strong> (Filhos de Noé) — todos os povos do mundo — receberam sete mandamentos universais 
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px; font-size: 1.05rem; line-height: 2; font-family: 'Georgia', serif;">
+                A Torá ensina que o ser humano não precisa ser judeu para ter uma relação santa com o Criador. Os <strong>Bnei Noach</strong> (Filhos de Noé) — todos os povos do mundo — receberam sete mandamentos universais 
                 através de Noé. Cumprir estas leis com fé em HaShem é considerado <em>chasidei ummot ha'olam</em> 
                 (justos entre as nações), garantindo participação no <em>Olam HaBa</em>.
             </p>
@@ -1464,25 +1493,25 @@
                 B"H
             </div>
 
-            <div style="text-align: left; line-height: 2.2; font-size: 1.1rem; background: var(--parchment); 
-                        padding: 40px; border-radius: 10px; border-left: 5px solid var(--gold-deep);">
-                <p style="margin-bottom: 20px;">
-                    <strong>Shalom u'vrachá!</strong>
+            <div style="text-align: left; line-height: 2; font-size: 1.05rem; background: var(--parchment); 
+                        padding: 40px; border-radius: 10px; border-left: 5px solid var(--gold-deep); font-family: 'Georgia', serif;">
+                <p style="margin-bottom: 2.5em;">
+                    <strong>Shalom u'vbrachá!</strong>
                 </p>
 
-                <p style="margin-bottom: 20px;">
+                <p style="margin-bottom: 2.5em;">
                     Sou <strong>Yisrael Yehudá</strong>, jovem <em>talmid</em> de Torá, filho da tradição de <strong>Pereira</strong>, 
                     com raízes que se estendem pelas terras de Paraná, Bahia e Itália — uma história que ecoa o exílio e o retorno do povo de Israel.
                 </p>
 
-                <p style="margin-bottom: 20px;">
+                <p style="margin-bottom: 2.5em;">
                     Embora não tenha nascido de ventre judaico, o <strong>Ribbono Shel Olam</strong> plantou em meu coração, desde cedo, 
                     uma chama insaciável pela <strong>Torá Shebichtav</strong> e pela <strong>Torá Shebe'al Pe</strong>. 
                     Hoje, <em>Baruch HaShem</em>, caminho no processo de <strong>guirur</strong> (conversão), buscando firmar-me debaixo 
                     das asas da <strong>Shechiná</strong> e anexar-me verdadeiramente à <strong>Knesset Yisrael</strong>.
                 </p>
 
-                <p style="margin-bottom: 20px;">
+                <p style="margin-bottom: 2.5em;">
                     Criei o <strong>OrHaTorá</strong> como uma <strong>Bênção dos Shamayim</strong> — uma porta aberta para que todo aquele 
                     que busca a <strong>Emet</strong> possa encontrar os ensinos autênticos de nossos <strong>Sages</strong>, 
                     sem barreiras de idioma ou condição material. Meu <em>ratzon</em> é que judeus de nascimento, <strong>Bnei Noach</strong>, 
@@ -1490,7 +1519,7 @@
                     o <strong>Lashon HaKodesh</strong> — tenham acesso à luz pura da <strong>Halachá</strong> e à profundidade dos <strong>Parshanim</strong>.
                 </p>
 
-                <p style="margin-bottom: 20px;">
+                <p style="margin-bottom: 2.5em;">
                     Sou um jovem <strong>ba'al melachá</strong> — trabalhador incansável nos <strong>Seforim</strong> que escrevo, 
                     nos estudos que compartilho e nos vídeos que produzo para <strong>TikTok</strong>, sempre com a intenção de 
                     <strong>kiddush HaShem</strong>. Cada página, cada aula, cada palavra é um tijolo no edifício que estou construindo: 
