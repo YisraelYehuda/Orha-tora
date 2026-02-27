@@ -203,9 +203,54 @@
             color: var(--gold-light);
         }
 
-        nav a:hover::after {
-            width: 100%;
-        }
+            nav a:hover::after {
+                width: 100%;
+            }
+
+            /* Submenu Styles */
+            nav ul li {
+                position: relative;
+            }
+
+            .submenu {
+                display: none;
+                position: absolute;
+                background: var(--blue-dark);
+                box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+                z-index: 1001;
+                min-width: 200px;
+                padding: 10px 0;
+                border-top: 3px solid var(--gold-deep);
+                left: 0;
+                top: 100%;
+            }
+
+            nav ul li:hover .submenu {
+                display: block;
+            }
+
+            .submenu li {
+                padding: 0;
+            }
+
+            .submenu a {
+                color: var(--parchment);
+                padding: 10px 20px;
+                display: block;
+                white-space: nowrap;
+                font-size: 1rem;
+                font-family: 'David Libre', serif;
+                font-weight: normal;
+            }
+
+            .submenu a:hover {
+                background: var(--blue-royal);
+                color: var(--gold-light);
+            }
+
+            .submenu a::after {
+                display: none;
+            }
 
         /* Mobile Menu */
         .mobile-menu-btn {
@@ -496,6 +541,59 @@
 
         .read-more:hover {
             gap: 10px;
+        }
+
+        /* Study Detail Section */
+        .study-detail-section {
+            background: var(--parchment);
+            padding: 80px 30px;
+            border-top: 3px solid var(--gold-deep);
+            border-bottom: 3px solid var(--gold-deep);
+        }
+
+        .study-content-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid var(--blue-royal);
+        }
+
+        .study-article h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--blue-royal);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .study-article h4::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gold-deep);
+        }
+
+        .study-article p {
+            margin-bottom: 1.5em;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .study-article strong {
+            color: var(--red-wine);
+        }
+
+        .study-article em {
+            color: var(--blue-royal);
         }
 
         /* Midrash Section */
@@ -844,7 +942,15 @@
                 <ul>
                     <li><a href="#inicio">Início</a></li>
                     <li><a href="#parasha">Parashá</a></li>
-                    <li><a href="#beit-midrash">Beit Midrash</a></li>
+                    <li><a href="#beit-midrash">Beit Midrash</a>
+                        <ul class="submenu">
+                            <li><a href="#estudos-parasha">Estudos de Parashá</a></li>
+                            <li><a href="#estudos-halacha">Halachá e Mishná</a></li>
+                            <li><a href="#estudos-tehilim">Tehilim e Tefilá</a></li>
+                            <li><a href="#estudos-historia">História de Israel</a></li>
+                            <li><a href="#estudos-filosofia">Filosofia e Kabbalá</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#midrash">Midrash</a></li>
                     <li><a href="#bnei-noach">Bnei Noach</a></li>
                     <li><a href="#sobre">Sobre</a></li>
@@ -971,7 +1077,7 @@
                     Comentários profundos sobre a porção semanal, explorando as camadas de 
                     <em>Peshat, Remez, Derash e Sod</em> — as quatro dimensões da interpretação toráica.
                 </p>
-                <a href="#" class="read-more">Acessar Estudos <i class="fas fa-arrow-right"></i></a>
+                <a href="#estudos-parasha" class="read-more">Acessar Estudos <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="content-card">
@@ -983,7 +1089,7 @@
                     A lei judaica prática, guiando cada aspecto da vida diária conforme a 
                     tradição transmitida de Sinai através dos <strong>Tanna'im</strong> e <strong>Amora'im</strong>.
                 </p>
-                <a href="#" class="read-more">Acessar Halachá <i class="fas fa-arrow-right"></i></a>
+                <a href="#estudos-halacha" class="read-more">Acessar Halachá <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="content-card">
@@ -995,7 +1101,7 @@
                     Os Salmos de David HaMelech e os mistérios da oração judaica. 
                     Aprenda a davenar com <em>kavaná</em> (intenção) e compreender as palavras dos <strong>Siddur</strong>.
                 </p>
-                <a href="#" class="read-more">Acessar Tehilim <i class="fas fa-arrow-right"></i></a>
+                <a href="#estudos-tehilim" class="read-more">Acessar Tehilim <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="content-card">
@@ -1007,7 +1113,7 @@
                     Da criação do mundo até os dias messiânicos. Conheça a jornada do povo judeu 
                     através dos exílios e retornos, conforme narrado nas <strong>Escrituras Sagradas</strong>.
                 </p>
-                <a href="#" class="read-more">Acessar História <i class="fas fa-arrow-right"></i></a>
+                <a href="#estudos-historia" class="read-more">Acessar História <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="content-card">
@@ -1019,7 +1125,7 @@
                     Explorações profundas na <em>Hashkafá</em> (visão de mundo judaica) e nos ensinos esotéricos 
                     da Torá, incluindo os fundamentos da fé segundo o <strong>Rambam</strong>.
                 </p>
-                <a href="#" class="read-more">Acessar Filosofia <i class="fas fa-arrow-right"></i></a>
+                <a href="#estudos-filosofia" class="read-more">Acessar Filosofia <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="content-card">
@@ -1034,6 +1140,102 @@
                 <a href="https://www.tiktok.com/@yod.torah" target="_blank" class="read-more">
                     Acessar Vídeos <i class="fas fa-arrow-right"></i>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Estudos de Parashá -->
+    <section class="study-detail-section" id="estudos-parasha">
+        <div class="container">
+            <div class="section-header">
+                <h3>Estudos de Parashá</h3>
+                <p>Aprofundando na Porção Semanal da Torá</p>
+            </div>
+            <div class="study-content-wrapper">
+                <div class="study-article">
+                    <h4>Parashat Tetzaveh: A Luz da Menorá e as Vestes Sacerdotais</h4>
+                    <p>A Parashat Tetzaveh, a vigésima porção semanal da Torá, é singular por não mencionar o nome de Moshé Rabbeinu. Em vez disso, o foco recai sobre Aharón e os Kohanim, detalhando as instruções para a construção da Menorá e a confecção das vestes sacerdotais. Esta omissão de Moshé, segundo nossos Sábios, é uma profunda lição de humildade e a força da palavra de um Tzadik.</p>
+                    <p>A Menorá, com seu azeite puro de olivas, simboliza a luz da Torá que deve ser mantida acesa continuamente. O azeite puro representa a pureza de intenção (Lishmá) com a qual devemos nos aproximar do estudo e cumprimento dos mandamentos. A luz da Torá não é meramente intelectual, mas uma luz espiritual que ilumina o caminho da vida.</p>
+                    <p>As vestes sacerdotais, por sua vez, são descritas com riqueza de detalhes, cada elemento carregando um profundo significado espiritual. O Choshen Mishpat (Peitoral do Julgamento), com suas doze pedras preciosas, representava as doze tribos de Israel, e através dele, a vontade Divina era revelada. As vestes não eram apenas adornos, mas instrumentos que elevavam os Kohanim a um estado de santidade, permitindo-lhes servir a HaShem no Mishkan.</p>
+                    <p>A ausência do nome de Moshé nesta Parashá, após seu pedido para ser apagado do Livro de HaShem (Shemot 32:32) em defesa do povo após o pecado do Bezerro de Ouro, nos ensina sobre o poder das palavras e a humildade de um verdadeiro líder. Moshé, o maior dos profetas, estava disposto a sacrificar sua própria existência para proteger seu povo, e HaShem, em Sua infinita sabedoria, honrou seu pedido de uma forma sutil, mas significativa.</p>
+                    <p>Que possamos aprender com a Parashat Tetzaveh a importância da pureza de intenção em nosso serviço a HaShem, a santidade de cada mandamento e a humildade necessária para liderar e servir com verdadeira devoção.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Halachá e Mishná -->
+    <section class="study-detail-section" id="estudos-halacha">
+        <div class="container">
+            <div class="section-header">
+                <h3>Halachá e Mishná</h3>
+                <p>A Lei Judaica em Detalhes</p>
+            </div>
+            <div class="study-content-wrapper">
+                <div class="study-article">
+                    <h4>Pureza do Azeite para a Menorá: Uma Lição Haláchica</h4>
+                    <p>A Torá em Parashat Tetzaveh instrui sobre o azeite puro de olivas, batido, para a iluminação contínua da Menorá. Esta instrução haláchica não é apenas um detalhe técnico, mas um princípio fundamental que permeia toda a lei judaica: a busca pela pureza e pela intenção correta (Kavaná) em cada mitzvá.</p>
+                    <p>O azeite batido (כתית למאור - katit lamaor) refere-se ao azeite da primeira prensagem, que é o mais puro e claro. O Talmud e os comentaristas explicam que as olivas eram esmagadas e não moídas, para evitar que fragmentos da polpa ou do caroço se misturassem ao azeite, o que poderia diminuir sua pureza e, consequentemente, a qualidade da luz. Esta exigência de pureza máxima para a Menorá nos ensina que, em nosso serviço a HaShem, devemos sempre buscar a excelência e a ausência de impurezas, tanto físicas quanto espirituais.</p>
+                    <p>A Mishná (Menachot 8:4) discute as diferentes qualidades de azeite e suas aplicações, enfatizando que apenas o azeite mais puro era adequado para a Menorá. Este rigor haláchico serve como um lembrete constante de que a Torá nos convida a elevar cada ação, mesmo as mais mundanas, a um nível de santidade e perfeição. A pureza do azeite reflete a pureza do coração que deve acompanhar a observância dos mandamentos.</p>
+                    <p>Além disso, a luz da Menorá era um testemunho para o mundo de que a Shechiná (Presença Divina) residia em Israel. A manutenção contínua dessa luz, com azeite da mais alta qualidade, simboliza a perpetuidade da Torá e a responsabilidade do povo judeu de ser uma luz para as nações, através da observância fiel da Halachá. Assim, cada detalhe da lei, por menor que pareça, carrega um significado cósmico e uma lição eterna.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Tehilim e Tefilá -->
+    <section class="study-detail-section" id="estudos-tehilim">
+        <div class="container">
+            <div class="section-header">
+                <h3>Tehilim e Tefilá</h3>
+                <p>Os Salmos de David e o Poder da Oração</p>
+            </div>
+            <div class="study-content-wrapper">
+                <div class="study-article">
+                    <h4>A Kavaná na Tefilá: Conectando-se com o Infinito</h4>
+                    <p>A Tefilá (oração) no judaísmo não é meramente a recitação de palavras, mas um profundo ato de conexão com o Criador. A Kavaná (intenção) é o coração da Tefilá, a força motriz que eleva nossas súplicas e louvores aos céus. Sem Kavaná, a oração pode se tornar um ritual vazio, desprovido de alma.</p>
+                    <p>Nossos Sábios ensinam que a Kavaná mínima para a Amidá (a oração central) é ter a intenção de que se está diante de HaShem e que as palavras que se pronunciam são um pedido de misericórdia e uma expressão de louvor. No entanto, a Kavaná ideal envolve a compreensão do significado das palavras, a meditação sobre a grandeza de HaShem e a consciência de nossa própria pequenez e dependência d'Ele.</p>
+                    <p>Os Tehilim (Salmos) de David HaMelech são uma fonte inesgotável de inspiração para a Tefilá. Cada Salmo é uma janela para a alma humana, expressando alegria, tristeza, gratidão, arrependimento e esperança. Ao recitar Tehilim, nos unimos a David HaMelech em sua busca por HaShem, e suas palavras se tornam as nossas, permitindo-nos expressar sentimentos que talvez não conseguiríamos formular por conta própria.</p>
+                    <p>A prática da Tefilá com Kavaná exige esforço e dedicação. É um trabalho espiritual contínuo, que nos desafia a transcender as distrações do mundo material e a focar nossa mente e coração no Infinito. Que possamos sempre buscar aprimorar nossa Kavaná, para que nossas orações sejam uma verdadeira ponte entre o céu e a terra, trazendo bênçãos para nós e para todo o mundo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de História de Israel -->
+    <section class="study-detail-section" id="estudos-historia">
+        <div class="container">
+            <div class="section-header">
+                <h3>História de Israel</h3>
+                <p>A Jornada Eterna de um Povo</p>
+            </div>
+            <div class="study-content-wrapper">
+                <div class="study-article">
+                    <h4>Do Exílio à Redenção: A Promessa Eterna de HaShem</h4>
+                    <p>A história do povo de Israel é uma narrativa de exílio e redenção, marcada pela fidelidade de HaShem às Suas promessas. Desde a saída do Egito, passando pela entrega da Torá no Sinai, a conquista da Terra de Israel, os períodos dos Juízes e Reis, até os exílios babilônico e romano, a presença Divina sempre acompanhou Seu povo.</p>
+                    <p>Mesmo nos momentos mais sombrios, quando o Templo foi destruído e o povo disperso entre as nações, a esperança da redenção nunca se apagou. A Torá e os Profetas constantemente reafirmam a promessa de HaShem de reunir Seu povo de volta à sua terra e de estabelecer um Reino de paz e justiça sob o Mashíach.</p>
+                    <p>A história de Israel não é apenas um registro de eventos passados, mas uma lição viva de fé, perseverança e a mão Divina que guia os destinos. Cada exílio foi seguido por um retorno, cada período de escuridão por um amanhecer de esperança. Isso nos ensina que, independentemente das adversidades, a promessa de HaShem é inabalável e Sua misericórdia é eterna.</p>
+                    <p>A fundação do Estado de Israel em 1948 é vista por muitos como o início da Gueulá (Redenção) em nossos dias, um cumprimento das profecias bíblicas. No entanto, a redenção completa ainda aguarda a vinda do Mashíach, que trará paz universal e o conhecimento de HaShem a toda a humanidade. A história de Israel é, portanto, uma história de espera ativa, de preparação para um futuro glorioso que HaShem prometeu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Filosofia e Kabbalá -->
+    <section class="study-detail-section" id="estudos-filosofia">
+        <div class="container">
+            <div class="section-header">
+                <h3>Filosofia e Kabbalá</h3>
+                <p>As Dimensões Esotéricas da Torá</p>
+            </div>
+            <div class="study-content-wrapper">
+                <div class="study-article">
+                    <h4>A Unidade de HaShem e a Criação do Mundo</h4>
+                    <p>A filosofia judaica e a Kabbalá buscam aprofundar a compreensão da Unidade de HaShem (Ein Sof) e Sua relação com a criação do mundo. A Torá, em sua superfície, revela mandamentos e narrativas, mas em suas camadas mais profundas, esconde os segredos da existência e da Divindade.</p>
+                    <p>O conceito de Ein Sof (O Infinito) na Kabbalá descreve a essência de HaShem que transcende toda a compreensão humana. Para que o Infinito pudesse criar um mundo finito, foi necessário um processo de contração (Tzimtzum), onde HaShem "recolheu" Sua luz para criar um espaço para a existência. A partir desse Tzimtzum, emanaram as Sefirot, dez atributos divinos que servem como canais através dos quais a luz e a influência de HaShem se manifestam no mundo.</p>
+                    <p>A Kabbalá não é um estudo separado da Torá, mas sim uma forma de aprofundar sua compreensão, revelando as conexões místicas entre os mandamentos, as letras hebraicas e os mundos espirituais. Ela nos ensina que cada mitzvá que realizamos neste mundo físico tem um impacto nos mundos superiores, restaurando a Unidade e trazendo a redenção.</p>
+                    <p>Grandes pensadores como o Rambam (Maimônides) em sua obra "Guia dos Perplexos" e o Arizal (Rabino Yitzchak Luria) com seus ensinamentos cabalísticos, buscaram conciliar a razão e a fé, a filosofia e a mística, para oferecer uma visão mais completa da Torá e da relação entre HaShem e o homem. O estudo da Filosofia e Kabbalá nos convida a transcender a compreensão superficial e a mergulhar nas profundezas da sabedoria divina, buscando a Unidade em todas as coisas.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1365,7 +1567,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>© 5786 (2026) OrHaTorá - Todos os direitos reservados | Criado por Yisrael Yehudá ben Pereira</p>
+            <p>© 5786 (2026) OrHaTorá - Todos os direitos reservados | Criado por Yisrael Yehudá</p>
             <p style="margin-top: 10px; font-size: 0.8rem;">
                 "Eis que ensinei-vos estatutos e juízos, conforme me ordenou o Eterno, meu Deus" — Devarim 4:5
             </p>
