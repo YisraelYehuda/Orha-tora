@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OrHaTorá - Bênção dos Shamayim. Portal autêntico de estudos judaicos, Torá, Halachá e Sheva Mitzvot Bnei Noach.">
+    <title>OrHaTorá | Bênção dos Shamayim - Portal de Estudos Judaicos Autênticos</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=David+Libre:wght@400;500;700&family=Noto+Serif+Hebrew:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold-deep: #B8860B;
+            --gold-light: #FFD700;
+            --blue-royal: #0B1F3F;
+            --blue-dark: #051020;
+            --parchment: #F4F1E8;
+            --parchment-dark: #E8E4D5;
+            --text-dark: #1a1a1a;
+            --red-wine: #722F37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'David Libre', serif;
+            background-color: var(--parchment);
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--blue-royal);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-deep);
+            border-radius: 5px;
+        }
+
+        /* Header & Navigation */
+        .top-bar {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-royal) 100%);
+            color: var(--gold-light);
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            border-bottom: 2px solid var(--gold-deep);
+            font-family: 'Noto Serif Hebrew', serif;
+        }
+
+        .hebrew-date {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        header {
+            background: linear-gradient(to bottom, var(--blue-royal), var(--blue-dark));
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border-bottom: 3px solid var(--gold-deep);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gold-deep);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--blue-dark);
+            border: 3px solid var(--gold-light);
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        .logo-text h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .logo-text span {
+            color: var(--parchment);
+            font-size: 0.9rem;
+            font-style: italic;
+            display: block;
+            margin-top: -5px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            border: 2px solid var(--gold-deep);
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            color: var(--parchment);
+            font-family: 'David Libre', serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-container input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gold-deep);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--blue-dark);
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--parchment);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+            font-family: 'Cinzel', serif;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold-light);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--gold-light);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gold-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(11,31,63,0.85), rgba(5,16,32,0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%230B1F3F" width="100" height="100"/><path fill="%23B8860B" opacity="0.1" d="M20,20 Q40,5 60,20 T100,20 M20,50 Q40,35 60,50 T100,50 M20,80 Q40,65 60,80 T100,80"/></svg>');
+            background-size: cover;
+            padding: 100px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '✡';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 400px;
+            opacity: 0.03;
+            color: var(--gold-light);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            letter-spacing: 4px;
+        }
+
+        .hero .subtitle {
+            color: var(--parchment);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .hero .quote {
+            color: var(--parchment-dark);
+            font-size: 1.3rem;
+            border-left: 4px solid var(--gold-deep);
+            padding-left: 30px;
+            margin: 40px 0;
+            text-align: left;
+            font-family: 'Noto Serif Hebrew', serif;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: 2px solid var(--gold-deep);
+            background: transparent;
+            color: var(--gold-light);
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gold-deep);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            color: var(--blue-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(184,134,11,0.4);
+        }
+
+        .btn-primary {
+            background: var(--gold-deep);
+            color: var(--blue-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+        }
+
+        /* Current Parasha Section */
+        .parasha-section {
+            background: var(--parchment-dark);
+            padding: 60px 30px;
+            border-top: 3px solid var(--gold-deep);
+            border-bottom: 3px solid var(--gold-deep);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--blue-royal);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gold-deep);
+        }
+
+        .parasha-card {
+            background: white;
+            border: 2px solid var(--gold-deep);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parasha-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: var(--gold-deep);
+            opacity: 0.1;
+            border-radius: 0 0 0 100%;
+        }
+
+        .parasha-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .parasha-title {
+            font-family: 'Noto Serif Hebrew', serif;
+            font-size: 2.5rem;
+            color: var(--blue-royal);
+        }
+
+        .parasha-date {
+            background: var(--blue-royal);
+            color: var(--gold-light);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .torah-text {
+            background: var(--parchment);
+            padding: 30px;
+            border-left: 5px solid var(--gold-deep);
+            margin: 20px 0;
+            font-family: 'Noto Serif Hebrew', serif;
+            font-size: 1.2rem;
+            line-height: 2;
+        }
+
+        .torah-ref {
+            color: var(--red-wine);
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .content-card {
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gold-deep);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .content-card:hover {
+            border-color: var(--gold-deep);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .content-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--gold-deep);
+            margin-bottom: 20px;
+        }
+
+        .content-card h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--blue-royal);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .content-card p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: var(--red-wine);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 10px;
+        }
+
+        /* Midrash Section */
+        .midrash-section {
+            background: var(--blue-royal);
+            color: var(--parchment);
+            padding: 80px 30px;
+            position: relative;
+        }
+
+        .midrash-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%230B1F3F" width="100" height="100"/><circle fill="%23B8860B" opacity="0.05" cx="50" cy="50" r="40"/></svg>');
+            opacity: 0.3;
+        }
+
+        .midrash-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .midrash-title {
+            text-align: center;
+            color: var(--gold-light);
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .parable-box {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--gold-deep);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .parable-box::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 4rem;
+            color: var(--gold-deep);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .parable-box h4 {
+            color: var(--gold-light);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+
+        .parable-text {
+            font-style: italic;
+            line-height: 2;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .parable-lesson {
+            border-top: 1px solid var(--gold-deep);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .parable-lesson strong {
+            color: var(--gold-light);
+        }
+
+        /* Bnei Noach Section */
+        .bnei-noach-section {
+            background: linear-gradient(135deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+            padding: 80px 30px;
+        }
+
+        .mitzvot-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .mitzvah-item {
+            background: white;
+            border-left: 5px solid var(--red-wine);
+            padding: 25px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .mitzvah-item:hover {
+            transform: translateX(10px);
+        }
+
+        .mitzvah-number {
+            display: inline-block;
+            background: var(--red-wine);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .mitzvah-item h5 {
+            color: var(--blue-royal);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            background: white;
+            padding: 60px 30px;
+            border-top: 3px solid var(--gold-deep);
+        }
+
+        .comment-form {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--parchment);
+            padding: 40px;
+            border-radius: 10px;
+            border: 2px solid var(--gold-deep);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--blue-royal);
+            font-weight: bold;
+            font-family: 'Cinzel', serif;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: 'David Libre', serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold-deep);
+        }
+
+        .submit-btn {
+            background: var(--blue-royal);
+            color: var(--gold-light);
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: var(--gold-deep);
+            color: var(--blue-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--blue-dark);
+            color: var(--parchment);
+            padding: 60px 30px 30px;
+            border-top: 3px solid var(--gold-deep);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h5 {
+            color: var(--gold-light);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--parchment-dark);
+            text-decoration: none;
+            line-height: 2;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold-light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--blue-royal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--gold-deep);
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--gold-deep);
+            color: var(--blue-dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--blue-royal);
+            color: var(--parchment-dark);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .search-container {
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Torah scroll decoration */
+        .torah-decoration {
+            text-align: center;
+            font-size: 3rem;
+            color: var(--gold-deep);
+            margin: 20px 0;
+            letter-spacing: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="hebrew-date">
+            <i class="fas fa-star-of-david"></i> 
+            יום חמישי | 9 Adar 5786 | Parashat Tetzaveh 
+            <i class="fas fa-star-of-david"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-torah"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>OrHaTorá</h1>
+                    <span>Bênção dos Shamayim</span>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#parasha">Parashá</a></li>
+                    <li><a href="#beit-midrash">Beit Midrash</a></li>
+                    <li><a href="#midrash">Midrash</a></li>
+                    <li><a href="#bnei-noach">Bnei Noach</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+
+            <div class="search-container">
+                <input type="text" placeholder="Pesquisar na Torá..." id="searchInput">
+                <button class="search-btn" onclick="search()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content animate-in">
+            <h2>OrHaTorá</h2>
+            <p class="subtitle">Iluminando os Caminhos da Torá</p>
+            
+            <div class="quote">
+                "Porque o mandamento é uma lâmpada, e a Torá é luz; e as repreensões da instrução são o caminho da vida."
+                <span class="torah-ref">— Mishlei (Provérbios) 6:23</span>
+            </div>
+
+            <p style="color: var(--parchment); font-size: 1.2rem; margin-top: 30px;">
+                Bem-vindo ao <strong>OrHaTorá</strong>, um santuário virtual dedicado ao estudo autêntico da <em>Torá Shebichtav</em> e da <em>Torá Shebe'al Pe</em>. 
+                Aqui, judeus, Bnei Noach e todos os que buscam a <strong>Emet</strong> encontrarão as riquezas da sabedoria judaica, 
+                transmitidas com fidelidade à <strong>Halachá</strong> e à tradição dos <strong>Sages</strong>.
+            </p>
+
+            <div class="cta-buttons">
+                <a href="#parasha" class="btn btn-primary">Estudar Parashá da Semana</a>
+                <a href="#beit-midrash" class="btn">Explorar Beit Midrash</a>
+                <a href="#bnei-noach" class="btn">Sheva Mitzvot</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Parasha Section -->
+    <section class="parasha-section" id="parasha">
+        <div class="container">
+            <div class="section-header">
+                <h3>Parashat HaShavua</h3>
+                <p>A Porção Semanal da Torá</p>
+            </div>
+
+            <div class="parasha-card animate-in">
+                <div class="parasha-header">
+                    <div>
+                        <h2 class="parasha-title">תְּצַוֶּה</h2>
+                        <h3 style="color: var(--blue-royal); font-size: 2rem; margin-top: 10px;">Parashat Tetzaveh</h3>
+                    </div>
+                    <div class="parasha-date">
+                        <i class="fas fa-calendar-alt"></i> 9-15 Adar 5786<br>
+                        <small>26 Fev - 4 Mar 2026</small>
+                    </div>
+                </div>
+
+                <div class="torah-decoration">◆ ◆ ◆</div>
+
+                <div class="torah-text">
+                    <p><strong>Êxodo (Shemot) 27:20-30:10</strong></p>
+                    <br>
+                    <p>"E tu, Moshé, ordenarás aos filhos de Israel que te tragam azeite puro de olivas, batido, para a iluminação, para manter a luz contínuamente acesa."</p>
+                    <br>
+                    <p>"E tu farás vestes sagradas para Aharão, teu irmão, para honra e glória. E falarás a todos os homens sábios de coração, que Eu enchi com o espírito de sabedoria, que façam as vestes de Aharão, para santificá-lo, para que me sirva como kohen."</p>
+                    <span class="torah-ref">— Shemot 27:20; 28:2-3</span>
+                </div>
+
+                <h4 style="color: var(--blue-royal); margin: 30px 0 15px; font-family: 'Cinzel', serif;">
+                    <i class="fas fa-book-open"></i> Resumo da Parashá
+                </h4>
+                
+                <p style="line-height: 2; margin-bottom: 20px;">
+                    <strong>Parashat Tetzaveh</strong> ("Tu Ordenarás") é a vigésima porção da Torá. Nesta semana sagrada, 
+                    aprendemos sobre o <em>azeite puro para a Menorá</em> — simbolizando a necessidade de pureza espiritual 
+                    para que a luz da Torá ilumine nossas vidas continuamente, sem interrupção.
+                </p>
+
+                <p style="line-height: 2; margin-bottom: 20px;">
+                    A parashá detalha as <strong>vestes sacerdotais (Bigdei Kehuná)</strong> de Aharón HaKohen: o <em>Ephod</em>, 
+                    o <em>Choshen Mishpat</em> (Peitoral do Julgamento) com as doze pedras preciosas representando as tribos de Israel, 
+                    o <em>Me'il</em> (manto), o <em>Tzitz</em> (frontal de ouro), e as vestes de linho sagrado.
+                </p>
+
+                <p style="line-height: 2;">
+                    Notavelmente, esta é a única parashá desde o nascimento de Moshé até o fim do Livro de Shemot onde o nome de 
+                    Moshé Rabbeinu não é mencionado explicitamente. Os <strong>Chazal</strong> ensinam que isso ocorre porque 
+                    Moshé declarou em Shemot 32:32: "E agora, se perdoas o seu pecado... e se não, apaga-me, peço-te, do Teu livro." 
+                    Embora o pecado do Bezerro de Ouro tenha sido perdoado, a palavra do tzadik permanece, e seu nome foi ocultado 
+                    parcialmente como cumprimento de sua própria declaração.
+                </p>
+
+                <div style="margin-top: 30px; padding: 20px; background: var(--parchment); border-radius: 5px;">
+                    <h5 style="color: var(--red-wine); margin-bottom: 10px;">
+                        <i class="fas fa-lightbulb"></i> Reflexão Haftará
+                    </h5>
+                    <p>
+                        <strong>Haftará (Ashkenazim):</strong> I Reis (Melachim Alef) 18:20-39 — A história de Eliyahu HaNavi 
+                        no Monte Carmelo, demonstrando o poder autêntico da avoda (serviço divino) contra os falsos profetas de Baal.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beit Midrash Section -->
+    <section class="container" id="beit-midrash" style="padding: 80px 30px;">
+        <div class="section-header">
+            <h3>Beit Midrash</h3>
+            <p>Estudos Profundos na Torá</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-scroll"></i>
+                </div>
+                <h4>Estudos de Parashá</h4>
+                <p>
+                    Comentários profundos sobre a porção semanal, explorando as camadas de 
+                    <em>Peshat, Remez, Derash e Sod</em> — as quatro dimensões da interpretação toráica.
+                </p>
+                <a href="#" class="read-more">Acessar Estudos <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <h4>Halachá e Mishná</h4>
+                <p>
+                    A lei judaica prática, guiando cada aspecto da vida diária conforme a 
+                    tradição transmitida de Sinai através dos <strong>Tanna'im</strong> e <strong>Amora'im</strong>.
+                </p>
+                <a href="#" class="read-more">Acessar Halachá <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-praying-hands"></i>
+                </div>
+                <h4>Tehilim e Tefilá</h4>
+                <p>
+                    Os Salmos de David HaMelech e os mistérios da oração judaica. 
+                    Aprenda a davenar com <em>kavaná</em> (intenção) e compreender as palavras dos <strong>Siddur</strong>.
+                </p>
+                <a href="#" class="read-more">Acessar Tehilim <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-star-of-david"></i>
+                </div>
+                <h4>História de Israel</h4>
+                <p>
+                    Da criação do mundo até os dias messiânicos. Conheça a jornada do povo judeu 
+                    através dos exílios e retornos, conforme narrado nas <strong>Escrituras Sagradas</strong>.
+                </p>
+                <a href="#" class="read-more">Acessar História <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h4>Filosofia e Kabbalá</h4>
+                <p>
+                    Explorações profundas na <em>Hashkafá</em> (visão de mundo judaica) e nos ensinos esotéricos 
+                    da Torá, incluindo os fundamentos da fé segundo o <strong>Rambam</strong>.
+                </p>
+                <a href="#" class="read-more">Acessar Filosofia <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h4>Shiurim em Vídeo</h4>
+                <p>
+                    Aulas e lições em formato audiovisual, transmitindo a oralidade viva da Torá 
+                    através das plataformas modernas, incluindo nosso canal no TikTok.
+                </p>
+                <a href="https://www.tiktok.com/@yod.torah" target="_blank" class="read-more">
+                    Acessar Vídeos <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Midrash Section -->
+    <section class="midrash-section" id="midrash">
+        <div class="midrash-content">
+            <h3 class="midrash-title">
+                <i class="fas fa-book"></i> Midrash e Parábolas
+            </h3>
+            
+            <p style="text-align: center; margin-bottom: 40px; font-size: 1.1rem;">
+                As parábolas de nossos Sages iluminam a Torá, revelando verdades profundas através de narrativas atemporais.
+            </p>
+
+            <div class="parable-box">
+                <h4>A Menorá e o Azeite Puro</h4>
+                <div class="parable-text">
+                    <p>
+                        Diz o <strong>Midrash Tanchumá</strong> (Tetzaveh 5): Por que a porção do azeite vem imediatamente após 
+                        a porção do <em>Mishkan</em>? Assim como a luz do <em>Mishkan</em> vem do azeite, assim a luz do <em>Olam HaBa</em> 
+                        (Mundo por Vir) vem das boas ações deste mundo.
+                    </p>
+                    <p style="margin-top: 15px;">
+                        O <strong>Kohen Gadol</strong> acendia as lâmpadas da Menorá até que elas ardiam por si mesmas. 
+                        Assim, o tzadik deve inflamar as almas até que elas possam arder com sua própria chama espiritual.
+                    </p>
+                </div>
+                <div class="parable-lesson">
+                    <strong>Lição Haláchica:</strong> A Torá não nos pede apenas cumprir os mandamentos mecanicamente, 
+                    mas sim trazer luz — <em>or</em> — para o mundo. O azeite deve ser <em>zach</em> (puro), ensinando-nos 
+                    que nossas ações devem emanar de intenções puras, não de desejos de reconhecimento ou recompensa material.
+                </div>
+            </div>
+
+            <div class="parable-box">
+                <h4>O Choshen e o Julgamento Divino</h4>
+                <div class="parable-text">
+                    <p>
+                        O <em>Choshen Mishpat</em> continha as <em>Urim veTumim</em> — instrumentos de comunicação profética. 
+                        Diz o <strong>Talmud Bavli</strong> (Yoma 73b): Quando a Shechiná repousava sobre o Kohen Gadol, 
+                        as letras no Choshen se iluminavam, formando respostas às perguntas de Israel.
+                    </p>
+                    <p style="margin-top: 15px;">
+                        Mas havia uma condição: o questionador devia ser digno, e a comunidade devia ser merecedora. 
+                        Se não houvesse <em>kedushá</em> (santidade) no povo, as letras permaneciam escuras.
+                    </p>
+                </div>
+                <div class="parable-lesson">
+                    <strong>Reflexão Teológica:</strong> A comunicação divina é condicional à preparação humana. 
+                    Não é HaShem quem se afasta, mas nós que, através de nossas ações, criam ou removem os véus entre 
+                    o Criador e Sua criação. A Torá é a luz, mas devemos purificar nossos "vasos" para recebê-la.
+                </div>
+            </div>
+
+            <div class="parable-box">
+                <h4>A Ausência de Moshé</h4>
+                <div class="parable-text">
+                    <p>
+                        Pergunta o <strong>Ba'al HaTurim</strong>: Por que o nome de Moshé está ausente em Tetzaveh? 
+                        Responde: Porque Moshé disse "Apaga-me do Teu livro", e embora tenha sido perdoado, 
+                        a palavra do tzadik tem poder.
+                    </p>
+                    <p style="margin-top: 15px;">
+                        Mas há uma leitura mais profunda: Em Tetzaveh, o foco é Aharón e os Kohanim. 
+                        Moshé, o líder supremo, se retira para ensinar que <em>kavod</em> (honra) deve ser dada 
+                        até mesmo quando isso significa diminuir-se. O verdadeiro líder não busca o centro do palco, 
+                        mas o serviço de HaShem.
+                    </p>
+                </div>
+                <div class="parable-lesson">
+                    <strong>Mussar (Ética):</strong> A humildade não é auto-depreciação, mas sim o reconhecimento 
+                    de que nosso valor vem de nossa função, não de nossa personalidade. Moshé era o mais humilde 
+                    dos homens, e precisamente por isso foi digno de liderar.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bnei Noach Section -->
+    <section class="bnei-noach-section" id="bnei-noach">
+        <div class="container">
+            <div class="section-header">
+                <h3 style="color: var(--blue-royal);">Sheva Mitzvot Bnei Noach</h3>
+                <p>Os Sete Mandamentos Universais</p>
+            </div>
+
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem; line-height: 2;">
+                A Torá ensina que o ser humano não precisa ser judeu para ter uma relação santa com o Criador. 
+                Os <strong>Bnei Noach</strong> (Filhos de Noé) — todos os povos do mundo — receberam sete mandamentos universais 
+                através de Noé. Cumprir estas leis com fé em HaShem é considerado <em>chasidei ummot ha'olam</em> 
+                (justos entre as nações), garantindo participação no <em>Olam HaBa</em>.
+            </p>
+
+            <div class="mitzvot-list">
+                <div class="mitzvah-item">
+                    <span class="mitzvah-number">1</span>
+                    <h5>Avará (Idolatria)</h5>
+                    <p>Proibição de adorar ídolos ou qualquer coisa além do Criador Único e Incorporal. 
+                    Reconhecer que HaShem é Echad (Um) e que não há outro poder independente d'Ele.</p>
+                </div>
+
+                <div class="mitzvah-item">
+                    <span class="mitzvah-number">2</span>
+                    <h5>Birchat HaShem (Blasfêmia)</h5>
+                    <p>Proibição de amaldiçoar o Nome de Deus ou profaná-Lo de qualquer forma. 
+                    Honrar o Nome Sagrado e não profaná-lo através de juramentos falsos ou palavras destrutivas.</p>
+                </div>
+
+                <div class="mitzvah-item">
+                    <span class="mitzvah-number">3</span>
+                    <h5>Shefichut Damim (Assassinato)</h5>
+                    <p>Proibição de derramar sangue humano. Respeitar a vida como dom divino — 
+                    "Quem derramar o sangue do homem, pelo homem seu sangue será derramado" (Bereshit 9:6).</p>
+                </div>
+
+                <div class="mitzvah-item">
+                    <span class="mitzvah-number">4</span>
+                    <h5>Gilui Arayot (Imoralidade Sexual)</h5>
+                    <p>Proibição das relações sexuais proibidas: adultério, incesto, bestialidade e homossexualidade masculina. 
+                    Santificar a união conjugal conforme a estrutura divina.</p>
+                </div>
+
+                <div class="mitzvah-item">
+                    <span class="mitzvah-number">5</span>
+                    <h5>Gezel (Roubo)</h5>
+                    <p>Proibição de roubar ou se apropriar indevidamente da propriedade alheia. 
+                    Respeitar os direitos de propriedade e a ordem econômica justa estabelecida pelo Criador.</p>
+                </div>
+
+                <div class="mitzvah-item">
+                    <span class="mitzvah-number">6</span>
+                    <h5>Ever Min HaChai (Parte de Animal Vivo)</h5>
+                    <p>Proibição de comer carne arrancada de um animal ainda vivo. 
+                    Demonstrar compaixão pelos animais e não ser cruel, reconhecendo que a vida pertence a HaShem.</p>
+                </div>
+
+                <div class="mitzvah-item" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
+                    <span class="mitzvah-number">7</span>
+                    <h5>Dinim (Estabelecimento de Leis)</h5>
+                    <p>Obrigação de estabelecer sistemas judiciais justos e tribunais para aplicar as seis proibições anteriores. 
+                    Criar sociedades baseadas na justiça, onde a anarquia não prevaleça e os direitos sejam protegidos. 
+                    Esta é uma <em>mitzvá aseh</em> (mandamento positivo), enquanto as outras seis são <em>lo ta'aseh</em> (proibições).</p>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 40px; border-radius: 10px; margin-top: 40px; border: 2px solid var(--gold-deep);">
+                <h4 style="color: var(--blue-royal); font-family: 'Cinzel', serif; margin-bottom: 20px;">
+                    <i class="fas fa-info-circle"></i> Orientação Espiritual para Bnei Noach
+                </h4>
+                <p style="line-height: 2; margin-bottom: 15px;">
+                    Caro estudioso dos Sete Mandamentos: Você está em um caminho sagrado. Não é necessário converter-se ao judaísmo 
+                    para agradar a HaShem — basta cumprir estas sete leis por reconhecimento do Criador e obediência à Sua vontade.
+                </p>
+                <p style="line-height: 2; margin-bottom: 15px;">
+                    Recomenda-se recitar diariamente uma confissão de fé no Criador Único, estudar as aplicações detalhadas 
+                    destas leis (preferencialmente com um rabino ortodoxo experiente neste campo), e praticar a gratidão 
+                    (<em>hakarat hatov</em>) por todas as bondades recebidas.
+                </p>
+                <p style="line-height: 2;">
+                    <strong>Importante:</strong> Embora não seja obrigatório, muitos Bnei Noach adotam práticas adicionais 
+                    como rezar, dar caridade (<em>tzedaká</em>), e honrar os pais, expandindo sua conexão espiritual 
+                    dentro dos limites haláchicos.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="container" id="sobre" style="padding: 80px 30px; background: white;">
+        <div class="section-header">
+            <h3>Sobre o Autor</h3>
+            <p>Yisrael Yehudá ben Pereira</p>
+        </div>
+
+        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <div style="width: 150px; height: 150px; background: var(--gold-deep); border-radius: 50%; margin: 0 auto 30px; 
+                        display: flex; align-items: center; justify-content: center; font-size: 4rem; color: white;
+                        border: 5px solid var(--blue-royal); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div style="font-style: italic; color: var(--red-wine); font-size: 1.2rem; margin-bottom: 30px;">
+                B"H
+            </div>
+
+            <div style="text-align: left; line-height: 2.2; font-size: 1.1rem; background: var(--parchment); 
+                        padding: 40px; border-radius: 10px; border-left: 5px solid var(--gold-deep);">
+                <p style="margin-bottom: 20px;">
+                    <strong>Shalom u'vrachá!</strong>
+                </p>
+
+                <p style="margin-bottom: 20px;">
+                    Sou <strong>Yisrael Yehudá</strong>, jovem <em>talmid</em> de Torá, filho da tradição de <strong>Pereira</strong>, 
+                    com raízes que se estendem pelas terras de Paraná, Bahia e Itália — uma história que ecoa o exílio e o retorno do povo de Israel.
+                </p>
+
+                <p style="margin-bottom: 20px;">
+                    Embora não tenha nascido de ventre judaico, o <strong>Ribbono Shel Olam</strong> plantou em meu coração, desde cedo, 
+                    uma chama insaciável pela <strong>Torá Shebichtav</strong> e pela <strong>Torá Shebe'al Pe</strong>. 
+                    Hoje, <em>Baruch HaShem</em>, caminho no processo de <strong>guirur</strong> (conversão), buscando firmar-me debaixo 
+                    das asas da <strong>Shechiná</strong> e anexar-me verdadeiramente à <strong>Knesset Yisrael</strong>.
+                </p>
+
+                <p style="margin-bottom: 20px;">
+                    Criei o <strong>OrHaTorá</strong> como uma <strong>Bênção dos Shamayim</strong> — uma porta aberta para que todo aquele 
+                    que busca a <strong>Emet</strong> possa encontrar os ensinos autênticos de nossos <strong>Sages</strong>, 
+                    sem barreiras de idioma ou condição material. Meu <em>ratzon</em> é que judeus de nascimento, <strong>Bnei Noach</strong>, 
+                    <strong>Gerei Tzedek</strong> e todos os que anseiam pelas <strong>Escrituras Sagradas em sua língua original</strong> — 
+                    o <strong>Lashon HaKodesh</strong> — tenham acesso à luz pura da <strong>Halachá</strong> e à profundidade dos <strong>Parshanim</strong>.
+                </p>
+
+                <p style="margin-bottom: 20px;">
+                    Sou um jovem <strong>ba'al melachá</strong> — trabalhador incansável nos <strong>Seforim</strong> que escrevo, 
+                    nos estudos que compartilho e nos vídeos que produzo para <strong>TikTok</strong>, sempre com a intenção de 
+                    <strong>kiddush HaShem</strong>. Cada página, cada aula, cada palavra é um tijolo no edifício que estou construindo: 
+                    uma vida dedicada à <strong>Torá</strong>, ao <strong>Avodá</strong> e à <strong>G'milut Chassadim</strong>.
+                </p>
+
+                <p>
+                    Este é apenas o <strong>techilá</strong> — o início. Que o <strong>Eterno de Israel</strong> me conceda forças 
+                    para expandir este <strong>Beit Midrash virtual</strong>, para honra do <strong>Nome Santo</strong>, 
+                    <em>b'ezrat HaShem</em>.
+                </p>
+
+                <p style="margin-top: 30px; text-align: center; font-weight: bold; color: var(--blue-royal);">
+                    <em>Lechatchila ariber!</em> — Desde o início, para cima!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section class="comments-section" id="contato">
+        <div class="container">
+            <div class="section-header">
+                <h3>Deixe seu Comentário</h3>
+                <p>Participe da discussão toráica</p>
+            </div>
+
+            <div class="comment-form">
+                <form onsubmit="handleComment(event)">
+                    <div class="form-group">
+                        <label for="name">Nome (Hebrew Name se houver)</label>
+                        <input type="text" id="name" required placeholder="Seu nome...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="seu@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="topic">Tema</label>
+                        <input type="text" id="topic" placeholder="Sobre qual assunto deseja comentar?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment">Comentário ou Pergunta</label>
+                        <textarea id="comment" rows="6" required placeholder="Escreva sua reflexão, dúvida ou comentário sobre os estudos..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Enviar Comentário
+                    </button>
+                </form>
+
+                <div id="commentsDisplay" style="margin-top: 40px;">
+                    <!-- Comentários aparecerão aqui via JavaScript -->
+                    <div style="background: white; padding: 20px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid var(--gold-deep);">
+                        <strong>Rivka S.</strong> <span style="color: #666; font-size: 0.9rem;">- 2 dias atrás</span>
+                        <p style="margin-top: 10px;">Yasher koach pelos estudos! A explicação sobre a ausência de Moshé em Tetzaveh foi especialmente profunda. Aguardo mais conteúdo sobre as vestes sacerdotais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h5>OrHaTorá</h5>
+                <p>Bênção dos Shamayim</p>
+                <p>Um portal dedicado à disseminação autêntica da Torá, Halachá e tradição judaica para judeus, Bnei Noach e todos os buscadores da Verdade.</p>
+                <div class="social-links">
+                    <a href="https://www.tiktok.com/@yod.torah" target="_blank" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="mailto:orhatorabrasil@gmail.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="#" title="YouTube (Em breve)">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" title="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h5>Links Rápidos</h5>
+                <p><a href="#parasha">Parashá da Semana</a></p>
+                <p><a href="#beit-midrash">Beit Midrash</a></p>
+                <p><a href="#midrash">Midrash</a></p>
+                <p><a href="#bnei-noach">Sheva Mitzvot</a></p>
+                <p><a href="#sobre">Sobre o Autor</a></p>
+            </div>
+
+            <div class="footer-section">
+                <h5>Contato</h5>
+                <p><i class="fas fa-envelope"></i> orhatorabrasil@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Brasil</p>
+                <p style="margin-top: 15px;">
+                    <strong>Parcerias e Shiurim:</strong><br>
+                    Para convites de palestras, parcerias ou orientação espiritual, entre em contato via email.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h5>Halachá do Dia</h5>
+                <p style="font-style: italic; font-size: 0.95rem;">
+                    "É mitzvá ouvir atentamente a leitura da Torá na sinagoga, sem conversar durante a leitura. 
+                    Quem ouve a Torá com atenção merece vida longa." 
+                    <br>— Shulchan Aruch, Orach Chaim 146:2
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 5786 (2026) OrHaTorá - Todos os direitos reservados | Criado por Yisrael Yehudá ben Pereira</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                "Eis que ensinei-vos estatutos e juízos, conforme me ordenou o Eterno, meu Deus" — Devarim 4:5
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+        }
+
+        // Search Functionality
+        function search() {
+            const query = document.getElementById('searchInput').value;
+            if(query) {
+                alert('Pesquisando por: ' + query + '\n\n(Em um site completo, esta função buscaria em todo o conteúdo toráico)');
+            }
+        }
+
+        // Handle Comment Submission
+        function handleComment(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+            
+            if(name && comment) {
+                alert('Todá rabá, ' + name + '! Seu comentário foi recebido e será analisado antes da publicação.\n\nBaruch HaShem pela sua participação!');
+                e.target.reset();
+            }
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.content-card, .parable-box, .mitzvah-item').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
