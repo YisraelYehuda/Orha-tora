@@ -1,0 +1,62 @@
+    <!-- Contact & Inquiry Section -->
+    <section class="comments-section" id="contato">
+        <div class="container">
+            <div class="section-header">
+                <h3>Entre em Contato</h3>
+                <p>Envie suas dúvidas, sugestões e perguntas toráicas</p>
+            </div>
+
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div style="background: var(--parchment); padding: 30px; border-radius: 10px; border-left: 5px solid var(--gold-deep); margin-bottom: 40px;">
+                    <h4 style="color: var(--blue-royal); margin-bottom: 15px;">Política de Moderação</h4>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">
+                        Valorizamos cada pergunta e comentário recebido. Todos os envios são <strong>moderados com cuidado</strong> para manter um ambiente respeitoso, toráico e livre de spam. 
+                        Respostas são fornecidas conforme disponibilidade, priorizando perguntas sobre Torá, Halachá e ensinamentos judaicos.
+                    </p>
+                    <p style="line-height: 1.8;">
+                        <strong>Tempo de resposta:</strong> Até 7 dias úteis. Você receberá uma resposta no email fornecido.
+                    </p>
+                </div>
+
+                <div class="comment-form">
+                    <form onsubmit="handleComment(event)">
+                        <div class="form-group">
+                            <label for="name">Nome (ou Nome Hebraico)</label>
+                            <input type="text" id="name" required placeholder="Seu nome...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required placeholder="seu@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="topic">Assunto</label>
+                            <select id="topic" required>
+                                <option value="">Selecione um assunto...</option>
+                                <option value="parasha">Pergunta sobre Parashá</option>
+                                <option value="halacha">Pergunta sobre Halachá</option>
+                                <option value="mussar">Pergunta sobre Mussar/Ética</option>
+                                <option value="filosofia">Pergunta sobre Filosofia/Kabbalá</option>
+                                <option value="sugestao">Sugestão de Conteúdo</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="comment">Sua Pergunta ou Comentário</label>
+                            <textarea id="comment" rows="6" required placeholder="Escreva sua pergunta ou reflexão sobre os estudos..."></textarea>
+                        </div>
+                        
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">
+                            <i class="fas fa-shield-alt"></i> Seus dados serão utilizados apenas para responder seu contato. Nunca compartilharemos seu email.
+                        </p>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Enviar Pergunta
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
