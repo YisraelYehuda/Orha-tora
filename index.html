@@ -620,6 +620,131 @@
             letter-spacing: 1px;
         }
 
+        /* Sistema de Abas (Tabs) */
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--gold-deep);
+            padding-bottom: 15px;
+        }
+
+        .tab-button {
+            background: var(--parchment-dark);
+            border: 2px solid var(--gold-deep);
+            color: var(--blue-royal);
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .tab-button:hover {
+            background: var(--gold-light);
+            color: var(--blue-royal);
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: var(--gold-deep);
+            color: white;
+            border-color: var(--blue-royal);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Acordeão de Conteúdo */
+        .accordion-container {
+            margin-top: 30px;
+        }
+
+        .accordion-item {
+            border: 2px solid var(--gold-deep);
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .accordion-header {
+            background: var(--blue-royal);
+            color: var(--gold-light);
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .accordion-header:hover {
+            background: var(--blue-dark);
+            padding-left: 25px;
+        }
+
+        .accordion-header.active {
+            background: var(--gold-deep);
+            color: white;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .accordion-icon.active {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 20px;
+            background: var(--parchment);
+            border-top: 2px solid var(--gold-deep);
+            line-height: 2;
+            font-family: 'Georgia', serif;
+        }
+
+        .accordion-content.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 1000px;
+            }
+        }
+
         /* Midrash Section */
         .midrash-section {
             background: var(--blue-royal);
@@ -978,6 +1103,7 @@
                             <li style="border-top: 1px solid var(--gold-deep); margin-top: 5px; padding-top: 5px;"><strong style="color: var(--gold-light); padding: 0 20px; display: block;">Espiritualidade</strong></li>
                             <li><a href="#estudos-tehilim">Tehilim e Tefilá</a></li>
                             <li><a href="#estudos-filosofia">Filosofia e Kabbalá</a></li>
+                            <li><a href="#pensamento-judaico">Pensamento Judaico e Mussar</a></li>
                             <li><a href="#purim">Purim - Fes Judaica</a></li>
                         </ul>
                     </li>
@@ -1097,79 +1223,140 @@
             <p>Estudos Profundos na Torá</p>
         </div>
 
-        <div class="content-grid">
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-scroll"></i>
-                </div>
-                <h4>Estudos de Parashá</h4>
-                <p>
-                    Comentários profundos sobre a porção semanal, explorando as camadas de 
-                    <em>Peshat, Remez, Derash e Sod</em> — as quatro dimensões da interpretação toráica.
-                </p>
-                <a href="#estudos-parasha" class="read-more">Acessar Estudos <i class="fas fa-arrow-right"></i></a>
-            </div>
+        <div class="tabs-container">
+            <button class="tab-button active" onclick="openTab(event, 'tab-torah-parasha')">Torá & Parashá</button>
+            <button class="tab-button" onclick="openTab(event, 'tab-halacha-mitzvot')">Halachá & Mitzvot</button>
+            <button class="tab-button" onclick="openTab(event, 'tab-espiritualidade')">Espiritualidade</button>
+            <button class="tab-button" onclick="openTab(event, 'tab-outros')">Outros Estudos</button>
+        </div>
 
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-balance-scale"></i>
+        <div id="tab-torah-parasha" class="tab-content active">
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Estudos de Parashá</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Comentários profundos sobre a porção semanal, explorando as camadas de 
+                        <em>Peshat, Remez, Derash e Sod</em> — as quatro dimensões da interpretação toráica.</p>
+                        <a href="#estudos-parasha" class="read-more">Acessar Estudos <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
-                <h4>Halachá e Mishná</h4>
-                <p>
-                    A lei judaica prática, guiando cada aspecto da vida diária conforme a 
-                    tradição transmitida de Sinai através dos <strong>Tanna'im</strong> e <strong>Amora'im</strong>.
-                </p>
-                <a href="#estudos-halacha" class="read-more">Acessar Halachá <i class="fas fa-arrow-right"></i></a>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>História de Israel</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Da criação do mundo até os dias messiânicos. Conheça a jornada do povo judeu 
+                        através dos exílios e retornos, conforme narrado nas <strong>Escrituras Sagradas</strong>.</p>
+                        <a href="#estudos-historia" class="read-more">Acessar História <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-praying-hands"></i>
+        <div id="tab-halacha-mitzvot" class="tab-content">
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Halachá e Mishná</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A lei judaica prática, guiando cada aspecto da vida diária conforme a 
+                        tradição transmitida de Sinai através dos <strong>Tanna\'im</strong> e <strong>Amora\'im</strong>.</p>
+                        <a href="#estudos-halacha" class="read-more">Acessar Halachá <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
-                <h4>Tehilim e Tefilá</h4>
-                <p>
-                    Os Salmos de David HaMelech e os mistérios da oração judaica. 
-                    Aprenda a davenar com <em>kavaná</em> (intenção) e compreender as palavras dos <strong>Siddur</strong>.
-                </p>
-                <a href="#estudos-tehilim" class="read-more">Acessar Tehilim <i class="fas fa-arrow-right"></i></a>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Sheva Mitzvot Bnei Noach</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Os Sete Mandamentos Universais para toda a humanidade, revelados a Noé. 
+                        Um caminho de retidão para os não-judeus.</p>
+                        <a href="#bnei-noach" class="read-more">Acessar Bnei Noach <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-star-of-david"></i>
+        <div id="tab-espiritualidade" class="tab-content">
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Tehilim e Tefilá</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Os Salmos de David HaMelech e os mistérios da oração judaica. 
+                        Aprenda a davenar com <em>kavaná</em> (intenção) e compreender as palavras dos <strong>Siddur</strong>.</p>
+                        <a href="#estudos-tehilim" class="read-more">Acessar Tehilim <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
-                <h4>História de Israel</h4>
-                <p>
-                    Da criação do mundo até os dias messiânicos. Conheça a jornada do povo judeu 
-                    através dos exílios e retornos, conforme narrado nas <strong>Escrituras Sagradas</strong>.
-                </p>
-                <a href="#estudos-historia" class="read-more">Acessar História <i class="fas fa-arrow-right"></i></a>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Filosofia e Kabbalá</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Explorações profundas na <em>Hashkafá</em> (visão de mundo judaica) e nos ensinos esotéricos 
+                        da Torá, incluindo os fundamentos da fé segundo o <strong>Rambam</strong>.</p>
+                        <a href="#estudos-filosofia" class="read-more">Acessar Filosofia <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Pensamento Judaico e Mussar</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A disciplina ética e moral judaica para o aprimoramento pessoal e espiritual, 
+                        com ensinamentos de grandes mestres como o <strong>Chofetz Chaim</strong>.</p>
+                        <a href="#pensamento-judaico" class="read-more">Acessar Mussar <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Purim - Festa Judaica</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Alegria e milagres: celebre a história de Purim, a salvação do povo judeu 
+                        e as mitzvot especiais desta festa.</p>
+                        <a href="#purim" class="read-more">Acessar Purim <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-brain"></i>
+        <div id="tab-outros" class="tab-content">
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Midrash e Parábolas</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>As parábolas de nossos Sages iluminam a Torá, revelando verdades profundas 
+                        através de narrativas atemporais.</p>
+                        <a href="#midrash" class="read-more">Acessar Midrash <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
-                <h4>Filosofia e Kabbalá</h4>
-                <p>
-                    Explorações profundas na <em>Hashkafá</em> (visão de mundo judaica) e nos ensinos esotéricos 
-                    da Torá, incluindo os fundamentos da fé segundo o <strong>Rambam</strong>.
-                </p>
-                <a href="#estudos-filosofia" class="read-more">Acessar Filosofia <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-video"></i>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Shiurim em Vídeo</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Aulas e lições em formato audiovisual, transmitindo a oralidade viva da Torá 
+                        através das plataformas modernas, incluindo nosso canal no TikTok.</p>
+                        <a href="https://www.tiktok.com/@yod.torah" target="_blank" class="read-more">Acessar Vídeos <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
-                <h4>Shiurim em Vídeo</h4>
-                <p>
-                    Aulas e lições em formato audiovisual, transmitindo a oralidade viva da Torá 
-                    através das plataformas modernas, incluindo nosso canal no TikTok.
-                </p>
-                <a href="https://www.tiktok.com/@yod.torah" target="_blank" class="read-more">
-                    Acessar Vídeos <i class="fas fa-arrow-right"></i>
-                </a>
             </div>
         </div>
     </section>
@@ -1190,6 +1377,24 @@
                     <p>A ausência do nome de Moshé nesta Parashá, após seu pedido para ser apagado do Livro de HaShem (Shemot 32:32) em defesa do povo após o pecado do Bezerro de Ouro, nos ensina sobre o poder das palavras e a humildade de um verdadeiro líder. Moshé, o maior dos profetas, estava disposto a sacrificar sua própria existência para proteger seu povo, e HaShem, em Sua infinita sabedoria, honrou seu pedido de uma forma sutil, mas significativa.</p>
                     <p>Que possamos aprender com a Parashat Tetzaveh a importância da pureza de intenção em nosso serviço a HaShem, a santidade de cada mandamento e a humildade necessária para liderar e servir com verdadeira devocão.</p>
                     <p class="study-closing-line">Baruch HaShem pela Torá e por Sua infinita sabedoria.</p>
+                </div>
+
+                <div class="study-article">
+                    <h4>Parashat Vayakhel-Pekudei: A Conclusão do Mishkan e a Presença Divina</h4>
+                    <p>As Parashiot Vayakhel e Pekudei, frequentemente lidas juntas, marcam a conclusão da construção do Mishkan (Tabernáculo) e a subsequente manifestação da Shechiná (Presença Divina) entre o povo de Israel. Após as detalhadas instruções Divinas, Moshé reúne o povo para a execução da obra, destacando a importância da contribuição de cada um e a dedicação dos artesãos.</p>
+
+                    <p><strong>Vayakhel: A Unidade na Construção</strong></p>
+                    <p>A Parashat Vayakhel inicia com a ordem de Moshé para observar o Shabat, mesmo durante a construção do Mishkan, enfatizando a santidade do tempo sobre a santidade do espaço. Em seguida, descreve a coleta das doações do povo, onde homens e mulheres, ricos e pobres, contribuíram com generosidade e coração voluntário. O <strong>Rashi</strong> (Shemot 35:21) comenta que a prontidão do povo em doar foi tão grande que Moshé teve que pedir que parassem de trazer mais ofertas, pois já havia o suficiente, e até em excesso. Isso demonstra o entusiasmo e a unidade do povo em cumprir a vontade Divina.</p>
+                    <p>Os artesãos Bezalel e Oholiav são nomeados e dotados de sabedoria Divina para realizar o trabalho. O <strong>Ramban</strong> (Shemot 35:31) explica que a sabedoria que lhes foi concedida não era apenas técnica, mas uma compreensão profunda da intenção Divina por trás de cada detalhe do Mishkan, permitindo-lhes infundir santidade em cada peça.</p>
+
+                    <p><strong>Pekudei: A Contabilidade e a Habitação da Shechiná</strong></p>
+                    <p>Pekudei detalha a contabilidade de todos os materiais utilizados na construção do Mishkan, enfatizando a transparência e a responsabilidade. Cada item, desde o ouro e a prata até o bronze, é meticulosamente registrado. O <strong>Sforno</strong> (Shemot 38:21) aponta que essa contabilidade servia para demonstrar que tudo foi feito exatamente conforme a ordem de HaShem, sem desvio algum, e para inspirar confiança no povo.</p>
+                    <p>A Parashá culmina com a montagem do Mishkan e a gloriosa habitação da Shechiná. "E a nuvem cobriu a Tenda do Encontro, e a glória de HaShem encheu o Mishkan" (Shemot 40:34). Este é o ápice de toda a narrativa, o momento em que o propósito da criação do Mishkan é realizado: HaShem habitando entre Seu povo. O <strong>Midrash Tanchuma</strong> (Pekudei 11) compara a Shechiná que desceu sobre o Mishkan à noiva que entra em sua chuppá, simbolizando a união íntima entre HaShem e Israel.</p>
+
+                    <p><strong>Lições Eternas para Nossos Dias</strong></p>
+                    <p>As Parashiot Vayakhel-Pekudei nos ensinam que a construção de um lar para a Shechiná não é apenas um evento histórico, mas um processo contínuo em nossas vidas. Cada um de nós, com nossos talentos e recursos, é chamado a contribuir para a construção de um "Mishkan" pessoal e comunitário. A generosidade, a unidade, a dedicação e a Kavaná (intenção) são os "materiais" com os quais construímos esse santuário.</p>
+                    <p>A presença Divina não se manifesta em um vazio, mas em um espaço preparado com santidade e pureza. Que possamos, através de nossas ações e estudo da Torá, criar um ambiente digno para a habitação da Shechiná em nossos corações e em nosso mundo, apressando a vinda do Mashíach e a reconstrução do Beit HaMikdash.</p>
+                    <p class="study-closing-line">Que a luz do Mishkan ilumine nossos caminhos e a Shechiná repouse sobre nós. Amém.</p>
                 </div>
             </div>
         </div>
@@ -1279,6 +1484,26 @@
                     <p>A Kabbalá não é um estudo separado da Torá, mas sim uma forma de aprofundar sua compreensão, revelando as conexões místicas entre os mandamentos, as letras hebraicas e os mundos espirituais. Ela nos ensina que cada mitzvá que realizamos neste mundo físico tem um impacto nos mundos superiores, restaurando a Unidade e trazendo a redenção.</p>
                     <p>Grandes pensadores como o Rambam (Maimônides) em sua obra "Guia dos Perplexos" e o Arizal (Rabino Yitzchak Luria) com seus ensinamentos cabalísticos, buscaram conciliar a razão e a fé, a filosofia e a mística, para oferecer uma visão mais completa da Torá e da relação entre HaShem e o homem. O estudo da Filosofia e Kabbalá nos convida a transcender a compreensão superficial e a mergulhar nas profundezas da sabedoria divina, buscando a Unidade em todas as coisas.</p>
                     <p class="study-closing-line">Na profundidade da Kabbalá, encontramos a Unidade Eterna.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Pensamento Judaico e Mussar -->
+    <section class="study-detail-section" id="pensamento-judaico">
+        <div class="container">
+            <div class="section-header">
+                <h3>Pensamento Judaico e Mussar</h3>
+                <p>Aprimorando o Caráter e a Devoção</p>
+            </div>
+            <div class="study-content-wrapper">
+                <div class="study-article">
+                    <h4>A Importância do Mussar: Cultivando a Santidade Interior</h4>
+                    <p>O Mussar, a disciplina ética e moral judaica, é um caminho essencial para o aprimoramento pessoal e espiritual. Não basta apenas cumprir os mandamentos (Mitzvot) externamente; a Torá exige que purifiquemos e refinemos nossas qualidades interiores (Midot), transformando-nos em vasos dignos da Shechiná (Presença Divina). Grandes mestres de Mussar, como o <strong>Chofetz Chaim</strong> (Rabino Yisrael Meir Kagan), enfatizaram que o estudo e a prática do Mussar são tão vitais quanto o estudo da Halachá.</p>
+                    <p>O <strong>Chofetz Chaim</strong>, em sua obra "Shemirat HaLashon" (Guarda da Língua), ensina que a fala é uma das ferramentas mais poderosas que HaShem nos concedeu, e seu uso indevido pode causar danos irreparáveis. Ele detalha as leis de Lashon Hará (fofoca), Rechilut (calúnia) e Onaat Devarim (ferir com palavras), e oferece um guia prático para cultivar a fala positiva e construtiva. O estudo dessas leis não é apenas um exercício intelectual, mas um convite à auto-reflexão e à transformação de um dos aspectos mais desafiadores do comportamento humano.</p>
+                    <p>Outro pilar do Mussar é o desenvolvimento da Bitachon (confiança em HaShem). O <strong>Rabino Eliyahu Dessler</strong>, em "Michtav MeEliyahu", explora a profundidade da Bitachon, ensinando que ela não é uma fé cega, mas uma compreensão racional e emocional da Providência Divina. Cultivar a Bitachon significa reconhecer que HaShem é a fonte de todo o bem e que Ele orquestra cada detalhe de nossas vidas para o nosso benefício final, mesmo que não compreendamos Seus caminhos. Isso nos liberta da ansiedade e nos permite servir a HaShem com alegria e serenidade.</p>
+                    <p>A prática do Mussar envolve a introspecção diária, a identificação de nossas falhas de caráter e o trabalho contínuo para corrigi-las. É um processo de vida, uma jornada de autodescoberta e crescimento espiritual. Ao nos dedicarmos ao Mussar, não apenas nos tornamos pessoas melhores, mas também contribuímos para a elevação do mundo inteiro, revelando a santidade inerente a cada ser humano.</p>
+                    <p class="study-closing-line">Que o estudo do Mussar nos inspire a santificar cada aspecto de nossas vidas.</p>
                 </div>
             </div>
         </div>
@@ -1694,8 +1919,47 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.content-card, .parable-box, .mitzvah-item').forEach((el) => {
+        document.querySelectorAll(".content-card, .parable-box, .mitzvah-item").forEach((el) => {
             observer.observe(el);
+        });
+
+        // Funções para o sistema de abas (tabs)
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Funções para o sistema de acordeão
+        document.querySelectorAll(".accordion-header").forEach(header => {
+            header.addEventListener("click", () => {
+                const accordionItem = header.parentElement;
+                const accordionContent = header.nextElementSibling;
+                const accordionIcon = header.querySelector(".accordion-icon");
+
+                accordionItem.classList.toggle("active");
+                header.classList.toggle("active");
+                accordionIcon.classList.toggle("active");
+
+                if (accordionContent.style.display === "block") {
+                    accordionContent.style.display = "none";
+                } else {
+                    accordionContent.style.display = "block";
+                }
+            });
+        });
+
+        // Abrir a primeira aba por padrão
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector(".tab-button").click();
         });
     </script>
     <script src="search.js"></script>
