@@ -447,6 +447,8 @@
     }
 
     let audioNodes = [];
+    let raindropsInterval = null;
+    let windGustInterval = null;
 
     function startAudio() {
       initAudio();
@@ -454,50 +456,114 @@
       
       const masterGain = audioContext.createGain();
       masterGain.gain.setValueAtTime(0, audioContext.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0.25, audioContext.currentTime + 2);
+      masterGain.gain.linearRampToValueAtTime(0.22, audioContext.currentTime + 2);
       masterGain.connect(audioContext.destination);
       
-      // Cria ruído branco para simular chuva
-      const bufferSize = audioContext.sampleRate * 2;
-      const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-      const noiseData = noiseBuffer.getChannelData(0);
+      // Cria ruído rosa (mais suave que branco) para simular chuva de fundo
+      const bufferSize = audioContext.sampleRate * 4;
+      const pinkNoiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const pinkNoiseData = pinkNoiseBuffer.getChannelData(0);
+      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
       for (let i = 0; i < bufferSize; i++) {
-        noiseData[i] = Math.random() * 2 - 1;
+        const white = Math.random() * 2 - 1;
+        b0 = 0.049922035 * white + 0.950066025 * b0;
+        b1 = 0.362025049 * b0 + 0.637974951 * b1;
+        b2 = 0.214992697 * b1 + 0.785007303 * b2;
+        b3 = 0.062018883 * b2 + 0.937981117 * b3;
+        b4 = 0.049922035 * b3 + 0.950066025 * b4;
+        b5 = 0.362025049 * b4 + 0.637974951 * b5;
+        b6 = 0.214992697 * b5 + 0.785007303 * b6;
+        pinkNoiseData[i] = b6 * 0.3;
       }
       
-      const noiseSource = audioContext.createBufferSource();
-      noiseSource.buffer = noiseBuffer;
-      noiseSource.loop = true;
+      const pinkNoiseSource = audioContext.createBufferSource();
+      pinkNoiseSource.buffer = pinkNoiseBuffer;
+      pinkNoiseSource.loop = true;
       
-      // Filtro para suavizar o som (simular chuva)
+      // Filtro para suavizar (chuva de fundo)
       const rainFilter = audioContext.createBiquadFilter();
       rainFilter.type = 'lowpass';
-      rainFilter.frequency.value = 2000;
-      rainFilter.Q.value = 1;
+      rainFilter.frequency.value = 3500;
+      rainFilter.Q.value = 0.7;
       
-      // Oscilador de baixa frequência para simular vento
-      const windOsc = audioContext.createOscillator();
-      windOsc.type = 'sine';
-      windOsc.frequency.value = 0.3; // Variação lenta
-      
-      const windGain = audioContext.createGain();
-      windGain.gain.setValueAtTime(0.15, audioContext.currentTime);
-      
-      // Conectar ruído (chuva)
-      noiseSource.connect(rainFilter);
+      // Conectar ruído rosa
+      pinkNoiseSource.connect(rainFilter);
       rainFilter.connect(masterGain);
+      pinkNoiseSource.start();
+      audioNodes.push(pinkNoiseSource, rainFilter);
       
-      // Conectar vento (oscilação suave)
-      windOsc.connect(windGain);
-      windGain.connect(masterGain);
+      // Simular pingos de chuva individuais (HD)
+      raindropsInterval = setInterval(() => {
+        const numDrops = Math.floor(Math.random() * 3) + 2; // 2-4 pingos
+        for (let d = 0; d < numDrops; d++) {
+          setTimeout(() => {
+            const dropOsc = audioContext.createOscillator();
+            const dropGain = audioContext.createGain();
+            const dropFilter = audioContext.createBiquadFilter();
+            
+            // Frequência do pingo (som agudo e nítido)
+            dropOsc.frequency.value = 800 + Math.random() * 400;
+            dropOsc.type = 'sine';
+            
+            // Filtro para dar corpo ao pingo
+            dropFilter.type = 'highpass';
+            dropFilter.frequency.value = 600;
+            
+            // Envelope do pingo (muito rápido)
+            dropGain.gain.setValueAtTime(0.08, audioContext.currentTime);
+            dropGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
+            
+            dropOsc.connect(dropFilter);
+            dropFilter.connect(dropGain);
+            dropGain.connect(masterGain);
+            
+            dropOsc.start(audioContext.currentTime);
+            dropOsc.stop(audioContext.currentTime + 0.15);
+            
+            audioNodes.push(dropOsc, dropGain, dropFilter);
+          }, d * 80);
+        }
+      }, 800);
       
-      noiseSource.start();
-      windOsc.start();
+      // Simular rajadas de vento ocasionais (som úmido e relaxante)
+      windGustInterval = setInterval(() => {
+        if (Math.random() > 0.6) { // 40% de chance a cada intervalo
+          const windOsc = audioContext.createOscillator();
+          const windGain = audioContext.createGain();
+          const windFilter = audioContext.createBiquadFilter();
+          
+          // Vento com frequência muito baixa (som profundo)
+          windOsc.frequency.value = 40 + Math.random() * 60;
+          windOsc.type = 'sine';
+          
+          // Filtro para criar som úmido
+          windFilter.type = 'lowpass';
+          windFilter.frequency.value = 800;
+          windFilter.Q.value = 0.5;
+          
+          // Envelope do vento (gradual)
+          windGain.gain.setValueAtTime(0, audioContext.currentTime);
+          windGain.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.8);
+          windGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 2.5);
+          
+          windOsc.connect(windFilter);
+          windFilter.connect(windGain);
+          windGain.connect(masterGain);
+          
+          windOsc.start(audioContext.currentTime);
+          windOsc.stop(audioContext.currentTime + 2.5);
+          
+          audioNodes.push(windOsc, windGain, windFilter);
+        }
+      }, 3000);
       
-      audioNodes.push(noiseSource, windOsc, rainFilter, windGain, masterGain);
+      audioNodes.push(masterGain);
     }
 
     function stopAudio() {
+      if (raindropsInterval) clearInterval(raindropsInterval);
+      if (windGustInterval) clearInterval(windGustInterval);
+      
       if (audioNodes.length > 0) {
         const masterGain = audioNodes[audioNodes.length - 1];
         masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 1);
