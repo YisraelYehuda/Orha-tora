@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Ohr | Conexão diária com HaShem</title>
+  <meta name="theme-color" content="#b88a2b" />
+  <meta name="description" content="Ohr — conexão diária com HaShem, com orações, reflexões e um espaço calmo para hitbodedut." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #f8f4eb;
+      --bg-soft: #fffdf8;
+      --surface: rgba(255,255,255,.72);
+      --surface-strong: rgba(255,255,255,.88);
+      --text: #1d2430;
+      --text-soft: #586171;
+      --gold: #b88a2b;
+      --gold-soft: rgba(184,138,43,.14);
+      --border: rgba(58,74,96,.12);
+      --shadow: 0 16px 40px rgba(25, 35, 52, .10);
+      --hero: linear-gradient(145deg,#fff7e7,#f6ecd7);
+      --pill: rgba(184,138,43,.12);
+      --nav: rgba(255,255,255,.82);
+      --accent: #233048;
+    }
+
+    body.night{
+      --bg: #07111d;
+      --bg-soft: #0d1826;
+      --surface: rgba(13,24,38,.72);
+      --surface-strong: rgba(13,24,38,.86);
+      --text: #f4efe6;
+      --text-soft: #b1b9c5;
+      --gold: #d9ae55;
+      --gold-soft: rgba(217,174,85,.14);
+      --border: rgba(217,174,85,.14);
+      --shadow: 0 18px 44px rgba(0,0,0,.34);
+      --hero: linear-gradient(145deg,#12223b,#0d1a2d);
+      --pill: rgba(217,174,85,.12);
+      --nav: rgba(7,17,29,.86);
+      --accent: #dbe7ff;
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);transition:background .45s ease,color .45s ease}
+    body{overflow:hidden}
+
+    .backdrop, .stars, .glow{position:fixed;inset:0;pointer-events:none}
+    .backdrop{background:
+      radial-gradient(circle at top left, rgba(217,174,85,.08), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(61,94,140,.10), transparent 26%),
+      linear-gradient(180deg, var(--bg-soft), var(--bg));
+      z-index:0;
+    }
+    .glow::before,.glow::after{content:'';position:absolute;border-radius:999px;filter:blur(60px);opacity:.4}
+    .glow::before{width:220px;height:220px;left:-60px;top:-50px;background:rgba(217,174,85,.18)}
+    .glow::after{width:240px;height:240px;right:-80px;bottom:90px;background:rgba(78,115,182,.15)}
+    .stars{display:none;z-index:0}
+    body.night .stars{display:block}
+    .star{position:absolute;background:#fff;border-radius:999px;opacity:.7;animation:twinkle 3s ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.9)}50%{opacity:.9;transform:scale(1.1)}}
+
+    .app{
+      position:relative;
+      z-index:1;
+      width:min(100%,460px);
+      margin:0 auto;
+      height:100dvh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .topbar{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:16px 20px 8px;
+      font-size:12px;color:var(--text-soft);
+      flex-shrink:0;
+    }
+    .clock{font-weight:700;font-size:14px;color:var(--text)}
+    .pill{
+      background:var(--pill);border:1px solid var(--border);color:var(--gold);
+      border-radius:999px;padding:7px 12px;font-size:11px;font-weight:600;
+      backdrop-filter:blur(10px)
+    }
+
+    .screen{
+      flex:1;overflow:auto;display:none;padding:0 16px 100px;scrollbar-width:none;
+      animation:fade .28s ease;
+    }
+    .screen::-webkit-scrollbar{display:none}
+    .screen.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    .header{padding:10px 4px 14px}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 6px}
+    .title{font-family:'Cormorant Garamond',serif;font-size:52px;line-height:.95;margin:0;color:var(--text)}
+    .subtitle{margin:8px 0 0;color:var(--text-soft);font-size:13px}
+
+    .card{
+      background:var(--surface);border:1px solid var(--border);border-radius:26px;
+      padding:18px;box-shadow:var(--shadow);backdrop-filter:blur(18px);
+      margin-bottom:14px;
+    }
+    .hero{background:var(--hero);position:relative;overflow:hidden}
+    .hero::after{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:999px;background:rgba(217,174,85,.10);filter:blur(4px)}
+    .section-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1;margin:0;color:var(--text)}
+    .hero-hebrew{margin:4px 0 10px;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold)}
+    .hero-desc{margin:0;color:var(--text-soft);font-size:13px;line-height:1.7}
+    .intent{
+      margin-top:14px;padding:12px 13px;border-radius:16px;background:rgba(255,255,255,.22);
+      border:1px solid var(--border)
+    }
+    body.night .intent{background:rgba(255,255,255,.03)}
+    .intent small{display:block;color:var(--gold);font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}
+    .intent p{margin:0;font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.45}
+    .btn{
+      appearance:none;border:none;background:linear-gradient(135deg,var(--gold),#efc870);color:#162235;
+      font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;
+      padding:13px 18px;margin-top:16px;box-shadow:0 10px 24px rgba(184,138,43,.28);cursor:pointer
+    }
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    .mini{padding:16px;border-radius:22px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
+    .mini .icon{font-size:22px;display:block;margin-bottom:8px}
+    .mini .label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 4px}
+    .mini .value{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.1;margin:0;color:var(--text)}
+    .mini .hint{font-size:12px;color:var(--text-soft);margin:6px 0 0;line-height:1.5}
+
+    .quote{position:relative}
+    .quote-text{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;line-height:1.45;color:var(--text)}
+    .quote-source{margin:12px 0 0;color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+    .quote-tag{display:inline-flex;gap:6px;align-items:center;margin-top:10px;padding:6px 10px;border-radius:999px;background:var(--gold-soft);border:1px solid var(--border);font-size:11px;color:var(--gold)}
+
+    .screen-title{margin:6px 4px 14px}
+    .screen-title h2{margin:0;font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:500}
+    .screen-title p{margin:5px 0 0;color:var(--text-soft);font-size:13px}
+
+    .list{display:flex;flex-direction:column;gap:12px}
+    details.item{
+      background:var(--surface);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);overflow:hidden
+    }
+    details.item[open]{border-color:rgba(184,138,43,.28)}
+    details.item summary{list-style:none;cursor:pointer;padding:18px}
+    details.item summary::-webkit-details-marker{display:none}
+    .item-top{display:flex;justify-content:space-between;gap:12px}
+    .item-title{font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1;margin:0 0 3px}
+    .item-hebrew{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);margin:0}
+    .badge{align-self:flex-start;background:var(--gold-soft);color:var(--gold);border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+    .item-desc{margin:10px 0 0;color:var(--text-soft);font-size:13px;line-height:1.7}
+    .item-body{padding:0 18px 18px}
+    .divider{height:1px;background:var(--border);margin:0 18px 16px}
+    .body-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.14em;margin:0 0 8px}
+    .rtl{direction:rtl;text-align:right;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.9;margin:0 0 10px}
+    .translit{margin:0 0 8px;color:var(--text-soft);font-size:12px;line-height:1.7;font-style:italic}
+    .pt{margin:0;color:var(--text);font-size:14px;line-height:1.7}
+
+    .teach-card .day{font-size:10px;color:var(--gold);letter-spacing:.16em;text-transform:uppercase;margin:0 0 6px}
+    .teach-card .phrase{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;line-height:1.45}
+    .teach-card .note{margin:10px 0 0;color:var(--text-soft);font-size:13px;line-height:1.7}
+
+    .med-step{padding:12px 14px;border-radius:16px;background:var(--gold-soft);border:1px solid var(--border);margin-bottom:10px}
+    .med-step strong{display:block;color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+    .med-step p{margin:0;color:var(--text);font-size:13px;line-height:1.65}
+
+    .nav{
+      flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 12px 16px;
+      background:var(--nav);backdrop-filter:blur(18px);border-top:1px solid var(--border)
+    }
+    .nav button{appearance:none;border:1px solid transparent;background:transparent;color:var(--text-soft);padding:10px 6px;border-radius:18px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+    .nav button.active{color:var(--gold);background:var(--gold-soft);border-color:var(--border)}
+    .nav .icon{font-size:18px;line-height:1}
+
+    .small-note{font-size:12px;color:var(--text-soft);line-height:1.6;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="glow"></div>
+  <div class="stars" id="stars"></div>
+
+  <div class="app">
+    <div class="topbar">
+      <div class="clock" id="clock">--:--</div>
+      <div class="pill" id="shabbatPill">Shabat em --</div>
+    </div>
+
+    <main class="screen active" id="home">
+      <div class="header">
+        <p class="eyebrow">Shalom, Yisrael Yehuda</p>
+        <h1 class="title">Ohr</h1>
+        <p class="subtitle">Conexão diária com HaShem • luz, oração e direção espiritual</p>
+      </div>
+
+      <section class="card hero">
+        <p class="section-label">Oração do momento</p>
+        <h2 class="hero-title" id="prayerName">Shacharit</h2>
+        <div class="hero-hebrew" id="prayerHebrew">שַׁחֲרִית</div>
+        <p class="hero-desc" id="prayerDesc">Comece o dia com presença, gratidão e alinhamento interior diante de HaShem.</p>
+        <div class="intent">
+          <small>Kavaná • intenção</small>
+          <p id="prayerIntent">Que esta oração organize meu coração antes de organizar o meu caminho.</p>
+        </div>
+        <button class="btn" data-go="oracoes">Abrir oração</button>
+      </section>
+
+      <div class="grid">
+        <section class="mini">
+          <span class="icon">🕯️</span>
+          <p class="label">Preparação</p>
+          <p class="value" id="countdownTitle">Para o Shabat</p>
+          <p class="hint" id="countdownText">Calculando...</p>
+        </section>
+        <section class="mini">
+          <span class="icon">🕰️</span>
+          <p class="label">Agora</p>
+          <p class="value" id="dateNow">--</p>
+          <p class="hint" id="periodNow">Período do dia</p>
+        </section>
+      </div>
+
+      <section class="card quote">
+        <p class="section-label">Mensagem do dia</p>
+        <p class="quote-text" id="dailyQuote">O silêncio de Deus não é ausência; às vezes é o céu preparando uma resposta mais alta que a sua dor.</p>
+        <p class="quote-source" id="dailySource">Yisrael Yehuda</p>
+        <div class="quote-tag" id="parashaTag">📖 inspiração semanal</div>
+      </section>
+    </main>
+
+    <main class="screen" id="oracoes">
+      <div class="screen-title">
+        <h2>Tefilot</h2>
+        <p>Orações centrais para manhã, tarde e noite.</p>
+      </div>
+      <div class="list" id="prayerList"></div>
+    </main>
+
+    <main class="screen" id="ensinamentos">
+      <div class="screen-title">
+        <h2>Ensinamentos</h2>
+        <p>Frases, direção espiritual e reflexões para o coração.</p>
+      </div>
+      <div class="list" id="teachingList"></div>
+    </main>
+
+    <main class="screen" id="meditacao">
+      <div class="screen-title">
+        <h2>Hitbodedut</h2>
+        <p>Um espaço calmo para respirar, falar com HaShem e voltar ao centro.</p>
+      </div>
+      <section class="card">
+        <p class="section-label">Como começar</p>
+        <div class="med-step"><strong>Passo 1</strong><p>Silencie o ambiente por alguns minutos e respire com calma.</p></div>
+        <div class="med-step"><strong>Passo 2</strong><p>Fale com HaShem com palavras simples e verdadeiras.</p></div>
+        <div class="med-step"><strong>Passo 3</strong><p>Agradeça, peça direção e termine com paz interior.</p></div>
+        <p class="small-note">Você pode usar este espaço como preparação antes da oração ou como momento íntimo no fim do dia.</p>
+      </section>
+    </main>
+
+    <nav class="nav">
+      <button class="active" data-screen="home"><span class="icon">⌂</span>Início</button>
+      <button data-screen="oracoes"><span class="icon">📖</span>Orações</button>
+      <button data-screen="ensinamentos"><span class="icon">✦</span>Ensinos</button>
+      <button data-screen="meditacao"><span class="icon">🤍</span>Calma</button>
+    </nav>
+  </div>
+
+  <script>
+    const prayers = {
+      morning: {
+        key: 'morning',
+        name: 'Shacharit', hebrew: 'שַׁחֲרִית', badge: 'manhã',
+        desc: 'Comece o dia com presença, gratidão e alinhamento interior diante de HaShem.',
+        intent: 'Que esta oração organize meu coração antes de organizar o meu caminho.',
+        heb: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ',
+        translit: 'Modeh ani lefanecha, Melech chai vekayam, shehechezarta bi nishmati bechemlah, rabbah emunatecha.',
+        pt: 'Agradeço diante de Ti, Rei vivo e eterno, por devolver minha alma com compaixão; grande é a Tua fidelidade.'
+      },
+      afternoon: {
+        key: 'afternoon',
+        name: 'Minchá', hebrew: 'מִנְחָה', badge: 'tarde',
+        desc: 'No meio das tarefas e do cansaço, pare e volte a falar com HaShem.',
+        intent: 'Que eu não me perca no movimento do dia e me lembre de Quem sustenta tudo.',
+        heb: 'שִׁוִּיתִי ה׳ לְנֶגְדִּי תָמִיד',
+        translit: 'Shiviti Adonai lenegdi tamid.',
+        pt: 'Coloco HaShem diante de mim continuamente.'
+      },
+      night: {
+        key: 'night',
+        name: 'Maariv', hebrew: 'מַעֲרִיב', badge: 'noite',
+        desc: 'Entregue o dia, descanse a alma e volte o coração para a confiança.',
+        intent: 'Que eu deposite nas mãos de HaShem aquilo que não consigo carregar sozinho.',
+        heb: 'בְּיָדְךָ אַפְקִיד רוּחִי; פָּדִיתָה אוֹתִי ה׳ אֵל אֱמֶת',
+        translit: 'Beyadecha afkid ruchi; padita oti Adonai El emet.',
+        pt: 'Em Tuas mãos entrego o meu espírito; Tu me redimiste, HaShem, Deus da verdade.'
+      }
+    };
+
+    const teachings = [
+      {
+        day: 'Hoje',
+        phrase: 'O silêncio de Deus não é ausência; às vezes é o céu preparando uma resposta mais alta que a sua dor.',
+        note: 'Nem todo silêncio é vazio. Algumas respostas amadurecem antes de chegar.',
+        source: 'Yisrael Yehuda'
+      },
+      {
+        day: 'Direção',
+        phrase: 'O judeu não reza para fugir da prova; reza para atravessá-la com alma firme.',
+        note: 'A oração não apaga a realidade, mas muda quem a enfrenta.',
+        source: 'Yisrael Yehuda'
+      },
+      {
+        day: 'Emuná',
+        phrase: 'Quando o coração se curva com verdade, a alma volta a respirar com luz.',
+        note: 'A força nem sempre aparece como barulho. Às vezes ela chega como paz.',
+        source: 'Yisrael Yehuda'
+      }
+    ];
+
+    const navButtons = document.querySelectorAll('.nav button');
+    const screens = document.querySelectorAll('.screen');
+    const prayerList = document.getElementById('prayerList');
+    const teachingList = document.getElementById('teachingList');
+
+    function setScreen(id){
+      screens.forEach(s => s.classList.toggle('active', s.id === id));
+      navButtons.forEach(b => b.classList.toggle('active', b.dataset.screen === id));
+    }
+
+    navButtons.forEach(btn => btn.addEventListener('click', () => setScreen(btn.dataset.screen)));
+    document.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => setScreen(btn.dataset.go)));
+
+    function createStars(){
+      const stars = document.getElementById('stars');
+      for(let i=0;i<42;i++){
+        const s=document.createElement('span');
+        s.className='star';
+        const size=(Math.random()*2.2)+1;
+        s.style.width=size+'px';
+        s.style.height=size+'px';
+        s.style.left=(Math.random()*100)+'%';
+        s.style.top=(Math.random()*100)+'%';
+        s.style.animationDelay=(Math.random()*3)+'s';
+        stars.appendChild(s);
+      }
+    }
+
+    function getPrayerByHour(hour){
+      if(hour >= 5 && hour < 12) return prayers.morning;
+      if(hour >= 12 && hour < 18) return prayers.afternoon;
+      return prayers.night;
+    }
+
+    function formatTwo(n){ return String(n).padStart(2,'0'); }
+
+    function updateClock(){
+      const now = new Date();
+      const hours = formatTwo(now.getHours());
+      const mins = formatTwo(now.getMinutes());
+      document.getElementById('clock').textContent = `${hours}:${mins}`;
+      document.getElementById('dateNow').textContent = now.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' });
+
+      const prayer = getPrayerByHour(now.getHours());
+      document.getElementById('prayerName').textContent = prayer.name;
+      document.getElementById('prayerHebrew').textContent = prayer.hebrew;
+      document.getElementById('prayerDesc').textContent = prayer.desc;
+      document.getElementById('prayerIntent').textContent = prayer.intent;
+
+      const period = now.getHours() < 12 ? 'Manhã clara' : now.getHours() < 18 ? 'Tarde ativa' : 'Noite de recolhimento';
+      document.getElementById('periodNow').textContent = period;
+
+      updateShabbatCountdown(now);
+      updateTheme(now.getHours());
+    }
+
+    function updateTheme(hour){
+      const night = hour >= 18 || hour < 6;
+      document.body.classList.toggle('night', night);
+    }
+
+    function updateShabbatCountdown(now){
+      const next = new Date(now);
+      const day = now.getDay(); // 0 sun ... 5 fri
+      let daysUntilFriday = (5 - day + 7) % 7;
+      next.setDate(now.getDate() + daysUntilFriday);
+      next.setHours(18,0,0,0);
+      if(day === 5 && now >= next){
+        next.setDate(next.getDate() + 7);
+      }
+
+      const diff = next - now;
+      const totalMins = Math.max(0, Math.floor(diff / 60000));
+      const d = Math.floor(totalMins / 1440);
+      const h = Math.floor((totalMins % 1440) / 60);
+      const m = totalMins % 60;
+
+      const compact = `${d ? d + 'd ' : ''}${h}h ${m}min`;
+      document.getElementById('shabbatPill').textContent = `Shabat em ${compact}`;
+      document.getElementById('countdownText').textContent = d > 0
+        ? `Faltam ${d} dia(s), ${h}h e ${m}min para sexta às 18h.`
+        : `Faltam ${h}h e ${m}min para sexta às 18h.`;
+    }
+
+    function renderPrayerList(){
+      const items = [prayers.morning, prayers.afternoon, prayers.night];
+      prayerList.innerHTML = items.map(item => `
+        <details class="item">
+          <summary>
+            <div class="item-top">
+              <div>
+                <h3 class="item-title">${item.name}</h3>
+                <p class="item-hebrew">${item.hebrew}</p>
+              </div>
+              <span class="badge">${item.badge}</span>
+            </div>
+            <p class="item-desc">${item.desc}</p>
+          </summary>
+          <div class="divider"></div>
+          <div class="item-body">
+            <p class="body-label">Trecho central</p>
+            <p class="rtl">${item.heb}</p>
+            <p class="translit">${item.translit}</p>
+            <p class="pt">${item.pt}</p>
+          </div>
+        </details>
+      `).join('');
+    }
+
+    function renderTeachings(){
+      teachingList.innerHTML = teachings.map(t => `
+        <section class="card teach-card">
+          <p class="day">${t.day}</p>
+          <p class="phrase">${t.phrase}</p>
+          <p class="note">${t.note}</p>
+          <p class="quote-source">${t.source}</p>
+        </section>
+      `).join('');
+      document.getElementById('dailyQuote').textContent = teachings[0].phrase;
+      document.getElementById('dailySource').textContent = teachings[0].source;
+      document.getElementById('parashaTag').textContent = '📖 inspiração semanal';
+    }
+
+    createStars();
+    renderPrayerList();
+    renderTeachings();
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(reg => console.log('Service Worker registrado com sucesso', reg))
+          .catch(err => console.log('Erro ao registrar Service Worker', err));
+      });
+    }
+  </script>
+</body>
+</html>
