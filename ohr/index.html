@@ -6,7 +6,10 @@
   <title>Ohr | Conexão diária com HaShem</title>
   <meta name="theme-color" content="#b88a2b" />
   <meta name="description" content="Ohr — conexão diária com HaShem, com orações, reflexões e um espaço calmo para hitbodedut." />
-  <link rel="manifest" href="manifest.json" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="manifest" href="manifest.json?v=2" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -415,10 +418,25 @@
     // PWA Service Worker Registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
-          .then(reg => console.log('SW Registered', reg))
+        navigator.serviceWorker.register('./service-worker.js?v=2')
+          .then(reg => {
+            console.log('SW Registered', reg);
+            // Force update check
+            setInterval(() => reg.update(), 30000);
+          })
           .catch(err => console.log('SW Failed', err));
       });
+      
+      // Clear old caches on page load
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          names.forEach(name => {
+            if (name !== 'ohr-v2') {
+              caches.delete(name);
+            }
+          });
+        });
+      }
     }
   </script>
 </body>
