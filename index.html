@@ -56,21 +56,6 @@
         }
 
         /* ============================================================
-           ANIMAÇÕES
-        ============================================================ */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-up { animation: fadeInUp 1s ease-out forwards; }
-
-        @keyframes goldGlow {
-            0% { box-shadow: 0 0 5px var(--gold-deep); }
-            50% { box-shadow: 0 0 20px var(--gold-light); }
-            100% { box-shadow: 0 0 5px var(--gold-deep); }
-        }
-
-        /* ============================================================
            COMPONENTES GLOBAIS
         ============================================================ */
         .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
@@ -162,7 +147,6 @@
             font-size: 1.8rem;
             transition: var(--transition);
         }
-        .logo:hover .logo-icon { transform: rotate(360deg); border-color: var(--gold-light); }
 
         .logo-text h1 {
             font-family: 'Cinzel', serif;
@@ -192,24 +176,16 @@
             transition: var(--transition);
             position: relative;
         }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gold-deep);
-            transition: var(--transition);
-        }
         nav a:hover { color: var(--gold-deep); }
-        nav a:hover::after { width: 100%; }
 
-        .search-bar {
+        /* ============================================================
+           SISTEMA DE BUSCA (FIXED)
+        ============================================================ */
+        .search-container {
             position: relative;
-            width: 280px;
+            width: 300px;
         }
-        .search-bar input {
+        .search-input {
             width: 100%;
             padding: 12px 45px 12px 20px;
             border-radius: 30px;
@@ -217,253 +193,147 @@
             background: var(--cream);
             outline: none;
             font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
             transition: var(--transition);
         }
-        .search-bar input:focus { border-color: var(--gold-deep); background: var(--white); box-shadow: 0 0 15px rgba(184,134,11,0.2); }
-        .search-bar i {
+        .search-input:focus { border-color: var(--gold-deep); background: var(--white); }
+        .search-icon {
             position: absolute;
             right: 18px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gold-deep);
-            font-size: 1.1rem;
         }
+        .search-results {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1002;
+        }
+        .search-result-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--cream);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .search-result-item:hover { background: var(--cream); color: var(--gold-deep); }
+        .search-result-item h5 { font-family: 'Cinzel', serif; margin-bottom: 5px; }
+        .search-result-item p { font-size: 0.8rem; opacity: 0.7; line-height: 1.4; }
 
         /* ============================================================
-           HERO SECTION (LUXURY)
+           HERO SECTION
         ============================================================ */
         .hero {
             background: linear-gradient(rgba(10, 17, 40, 0.85), rgba(10, 17, 40, 0.85)), url('https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
-            padding: 160px 0;
+            padding: 140px 0;
             text-align: center;
             color: var(--white);
-            position: relative;
-            overflow: hidden;
         }
-
-        .hero h2 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(3.5rem, 10vw, 7.5rem);
-            font-weight: 900;
-            letter-spacing: 15px;
-            margin-bottom: 15px;
-            color: var(--gold-light);
-            text-shadow: 0 15px 30px rgba(0,0,0,0.6);
-            opacity: 0;
-            animation: fadeInUp 1.2s ease-out forwards;
-        }
-
-        .hero p {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-style: italic;
-            max-width: 900px;
-            margin: 0 auto 50px;
-            opacity: 0;
-            animation: fadeInUp 1.2s ease-out 0.3s forwards;
-        }
-
-        .btn-gold {
-            background: linear-gradient(45deg, var(--gold-deep), var(--gold-light));
-            color: var(--white);
-            padding: 22px 55px;
-            border-radius: 60px;
-            text-decoration: none;
-            font-family: 'Cinzel', serif;
-            font-weight: 900;
-            letter-spacing: 3px;
-            transition: var(--transition);
-            display: inline-block;
-            box-shadow: 0 15px 35px rgba(184, 134, 11, 0.4);
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .btn-gold:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 45px rgba(184, 134, 11, 0.6);
-            color: var(--navy);
-        }
+        .hero h2 { font-family: 'Cinzel', serif; font-size: clamp(3rem, 8vw, 6rem); letter-spacing: 10px; color: var(--gold-light); margin-bottom: 20px; }
+        .hero p { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-style: italic; max-width: 800px; margin: 0 auto 40px; }
 
         /* ============================================================
-           KRIAT SHEMÁ COMPLETA (RITUAL COMPLETO)
+           KRIAT SHEMÁ ABSOLUTA (TABS)
         ============================================================ */
-        .shema-section { padding: 120px 0; background: var(--white); }
+        .shema-section { padding: 100px 0; background: var(--white); }
         
-        .shema-container {
+        .tabs-container {
             max-width: 1100px;
             margin: 0 auto;
+        }
+        .tabs-header {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 15px 35px;
+            background: var(--cream);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            color: var(--navy);
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 1px;
+        }
+        .tab-btn.active {
+            background: var(--gold-deep);
+            color: var(--white);
+            border-color: var(--gold-deep);
+            box-shadow: 0 10px 20px rgba(184, 134, 11, 0.3);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .prayer-card {
             background: var(--off-white);
             border: 3px solid var(--gold-deep);
             border-radius: 24px;
-            padding: 80px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
+            padding: 60px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
         }
-
-        .shema-container::before {
-            content: 'שמע';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-family: 'Noto Serif Hebrew', serif;
-            font-size: 15rem;
-            color: rgba(184, 134, 11, 0.03);
-            font-weight: 900;
-            pointer-events: none;
-        }
-
-        .prayer-block { margin-bottom: 80px; position: relative; z-index: 1; }
         .prayer-title {
             font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            font-weight: 900;
+            font-size: 1.8rem;
             color: var(--gold-deep);
-            border-bottom: 3px solid var(--gold-pale);
+            border-bottom: 2px solid var(--gold-pale);
             padding-bottom: 15px;
             margin-bottom: 40px;
             display: flex;
             align-items: center;
             gap: 20px;
-            letter-spacing: 1px;
         }
-
         .hebrew-text {
             font-family: 'Noto Serif Hebrew', serif;
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             line-height: 2;
             text-align: right;
             direction: rtl;
             color: var(--navy);
-            margin-bottom: 35px;
-            padding: 45px;
+            margin-bottom: 30px;
+            padding: 40px;
             background: var(--cream);
             border-radius: 20px;
-            border-right: 10px solid var(--gold-deep);
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.02);
-            transition: var(--transition);
+            border-right: 8px solid var(--gold-deep);
         }
-        .hebrew-text:hover { transform: scale(1.01); border-right-color: var(--gold-light); }
-
-        .translit-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            font-style: italic;
-            color: var(--gold-deep);
-            margin-bottom: 25px;
-            padding: 0 30px;
-            font-weight: 600;
-            line-height: 1.6;
-        }
-
-        .translation-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.35rem;
-            line-height: 1.9;
-            color: var(--text-soft);
-            padding: 0 30px;
-            border-left: 4px solid var(--gold-pale);
-            font-weight: 500;
-        }
-
-        .instruction {
-            background: linear-gradient(to right, var(--navy), var(--navy-mid));
-            color: var(--gold-pale);
-            padding: 14px 35px;
-            border-radius: 60px;
-            font-size: 0.95rem;
-            font-weight: 800;
-            display: inline-block;
-            margin-bottom: 25px;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .special-verse {
-            background: var(--navy);
-            color: var(--gold-light);
-            padding: 50px;
-            border-radius: 24px;
-            text-align: center;
-            border: 4px solid var(--gold-deep);
-            margin: 40px 0;
-            animation: goldGlow 3s infinite;
-        }
-        .special-verse .hebrew-text {
-            background: transparent;
-            color: var(--gold-light);
-            border: none;
-            text-align: center;
-            font-size: 3.5rem;
-            padding: 0;
-            margin-bottom: 20px;
-        }
-        .special-verse .translit-text { color: var(--white); font-size: 1.4rem; }
-        .special-verse .translation-text { color: var(--gold-pale); border: none; font-size: 1.6rem; font-weight: 700; }
+        .translit-text { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-style: italic; color: var(--gold-deep); margin-bottom: 20px; font-weight: 600; }
+        .translation-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; line-height: 1.8; color: var(--text-soft); border-left: 4px solid var(--gold-pale); padding-left: 25px; }
+        .instruction { background: var(--navy); color: var(--gold-pale); padding: 12px 30px; border-radius: 50px; font-size: 0.9rem; font-weight: 800; display: inline-block; margin-bottom: 25px; font-family: 'Cinzel', serif; }
 
         /* ============================================================
-           FOOTER (PERFEIÇÃO)
+           FOOTER
         ============================================================ */
-        footer {
-            background: linear-gradient(to bottom, var(--navy), #050814);
-            color: var(--white);
-            padding: 100px 0 50px;
-            border-top: 8px solid var(--gold-deep);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 80px;
-            margin-bottom: 80px;
-        }
-
-        .footer-col h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold-light);
-            margin-bottom: 30px;
-            font-size: 1.4rem;
-            letter-spacing: 3px;
-            font-weight: 900;
-        }
-
-        .footer-col p { opacity: 0.8; font-size: 1.05rem; line-height: 1.8; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 15px; }
-        .footer-col ul li a { color: var(--white); text-decoration: none; opacity: 0.7; transition: var(--transition); }
-        .footer-col ul li a:hover { opacity: 1; color: var(--gold-light); padding-left: 10px; }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 50px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 1rem;
-            opacity: 0.7;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-        }
+        footer { background: var(--navy); color: var(--white); padding: 80px 0 40px; border-top: 6px solid var(--gold-deep); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; margin-bottom: 60px; }
+        .footer-col h4 { font-family: 'Cinzel', serif; color: var(--gold-light); margin-bottom: 25px; font-size: 1.3rem; letter-spacing: 2px; }
+        .footer-bottom { text-align: center; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.6; font-size: 0.9rem; }
 
         /* ============================================================
            RESPONSIVIDADE
         ============================================================ */
-        @media (max-width: 1024px) {
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 50px; }
-        }
-
         @media (max-width: 768px) {
-            .container { padding: 0 25px; }
-            .header-inner { flex-direction: column; gap: 25px; }
-            .search-bar { width: 100%; }
-            .shema-container { padding: 40px 25px; }
-            .hebrew-text { font-size: 1.8rem; padding: 25px; }
-            .hero h2 { font-size: 3.5rem; }
-            .footer-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 20px; }
+            .header-inner { flex-direction: column; gap: 20px; }
+            .search-container { width: 100%; }
+            .prayer-card { padding: 30px 20px; }
+            .hebrew-text { font-size: 1.6rem; padding: 20px; }
         }
     </style>
 </head>
@@ -488,12 +358,12 @@
                     <li><a href="#shema">Kriat Shemá</a></li>
                     <li><a href="#estudos">Estudos</a></li>
                     <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#contato">Contato</a></li>
                 </ul>
             </nav>
-            <div class="search-bar">
-                <input type="text" placeholder="Pesquisar na Torá...">
-                <i class="fas fa-search"></i>
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar no portal...">
+                <i class="fas fa-search search-icon"></i>
+                <div class="search-results" id="searchResults"></div>
             </div>
         </div>
     </header>
@@ -502,87 +372,101 @@
         <div class="container">
             <h2>אוֹר הַתּוֹרָה</h2>
             <p>"Porque o mandamento é uma lâmpada, e a Torá é luz." — Mishlei 6:23</p>
-            <a href="#shema" class="btn-gold">Acessar Ritual Completo</a>
+            <a href="#shema" class="btn-gold" style="background: var(--gold-deep); color: white; padding: 18px 45px; border-radius: 50px; text-decoration: none; font-family: 'Cinzel', serif; font-weight: 800; letter-spacing: 2px; display: inline-block;">Acessar Ritual Completo</a>
         </div>
     </section>
 
     <section class="shema-section" id="shema">
         <div class="container">
             <span class="section-label">Tefilá — תְּפִלָּה</span>
-            <h2 class="section-title">Kriat Shemá Yisrael Completa</h2>
+            <h2 class="section-title">Kriat Shemá Yisrael Absoluta</h2>
             <div class="gold-divider"></div>
 
-            <div class="shema-container">
-                
-                <!-- 1. BÊNÇÃO: YOTZER OR -->
-                <div class="prayer-block">
-                    <div class="prayer-title"><i class="fas fa-sun"></i> 1. Bênção da Luz: Yotzer Or</div>
-                    <div class="instruction">Recite com profunda gratidão pela renovação diária da criação</div>
-                    <div class="hebrew-text">בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, יוֹצֵר אוֹר וּבוֹרֵא חֹשֶׁךְ, עֹשֶׂה שָׁלוֹם וּבוֹרֵא אֶת הַכֹּל. הַמֵּאִיר לָאָרֶץ וְלַדָּרִים עָלֶיהָ בְּרַחֲמִים, וּבְטוּבוֹ מְחַדֵּשׁ בְּכָל יוֹם תָּמִיד מַעֲשֵׂה בְרֵאשִׁית.</div>
-                    <div class="translit-text">Baruch Atá Adonai, Eloheinu Melech Haolam, Yotzer Or uvorei choshech, osseh shalom uvorei et hacol. Hameir laarets veladarim aleiha berachamim, uvtuvó mechadesh bechol yom tamid maasse bereshit.</div>
-                    <div class="translation-text">Bendito és Tu, Adonai, nosso Deus, Rei do Universo, que forma a luz e cria a escuridão, que faz a paz e cria todas as coisas. Que ilumina a terra e os que nela habitam com misericórdia, e em Sua bondade renova a cada dia, continuamente, a obra da criação.</div>
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="openTab(event, 'shacharit')">Shacharit (Manhã)</button>
+                    <button class="tab-btn" onclick="openTab(event, 'arvit')">Arvit (Noite)</button>
+                    <button class="tab-btn" onclick="openTab(event, 'hamita')">Al HaMitá (Dormir)</button>
                 </div>
 
-                <!-- 2. BÊNÇÃO: AHAVA RABBA -->
-                <div class="prayer-block">
-                    <div class="prayer-title"><i class="fas fa-heart"></i> 2. Bênção do Amor: Ahava Rabba</div>
-                    <div class="instruction">Medite sobre o amor infinito de Deus ao nos dar a Torá</div>
-                    <div class="hebrew-text">אַהֲבָה רַבָּה אֲהַבְתָּנוּ יְהֹוָה אֱלֹהֵינוּ, חֶמְלָה גְדוֹלָה וִיתֵרָה חָמַלְתָּ עָלֵינוּ. אָבִינוּ מַלְכֵּנוּ, בַּעֲבוּר אֲבוֹתֵינוּ שֶׁבָּטְחוּ בְךָ וַתְּלַמְּדֵם חֻקֵּי חַיִּים, כֵּן תְּחָנֵּנוּ וּתְלַמְּדֵנוּ.</div>
-                    <div class="translit-text">Ahava rabba ahavtanu Adonai Eloheinu, chemla ghedola viterá chamalta aleinu. Avinu Malkenu, baavur avotenu shebatchu vecha vatelamdem chukei chayim, ken techannenu utlamdenu.</div>
-                    <div class="translation-text">Com um amor abundante Tu nos amaste, Adonai nosso Deus; com uma compaixão grande e transbordante Tu tiveste piedade de nós. Nosso Pai, nosso Rei, por amor aos nossos antepassados que confiaram em Ti e a quem ensinaste as leis da vida, assim sê gracioso conosco e ensina-nos.</div>
-                </div>
-
-                <!-- O SHEMÁ - O ÁPICE -->
-                <div class="prayer-block">
-                    <div class="instruction">Cubra os olhos com a mão direita. Concentração total na Unicidade Divina.</div>
-                    <div class="special-verse">
-                        <div class="hebrew-text">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד׃</div>
-                        <div class="translit-text">SHEMÁ YISRAEL, ADONAI ELOHÊNU, ADONAI ECHÁD.</div>
-                        <div class="translation-text">Ouve Israel, Adonai é nosso Deus, Adonai é Um.</div>
+                <!-- SHACHARIT -->
+                <div id="shacharit" class="tab-content active">
+                    <div class="prayer-card">
+                        <div class="prayer-title"><i class="fas fa-sun"></i> Ritual de Shacharit</div>
+                        <div class="instruction">Bênção Inicial: Yotzer Or</div>
+                        <div class="hebrew-text">בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, יוֹצֵר אוֹר וּבוֹרֵא חֹשֶׁךְ, עֹשֶׂה שָׁלוֹם וּבוֹרֵא אֶת הַכֹּל.</div>
+                        <div class="translit-text">Baruch Atá Adonai, Eloheinu Melech Haolam, Yotzer Or uvorei choshech, osseh shalom uvorei et hacol.</div>
+                        <div class="translation-text">Bendito és Tu, Adonai, nosso Deus, Rei do Universo, que forma a luz e cria a escuridão, que faz a paz e cria todas as coisas.</div>
+                        
+                        <div style="margin-top: 50px;"></div>
+                        <div class="instruction">O Shemá (Ouve Israel)</div>
+                        <div class="hebrew-text" style="font-size: 3rem; text-align: center; border: 4px solid var(--gold-deep); background: var(--navy); color: var(--gold-light);">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד׃</div>
+                        <div class="translit-text" style="text-align: center;">SHEMÁ YISRAEL, ADONAI ELOHÊNU, ADONAI ECHÁD.</div>
+                        <div class="translation-text" style="text-align: center; border: none;">Ouve Israel, Adonai é nosso Deus, Adonai é Um.</div>
                     </div>
                 </div>
 
-                <!-- BARUCH SHEM -->
-                <div class="prayer-block">
-                    <div class="instruction">Recite em voz baixa (sussurro)</div>
-                    <div class="hebrew-text" style="font-size: 2rem; text-align: center; border: none; background: rgba(184,134,11,0.05);">בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד</div>
-                    <div class="translit-text" style="text-align: center;">Baruch shem kevod malchutó leolám vaed.</div>
-                    <div class="translation-text" style="text-align: center; border: none; font-style: italic;">Bendito seja o Nome da glória de Seu reinado para todo o sempre.</div>
+                <!-- ARVIT -->
+                <div id="arvit" class="tab-content">
+                    <div class="prayer-card">
+                        <div class="prayer-title"><i class="fas fa-moon"></i> Ritual de Arvit (Maariv)</div>
+                        <div class="instruction">Bênção: Maariv Aravim</div>
+                        <div class="hebrew-text">בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים.</div>
+                        <div class="translit-text">Baruch Atá Adonai, Eloheinu Melech Haolam, asher bidvaro maariv aravim.</div>
+                        <div class="translation-text">Bendito és Tu, Adonai, nosso Deus, Rei do Universo, que por Sua palavra traz o anoitecer.</div>
+                        
+                        <div style="margin-top: 50px;"></div>
+                        <div class="instruction">O Shemá da Noite</div>
+                        <div class="hebrew-text">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד׃</div>
+                        <div class="translation-text">Ouve Israel, Adonai é nosso Deus, Adonai é Um. (Recite os 3 parágrafos completos).</div>
+                    </div>
                 </div>
 
-                <!-- PARÁGRAFO 1: VEAHAVTA -->
-                <div class="prayer-block">
-                    <div class="prayer-title">3. Primeiro Parágrafo: Ve'ahavta</div>
-                    <div class="hebrew-text">וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ׃ וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ׃ וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ׃ וּקְשַׁרְתָּם לְאוֹת עַל־יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ׃ וּכְתַבְתָּם עַל־מְזוּזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ׃</div>
-                    <div class="translit-text">Veahavtá et Adonai Elohecha, bechol levavechá uvchol nafshechá uvchol meodêcha. Vehaiú hadevarím haele, asher anochí metsavechá haióm al levavêcha. Veshinantám levanêcha vedibartá bam, beshivtechá bevetecha, uvlechtechá vaderech, uvshochbechá uvcumecha. Ukshartám leot al iadecha, vehaiu letotafot ben enêcha. Uchtavtám al mezuzot betecha uvish'arecha.</div>
-                    <div class="translation-text">Amarás a Adonai, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força. E estas palavras que Eu te ordeno hoje estarão sobre o teu coração. As ensinarás a fundo aos teus filhos e falarás delas ao estares sentado em tua casa e ao andares pelo caminho, ao te deitares e ao te levantares. Deverás atá-las como sinal sobre tua mão e serão como lembretes entre teus olhos. E as escreverás sobre os umbrais de tua casa e em teus portões.</div>
+                <!-- AL HAMITA -->
+                <div id="hamita" class="tab-content">
+                    <div class="prayer-card">
+                        <div class="prayer-title"><i class="fas fa-bed"></i> Kriat Shemá Al HaMitá</div>
+                        <div class="instruction">Ribono Shel Olam (Perdão)</div>
+                        <div class="translation-text">Mestre do Universo, eu perdoo a qualquer pessoa que me tenha irritado ou pecado contra mim...</div>
+                        
+                        <div style="margin-top: 50px;"></div>
+                        <div class="instruction">Bênção Final: Hamapil</div>
+                        <div class="hebrew-text">בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמַּפִּיל חֶבְלֵי שֵׁנָה עַל עֵינָי וּתְנוּמָה עַל עַפְעַפָּי.</div>
+                        <div class="translit-text">Baruch Atá Adonai, Eloheinu Melech Haolam, hamapil chevlei shena al einai utnuma al afapai.</div>
+                        <div class="translation-text">Bendito és Tu, Adonai, nosso Deus, Rei do Universo, que faz cair os laços do sono sobre meus olhos e o adormecimento sobre minhas pálpebras.</div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <!-- PARÁGRAFO 2: VEHAIA -->
-                <div class="prayer-block">
-                    <div class="prayer-title">4. Segundo Parágrafo: Vehayá Im Shamoa</div>
-                    <div class="hebrew-text">וְהָיָה אִם־שָׁמֹעַ תִּשְׁמְעוּ אֶל־מִצְוֺתַי אֲשֶׁר אָנֹכִי מְצַוֶּה אֶתְכֶם הַיּוֹם לְאַהֲבָה אֶת־יְהוָה אֱלֹהֵיכֶם וּלְעָבְדוֹ בְּכָל־לְבַבְכֶם וּבְכָל־נַפְשְׁכֶם׃ וְנָתַתִּי מְטַר־אַרְצְכֶם בְּעִתּוֹ יוֹרֶה וּמַלְקוֹשׁ וְאָסַפְתָּ דְגָנֶךָ וְתִירֹשְׁךָ וְיִצְהָרֶךָ׃ וְנָתַתִּי עֵשֶׂב בְּשָׁדְךָ לִבְהֶמְתֶּךָ וְאָכַלְתָּ וְשָׁבָעְתָּ׃ הִשָּׁמְרוּ לָכֶם פֶּן יִפְתֶּה לְבַבְכֶם וְסַרְתֶּם וַעֲבַדְתֶּם אֱלֹהִים אֲחֵרִים וְהִשְׁתַּחֲוִיתֶם לָהֶם׃ וְחָרָה אַף־יְהוָה בָּכֶם וְעָצַר אֶת־הַשָּׁמַיִם וְלֹא־יִהְיֶה מָטָר וְהָאֲדָמָה לֹא תִתֵּן אֶת־יְבוּלָהּ וַאֲבַדְתֶּם מְהֵרָה מֵעַל הָאָרֶץ הַטֹּבָה אֲשֶׁר יְהוָה נֹתֵן לָכֶם׃ וְשַׁׂמְתֶּם אֶת־דְּבָרַי אֵלֶּה עַל־לְבַבְכֶם וְעַל־נַפְשְׁכֶם וּקְשַׁרְתֶּם אֹתָם לְאוֹת עַל־יֶדְכֶם וְהָיוּ לְטוֹטָפֹת בֵּין עֵינֵיכֶם׃ וְלִמַּדְתֶּם אֹתָם אֶת־בְּנֵיכֶם לְדַבֵּר בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ׃ וּכְתַבְתָּם עַל־מְזוּזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ׃ לְמַעַן יִרְבּוּ יְמֵיכֶם וִימֵי בְנֵיכֶם עַל הָאֲדָמָה אֲשֶׁר נִשְׁבַּע יְהוָה לַאֲבֹתֵיכֶם לָתֵת לָהֶם כִּימֵי הַשָּׁמַיִם עַל־הָאָרֶץ׃</div>
-                    <div class="translit-text">Vehaiá im shamoa tishmeu él mitsvotai, asher anochí metsavé etchem haiom, leahavá et Adonai Elohechem ul'ovdó bechol levavchem uvchol nafshechem...</div>
-                    <div class="translation-text">E será, se obedecerdes diligentemente os Meus preceitos que Eu vos ordeno hoje, de amar a Adonai, vosso Deus, e servi-Lo com todo vosso coração e toda vossa alma, darei a chuva a vossa terra no seu momento propício... para que se prolonguem vossos dias e os dias de vossos filhos sobre a terra que Adonai jurou entregar a vossos pais pelo tempo que os céus estiverem sobre a terra.</div>
+    <section id="estudos" style="padding: 100px 0; background: var(--cream);">
+        <div class="container">
+            <h2 class="section-title">Portal de Estudos</h2>
+            <div class="gold-divider"></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <div class="prayer-card" style="padding: 30px;">
+                    <h4 style="font-family: 'Cinzel', serif; color: var(--gold-deep); margin-bottom: 15px;">Parashat HaShavua</h4>
+                    <p>Estudos semanais sobre a porção da Torá com comentários do Rashi e Rambam.</p>
                 </div>
-
-                <!-- PARÁGRAFO 3: VAYOMER -->
-                <div class="prayer-block">
-                    <div class="prayer-title">5. Terceiro Parágrafo: Vayomer (Tzitzit)</div>
-                    <div class="hebrew-text">וַיֹּאמֶר יְהוָה אֶל־מֹשֶׁה לֵּאמֹר׃ דַּבֵּר אֶל־בְּנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם וְעָשׂוּ לָהֶם צִיצִת עַל־כַּנְפֵי בִגְדֵיהֶם לְדֹרֹתָם וְנָתְנוּ עַל־צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת׃ וְהָיָה לָכֶם לְצִיצִת וּרְאִיתֶם אֹתוֹ וּזְכַרְתֶּם אֶת־כָּל־מִצְוֺת יְהוָה וַעֲשִׂיתֶם אֹתָם וְלֹא־תָתֻרוּ אַחֲרֵי לְבַבְכֶם וְאַחֲרֵי עֵינֵיכֶם אֲשֶׁר־אַתֶּם זֹנִים אַחֲרֵיהֶם׃ לְמַעַן תִּזְכְּרוּ וַעֲשִׂיתֶם אֶת־כָּל־מִצְוֺתָי וִהְיִיתֶם קְדֹשִׁים לֵאלֹהֵיכֶם׃ אֲנִי יְהוָה אֱלֹהֵיכֶם אֲשֶׁר הוֹצֵאתִי אֶתְכֶם מֵאֶרֶץ מִצְרַיִם לִהְיוֹת לָכֶם לֵאלֹהִים אֲנִי יְהוָה אֱלֹהֵיכֶם׃ אֶמֶת׃</div>
-                    <div class="translit-text">Vaiômer Adonai el Moshé lemor. Daber el Benê Yisrael veamartá alehem veassu lahem tsitsít al canfê vigdehém ledorotám... Aní Adonai Elohechém. Emet.</div>
-                    <div class="translation-text">Adonai falou a Moshé, dizendo: Fale aos filhos de Israel e diga-lhes que façam para si franjas (Tsitsit) sobre os cantos de suas vestes... Eu sou Adonai, vosso Deus, que vos tirei da Terra do Egito para ser vosso Deus; Eu sou Adonai, vosso Deus: Verdadeiro.</div>
+                <div class="prayer-card" style="padding: 30px;">
+                    <h4 style="font-family: 'Cinzel', serif; color: var(--gold-deep); margin-bottom: 15px;">Bnei Noach</h4>
+                    <p>As 7 Leis Universais para toda a humanidade e orientação espiritual.</p>
                 </div>
-
-                <!-- 6. BÊNÇÃO FINAL: EMET VEYATZIV -->
-                <div class="prayer-block">
-                    <div class="prayer-title"><i class="fas fa-check-circle"></i> 6. Bênção da Redenção: Emet Veyatziv</div>
-                    <div class="instruction">Afirmação da Verdade e da Redenção de Israel</div>
-                    <div class="hebrew-text">אֱמֶת וְיַצִּיב וְנָכוֹן וְקַיָּם וְיָשָׁר וְנֶאֱמָן וְאָהוּב וְחָבִיב וְנֶחְמָד וְנָעִים וְנוֹרָא וְאַדִּיר וּמְתֻקָּן וּמְקֻבָּל וְטוֹב וְיָפֶה הַדָּבָר הַזֶּה עָלֵינוּ לְעוֹלָם וָעֶד.</div>
-                    <div class="translit-text">Emet veyatziv venachon vekayam veyashar veneeman veahuv vechaviv venechmad vena'im venora veadir umtukan umkubal vetov veyafe hadavar haze aleinu leolam vaed.</div>
-                    <div class="translation-text">Verdadeiro e firme, estabelecido e duradouro, reto e fiel, amado e precioso, desejável e agradável, reverenciado e poderoso, ordenado e aceitável, bom e belo é este ensinamento para nós, para todo o sempre.</div>
+                <div class="prayer-card" style="padding: 30px;">
+                    <h4 style="font-family: 'Cinzel', serif; color: var(--gold-deep); margin-bottom: 15px;">Mussar e Midrash</h4>
+                    <p>Ensinamentos éticos e parábolas dos nossos Sábios para o refinamento do caráter.</p>
                 </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="sobre" style="padding: 100px 0;">
+        <div class="container">
+            <h2 class="section-title">Sobre o OrHaTorá</h2>
+            <div class="gold-divider"></div>
+            <div class="prayer-card">
+                <p>O OrHaTorá foi fundado no dia **9 de Adar** com a missão de ser o coração do App **Ohr**. Criado por **Yisrael Yehudá**, este portal busca trazer a luz da Torá de forma profissional, halachica e acessível para todos.</p>
             </div>
         </div>
     </section>
@@ -592,38 +476,91 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4>OrHaTorá</h4>
-                    <p>O portal definitivo para o estudo da Torá e Halachá. O coração espiritual do App Ohr, trazendo a luz dos Shamayim para o seu dia a dia.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Navegação</h4>
-                    <ul>
-                        <li><a href="#inicio">Início</a></li>
-                        <li><a href="#shema">Kriat Shemá</a></li>
-                        <li><a href="#estudos">Beit Midrash</a></li>
-                        <li><a href="#sobre">Sobre o Autor</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Recursos</h4>
-                    <ul>
-                        <li><a href="#">App Ohr PWA</a></li>
-                        <li><a href="#">Calendário Judaico</a></li>
-                        <li><a href="#">Bnei Noach</a></li>
-                        <li><a href="#">Halachá Diária</a></li>
-                    </ul>
+                    <p>Iluminando os caminhos da Torá. O coração do App Ohr.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Contato</h4>
-                    <p><i class="fas fa-envelope"></i> orhatorabrasil@gmail.com</p>
-                    <p><i class="fab fa-tiktok"></i> @yod.torah</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Brasil</p>
+                    <p>Email: orhatorabrasil@gmail.com<br>TikTok: @yod.torah</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                © 5786 (2026) OrHaTorá — Criado com perfeição por Yisrael Yehudá | Baruch HaShem
+                © 5786 (2026) OrHaTorá | Criado por Yisrael Yehudá | Baruch HaShem
             </div>
         </div>
     </footer>
+
+    <script>
+        // SISTEMA DE TABS
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.className += " active";
+        }
+
+        // SISTEMA DE BUSCA FUNCIONAL
+        const searchData = [
+            { title: "Kriat Shemá Shacharit", desc: "Oração matinal completa com bênçãos.", link: "#shema" },
+            { title: "Kriat Shemá Arvit", desc: "Oração noturna completa.", link: "#shema" },
+            { title: "Kriat Shemá Al HaMitá", desc: "Oração antes de dormir com Hamapil.", link: "#shema" },
+            { title: "Parashat HaShavua", desc: "Estudo semanal da Torá.", link: "#estudos" },
+            { title: "Bnei Noach", desc: "As 7 leis universais.", link: "#estudos" },
+            { title: "Sobre Yisrael Yehudá", desc: "História do site e criador.", link: "#sobre" },
+            { title: "Data de Criação", desc: "Site criado em 9 de Adar.", link: "#sobre" }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            searchResults.innerHTML = '';
+            
+            if (term.length < 2) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            const filtered = searchData.filter(item => 
+                item.title.toLowerCase().includes(term) || 
+                item.desc.toLowerCase().includes(term)
+            );
+
+            if (filtered.length > 0) {
+                filtered.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'search-result-item';
+                    div.innerHTML = `<h5>${item.title}</h5><p>${item.desc}</p>`;
+                    div.onclick = () => {
+                        window.location.href = item.link;
+                        searchResults.style.display = 'none';
+                        searchInput.value = '';
+                    };
+                    searchResults.appendChild(div);
+                });
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item"><p>Nenhum resultado encontrado.</p></div>';
+                searchResults.style.display = 'block';
+            }
+        });
+
+        // Fechar busca ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 </html>
