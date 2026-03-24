@@ -297,23 +297,33 @@
 
     <main class="screen" id="sobre">
       <div class="screen-title">
-        <h2>Sobre</h2>
-        <p>Conheça o criador desta ferramenta de oração e paz.</p>
+        <h2>Sobre Ohr</h2>
+        <p>Conheça esta ferramenta de oração e paz espiritual.</p>
       </div>
       <div class="card hero">
         <p class="section-label">Ohr — Luz Espiritual</p>
         <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)">Criado por Yisrael Yehuda</h3>
         <p class="small-note" style="margin-top:16px">
-          Este aplicativo foi desenvolvido com o propósito de criar um espaço sagrado de conexão com HaShem. 
+          Este aplicativo foi desenvolvido com o propósito de criar um espaço sagrado de conexão com Adonai. 
           Cada detalhe foi pensado para oferecer uma experiência de oração profunda, autêntica e transformadora.
         </p>
+        <button class="btn" style="width:100%;margin-top:20px;background:linear-gradient(135deg,var(--gold),#efc870)" onclick="if(navigator.serviceWorker){const deferredPrompt=window.deferredPrompt;if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{window.deferredPrompt=null;});}}">
+          ⬇️ Instalar App no Celular
+        </button>
         <div style="margin-top:20px;padding:16px;background:var(--gold-soft);border-radius:16px;border:1px solid var(--border)">
           <p style="margin:0;font-size:13px;line-height:1.8;color:var(--text)">
-            <strong>Contato:</strong><br>
-            📧 <a href="mailto:orhatorabrasil@gmail.com" style="color:var(--gold);text-decoration:none;font-weight:700">orhatorabrasil@gmail.com</a><br><br>
-            <strong>Propósito:</strong><br>
+            <strong>📧 Contato:</strong><br>
+            <a href="mailto:orhatorabrasil@gmail.com" style="color:var(--gold);text-decoration:none;font-weight:700">orhatorabrasil@gmail.com</a><br><br>
+            <strong>✨ Propósito:</strong><br>
             Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
-            oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com o Criador.
+            oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.
+          </p>
+        </div>
+        <div style="margin-top:20px;padding:16px;background:rgba(217,174,85,.08);border-radius:16px;border:1px solid var(--border)">
+          <p style="margin:0;font-size:12px;line-height:1.8;color:var(--text-soft)">
+            <strong>💡 Como Instalar:</strong><br>
+            <strong>Android:</strong> Clique no botão acima ou nos 3 pontinhos do navegador e selecione "Instalar aplicativo".<br>
+            <strong>iPhone:</strong> Clique no ícone de compartilhar e selecione "Adicionar à Tela de Início".
           </p>
         </div>
         <p class="small-note" style="margin-top:20px;text-align:center;color:var(--gold);font-style:italic">
@@ -410,9 +420,10 @@
     const prayerTexts = {
       shema: {
         title: "Shemá Yisrael",
-        hebrew: "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד. בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.",
-        translit: "Shemá Yisrael, Adonai Elohênu, Adonai Echad. Baruch shem kevod malchuto le'olam va'ed.",
-        translation: "Ouve, ó Israel, o Eterno é nosso Deus, o Eterno é Um. Bendito seja o nome da glória de Seu reino por toda a eternidade."
+        hebrew: "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד.",
+        translit: "Shemá Yisrael, Adonai Elohênu, Adonai Echad.",
+        translation: "Ouve, ó Israel, Adonai é nosso Deus, Adonai é Um.",
+        full: true
       },
       modAni: {
         title: "Modé Ani",
@@ -573,16 +584,24 @@
               </div>
               <span class="badge">Essencial</span>
             </div>
-            <p class="item-desc">A declaração fundamental da unicidade de HaShem.</p>
+            <p class="item-desc">A declaração fundamental da unicidade de Adonai.</p>
           </summary>
           <div class="item-body">
             <div class="divider"></div>
-            <p class="body-label">Hebraico</p>
-            <p class="rtl">${prayerTexts.shema.hebrew}</p>
-            <p class="body-label">Transliteração</p>
-            <p class="translit">${prayerTexts.shema.translit}</p>
+            <p class="body-label">Primeira Porção (Deuteronômio 6:4-9)</p>
+            <p class="rtl">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד. וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל לְבָבְךָ וּבְכָל נַפְשְׁךָ וּבְכָל מְאֹדֶךָ. וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל לְבָבֶךָ. וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתְךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ. וּקְשַׁרְתָּם לְאוֹת עַל יָדְךָ וְהָיוּ לְטוֹטָפֹת בֵּין עֵינֶיךָ. וּכְתַבְתָּם עַל מְזוּזוֹת בֵּיתְךָ וּבִשְׁעָרֶיךָ.</p>
             <p class="body-label">Tradução</p>
-            <p class="pt">${prayerTexts.shema.translation}</p>
+            <p class="pt">Ouve, ó Israel, Adonai é nosso Deus, Adonai é Um. Amarás a Adonai, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força. Estas palavras que hoje te ordeno estarão em teu coração. Ensiná-las-ás a teus filhos e delas falarás sentado em tua casa, andando pelo caminho, deitando-te e levantando-te. Atá-las-ás como sinal em tua mão e serão como frontal entre teus olhos. Escrevê-las-ás nos umbrais de tua casa e em teus portões.</p>
+            <div class="divider"></div>
+            <p class="body-label">Segunda Porção (Deuteronômio 11:13-21)</p>
+            <p class="rtl">וְהָיָה אִם שָׁמֹעַ תִּשְׁמְעוּ אֶל מִצְוֹתַי אֲשֶׁר אָנֹכִי מְצַוֶּה אֶתְכֶם הַיּוֹם לְאַהֲבָה אֶת יְהוָה אֱלֹהֵיכֶם וּלְעָבְדוֹ בְּכָל לְבַבְכֶם וּבְכָל נַפְשְׁכֶם.</p>
+            <p class="body-label">Tradução</p>
+            <p class="pt">Se realmente obedecerdes aos Meus mandamentos que hoje vos ordeno, amando a Adonai, vosso Deus, e servindo-O com todo o vosso coração e com toda a vossa alma...</p>
+            <div class="divider"></div>
+            <p class="body-label">Terceira Porção (Números 15:37-41)</p>
+            <p class="rtl">וַיֹּאמֶר יְהוָה אֶל מֹשֶׁה לֵּאמֹר. דַּבֵּר אֶל בְנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם וְעָשׂוּ לָהֶם צִיצִת עַל כַּנְפֵי בִגְדֵיהֶם לְדֹרֹתָם וְנָתְנוּ עַל צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת.</p>
+            <p class="body-label">Tradução</p>
+            <p class="pt">Adonai falou a Moisés, dizendo: Fala aos filhos de Israel e dize-lhes que façam franjas nas extremidades de seus mantos, nas suas gerações, e que ponham na franja da extremidade um fio de azul...</p>
           </div>
         </details>
 
@@ -619,13 +638,13 @@
           <p class="section-label">Salmo ${psalm.num}</p>
           <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)">${psalm.theme}</h3>
           <p class="small-note" style="margin-top:16px">
-            Este salmo foi escolhido especialmente para hoje, de acordo com o ciclo tradicional judaico. 
-            Leia com atenção, deixe as palavras tocarem seu coração e permita-se sentir a presença de HaShem em cada verso.
+            Este Salmo foi escolhido especialmente para hoje, de acordo com o ciclo tradicional judaico. 
+            Leia com atenção, deixe as palavras tocarem seu coração e permita-se sentir a presença de Adonai em cada verso.
           </p>
           <div style="margin-top:20px;padding:16px;background:var(--gold-soft);border-radius:16px;border:1px solid var(--border)">
             <p style="margin:0;font-size:14px;line-height:1.8;color:var(--text)">
               <strong>Salmo ${psalm.num}</strong><br><br>
-              "Bem-aventurado o homem que não anda segundo o conselho dos ímpios, nem se detém no caminho dos pecadores, nem se senta na roda dos escarnecedores; antes tem seu prazer na lei do Senhor, e na sua lei medita dia e noite."
+              "Bem-aventurado o homem que não anda segundo o conselho dos ímpios, nem se detém no caminho dos pecadores, nem se senta na roda dos escarnecedores; antes tem seu prazer na Lei de Adonai, e na sua lei medita dia e noite."
             </p>
           </div>
         </div>
