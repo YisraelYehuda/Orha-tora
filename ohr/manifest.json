@@ -1,0 +1,27 @@
+{
+  "name": "Ohr | Conexão diária com HaShem",
+  "short_name": "Ohr",
+  "description": "Ohr — conexão diária com HaShem, com orações, reflexões e um espaço calmo para hitbodedut.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8f4eb",
+  "theme_color": "#b88a2b",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
