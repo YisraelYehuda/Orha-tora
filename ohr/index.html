@@ -1,820 +1,579 @@
 <!DOCTYPE html>
-<html lang="pt-BR" dir="ltr">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Ohr — Conteúdo Sagrado</title>
-  <meta name="theme-color" content="#C8922A" />
+  <title>Ohr | Conexão diária com HaShem</title>
+  <meta name="theme-color" content="#b88a2b" />
   <meta name="description" content="Ohr — conexão diária com HaShem, com orações, reflexões e um espaço calmo para hitbodedut." />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+Hebrew:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --gold:       #C8922A;
-      --gold-light: #E8B84B;
-      --gold-pale:  #F5E6C4;
-      --dark:       #0D0D0D;
-      --surface:    #111111;
-      --card:       #181510;
-      --border:     rgba(200,146,42,0.25);
-      --text:       #EDE0C8;
-      --text-muted: #A89070;
-      --hebrew:     #F0D080;
+    :root{
+      --bg: #f8f4eb;
+      --bg-soft: #fffdf8;
+      --surface: rgba(255,255,255,.72);
+      --surface-strong: rgba(255,255,255,.88);
+      --text: #1d2430;
+      --text-soft: #586171;
+      --gold: #b88a2b;
+      --gold-soft: rgba(184,138,43,.14);
+      --border: rgba(58,74,96,.12);
+      --shadow: 0 16px 40px rgba(25, 35, 52, .10);
+      --hero: linear-gradient(145deg,#fff7e7,#f6ecd7);
+      --pill: rgba(184,138,43,.12);
+      --nav: rgba(255,255,255,.82);
+      --accent: #233048;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-    body {
-      background: var(--dark);
-      color: var(--text);
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.8;
-      min-height: 100vh;
-      overflow-x: hidden;
+    body.night{
+      --bg: #07111d;
+      --bg-soft: #0d1826;
+      --surface: rgba(13,24,38,.72);
+      --surface-strong: rgba(13,24,38,.86);
+      --text: #f4efe6;
+      --text-soft: #b1b9c5;
+      --gold: #d9ae55;
+      --gold-soft: rgba(217,174,85,.14);
+      --border: rgba(217,174,85,.14);
+      --shadow: 0 18px 44px rgba(0,0,0,.34);
+      --hero: linear-gradient(145deg,#12223b,#0d1a2d);
+      --pill: rgba(217,174,85,.12);
+      --nav: rgba(7,17,29,.86);
+      --accent: #dbe7ff;
     }
 
-    /* ── Noise texture overlay ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: 0.5;
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);transition:background .45s ease,color .45s ease}
+    body{overflow:hidden}
+
+    .backdrop, .stars, .glow{position:fixed;inset:0;pointer-events:none}
+    .backdrop{background:
+      radial-gradient(circle at top left, rgba(217,174,85,.08), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(61,94,140,.10), transparent 26%),
+      linear-gradient(180deg, var(--bg-soft), var(--bg));
+      z-index:0;
+    }
+    .glow::before,.glow::after{content:'';position:absolute;border-radius:999px;filter:blur(60px);opacity:.4}
+    .glow::before{width:220px;height:220px;left:-60px;top:-50px;background:rgba(217,174,85,.18)}
+    .glow::after{width:240px;height:240px;right:-80px;bottom:90px;background:rgba(78,115,182,.15)}
+    .stars{display:none;z-index:0}
+    body.night .stars{display:block}
+    .star{position:absolute;background:#fff;border-radius:999px;opacity:.7;animation:twinkle 3s ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.9)}50%{opacity:.9;transform:scale(1.1)}}
+
+    .app{
+      position:relative;
+      z-index:1;
+      width:min(100%,460px);
+      margin:0 auto;
+      height:100dvh;
+      display:flex;
+      flex-direction:column;
     }
 
-    /* ── Header ── */
-    header {
-      text-align: center;
-      padding: 60px 20px 40px;
-      position: relative;
+    .topbar{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:16px 20px 8px;
+      font-size:12px;color:var(--text-soft);
+      flex-shrink:0;
+    }
+    .clock{font-weight:700;font-size:14px;color:var(--text)}
+    .pill{
+      background:var(--pill);border:1px solid var(--border);color:var(--gold);
+      border-radius:999px;padding:7px 12px;font-size:11px;font-weight:600;
+      backdrop-filter:blur(10px)
     }
 
-    .star-of-david {
-      font-size: 2.5rem;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 16px;
-      animation: glow 3s ease-in-out infinite alternate;
+    .screen{
+      flex:1;overflow:auto;display:none;padding:0 16px 100px;scrollbar-width:none;
+      animation:fade .28s ease;
+    }
+    .screen::-webkit-scrollbar{display:none}
+    .screen.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    .header{padding:10px 4px 14px}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 6px}
+    .title{font-family:'Cormorant Garamond',serif;font-size:52px;line-height:.95;margin:0;color:var(--text)}
+    .subtitle{margin:8px 0 0;color:var(--text-soft);font-size:13px}
+
+    .card{
+      background:var(--surface);border:1px solid var(--border);border-radius:26px;
+      padding:18px;box-shadow:var(--shadow);backdrop-filter:blur(18px);
+      margin-bottom:14px;
+    }
+    .hero{background:var(--hero);position:relative;overflow:hidden}
+    .hero::after{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:999px;background:rgba(217,174,85,.10);filter:blur(4px)}
+    .section-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1;margin:0;color:var(--text)}
+    .hero-hebrew{margin:4px 0 10px;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold)}
+    .hero-desc{margin:0;color:var(--text-soft);font-size:13px;line-height:1.7}
+    .intent{
+      margin-top:14px;padding:12px 13px;border-radius:16px;background:rgba(255,255,255,.22);
+      border:1px solid var(--border)
+    }
+    body.night .intent{background:rgba(255,255,255,.03)}
+    .intent small{display:block;color:var(--gold);font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}
+    .intent p{margin:0;font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.45}
+    .btn{
+      appearance:none;border:none;background:linear-gradient(135deg,var(--gold),#efc870);color:#162235;
+      font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;
+      padding:13px 18px;margin-top:16px;box-shadow:0 10px 24px rgba(184,138,43,.28);cursor:pointer;width:100%
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px rgba(200,146,42,0.3); }
-      to   { text-shadow: 0 0 30px rgba(200,146,42,0.8), 0 0 60px rgba(200,146,42,0.3); }
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    .mini{padding:16px;border-radius:22px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
+    .mini .icon{font-size:22px;display:block;margin-bottom:8px}
+    .mini .label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 4px}
+    .mini .value{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.1;margin:0;color:var(--text)}
+    .mini .hint{font-size:12px;color:var(--text-soft);margin:6px 0 0;line-height:1.5}
+
+    .quote{position:relative}
+    .quote-text{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;line-height:1.45;color:var(--text)}
+    .quote-source{margin:12px 0 0;color:var(--gold);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+    .quote-tag{display:inline-flex;gap:6px;align-items:center;margin-top:10px;padding:6px 10px;border-radius:999px;background:var(--gold-soft);border:1px solid var(--border);font-size:11px;color:var(--gold)}
+
+    .screen-title{margin:6px 4px 14px}
+    .screen-title h2{margin:0;font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:500}
+    .screen-title p{margin:5px 0 0;color:var(--text-soft);font-size:13px}
+
+    .list{display:flex;flex-direction:column;gap:12px}
+    details.item{
+      background:var(--surface);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);overflow:hidden
     }
+    details.item[open]{border-color:rgba(184,138,43,.28)}
+    details.item summary{list-style:none;cursor:pointer;padding:18px}
+    details.item summary::-webkit-details-marker{display:none}
+    .item-top{display:flex;justify-content:space-between;gap:12px}
+    .item-title{font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1;margin:0 0 3px}
+    .item-hebrew{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);margin:0}
+    .badge{align-self:flex-start;background:var(--gold-soft);color:var(--gold);border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+    .item-desc{margin:10px 0 0;color:var(--text-soft);font-size:13px;line-height:1.7}
+    .item-body{padding:0 18px 18px}
+    .divider{height:1px;background:var(--border);margin:0 18px 16px}
+    .body-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.14em;margin:0 0 8px}
+    .rtl{direction:rtl;text-align:right;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.9;margin:0 0 10px}
+    .translit{margin:0 0 8px;color:var(--text-soft);font-size:12px;line-height:1.7;font-style:italic}
+    .pt{margin:0;color:var(--text);font-size:13px;line-height:1.7}
 
-    header h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      color: var(--gold-light);
-      margin-bottom: 8px;
+    .med-step{padding:12px 14px;border-radius:16px;background:var(--gold-soft);border:1px solid var(--border);margin-bottom:10px}
+    .med-step strong{display:block;color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+    .med-step p{margin:0;color:var(--text);font-size:13px;line-height:1.65}
+
+    .timer-display{
+      text-align:center;margin:30px 0;
+      font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;color:var(--gold);
+      line-height:1;
     }
-
-    header .hebrew-title {
-      font-family: 'Noto Sans Hebrew', sans-serif;
-      font-size: 1.6rem;
-      color: var(--hebrew);
-      direction: rtl;
-      display: block;
-      margin-bottom: 12px;
+    .timer-controls{
+      display:flex;gap:10px;margin:20px 0;
     }
-
-    header p {
-      color: var(--text-muted);
-      font-style: italic;
-      font-size: 1rem;
-      letter-spacing: 0.05em;
+    .timer-controls button{
+      flex:1;padding:12px;border:1px solid var(--border);background:var(--surface);border-radius:16px;
+      color:var(--text);font-weight:700;cursor:pointer;
     }
+    .timer-controls button:active{background:var(--gold-soft)}
 
-    .divider {
-      width: 120px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 32px auto;
+    .nav{
+      flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:12px 12px 16px;
+      background:var(--nav);backdrop-filter:blur(18px);border-top:1px solid var(--border)
     }
+    .nav button{appearance:none;border:1px solid transparent;background:transparent;color:var(--text-soft);padding:10px 6px;border-radius:18px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+    .nav button.active{color:var(--gold);background:var(--gold-soft);border-color:var(--border)}
+    .nav .icon{font-size:18px;line-height:1}
 
-    /* ── Navigation tabs ── */
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      padding: 0 20px 40px;
-      position: relative; z-index: 1;
-    }
-
-    nav button {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 10px 22px;
-      border-radius: 2px;
-      font-family: 'Crimson Pro', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    nav button:hover,
-    nav button.active {
-      background: rgba(200,146,42,0.12);
-      border-color: var(--gold);
-      color: var(--gold-light);
-    }
-
-    /* ── Main content ── */
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 0 20px 80px;
-      position: relative; z-index: 1;
-    }
-
-    .section { display: none; }
-    .section.active { display: block; animation: fadeIn 0.5s ease; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Section header ── */
-    .section-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .section-header .hebrew {
-      font-family: 'Noto Sans Hebrew', sans-serif;
-      font-size: 2.4rem;
-      color: var(--hebrew);
-      direction: rtl;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .section-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 400;
-      color: var(--gold-light);
-      letter-spacing: 0.1em;
-    }
-
-    .section-header p {
-      color: var(--text-muted);
-      font-style: italic;
-      margin-top: 8px;
-    }
-
-    /* ── Prayer card ── */
-    .prayer-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 36px 40px;
-      margin-bottom: 28px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s;
-    }
-
-    .prayer-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: linear-gradient(180deg, var(--gold), transparent);
-    }
-
-    .prayer-card:hover { border-color: rgba(200,146,42,0.5); }
-
-    .prayer-card .order {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .prayer-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: var(--gold-light);
-      margin-bottom: 4px;
-    }
-
-    .prayer-card .hebrew-text {
-      font-family: 'Noto Sans Hebrew', sans-serif;
-      font-size: 1.5rem;
-      color: var(--hebrew);
-      direction: rtl;
-      text-align: right;
-      line-height: 2;
-      margin: 20px 0;
-      padding: 20px;
-      background: rgba(200,146,42,0.05);
-      border-radius: 2px;
-      border-right: 2px solid var(--gold);
-    }
-
-    .prayer-card .transliteration {
-      font-style: italic;
-      color: var(--text-muted);
-      font-size: 1rem;
-      margin-bottom: 16px;
-      padding-left: 16px;
-      border-left: 1px solid var(--border);
-    }
-
-    .prayer-card .translation {
-      color: var(--text);
-      margin-bottom: 20px;
-    }
-
-    .kavana-box {
-      background: rgba(200,146,42,0.07);
-      border: 1px solid rgba(200,146,42,0.2);
-      border-radius: 2px;
-      padding: 16px 20px;
-      margin-top: 16px;
-    }
-
-    .kavana-box .kavana-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .kavana-box p {
-      color: var(--text-muted);
-      font-style: italic;
-      font-size: 0.97rem;
-    }
-
-    /* ── Instruction box ── */
-    .instruction {
-      background: rgba(255,255,255,0.02);
-      border-left: 3px solid var(--gold);
-      padding: 14px 18px;
-      margin: 16px 0;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* ── Blessings list ── */
-    .blessings-list {
-      list-style: none;
-      margin: 20px 0;
-    }
-
-    .blessings-list li {
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(200,146,42,0.1);
-      display: grid;
-      gap: 4px;
-    }
-
-    .blessings-list li:last-child { border-bottom: none; }
-
-    .blessings-list .num {
-      font-size: 0.75rem;
-      color: var(--gold);
-      letter-spacing: 0.15em;
-    }
-
-    .blessings-list .heb {
-      font-family: 'Noto Sans Hebrew', sans-serif;
-      direction: rtl;
-      color: var(--hebrew);
-      font-size: 1.1rem;
-    }
-
-    .blessings-list .trans {
-      color: var(--text-muted);
-      font-style: italic;
-      font-size: 0.93rem;
-    }
-
-    /* ── Rebbe quote card ── */
-    .rebbe-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 36px 40px;
-      margin-bottom: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .rebbe-card::after {
-      content: '❝';
-      position: absolute;
-      top: 16px; right: 24px;
-      font-size: 5rem;
-      color: rgba(200,146,42,0.06);
-      font-family: Georgia, serif;
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    .rebbe-card:hover {
-      border-color: rgba(200,146,42,0.5);
-      transform: translateY(-2px);
-    }
-
-    .rebbe-card .rebbe-name {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .rebbe-card blockquote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .rebbe-card .apply {
-      background: rgba(200,146,42,0.07);
-      border-radius: 2px;
-      padding: 14px 18px;
-    }
-
-    .rebbe-card .apply-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .rebbe-card .apply p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* ── Tehilim section ── */
-    .tehilim-intro {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 28px 36px;
-      margin-bottom: 32px;
-      text-align: center;
-    }
-
-    .tehilim-intro p { color: var(--text-muted); font-style: italic; }
-
-    .tehilim-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 40px;
-    }
-
-    .tehilim-table th {
-      text-align: left;
-      padding: 12px;
-      color: var(--gold);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .tehilim-table td {
-      padding: 16px 12px;
-      border-bottom: 1px solid rgba(200,146,42,0.1);
-    }
-
-    .tehilim-table tr:last-child td { border-bottom: none; }
-
-    .tehilim-table .day { font-weight: 600; color: var(--gold-light); }
-    .tehilim-table .psalms { color: var(--text); }
-    .tehilim-table .active-day { background: rgba(200,146,42,0.08); }
-
-    .current-psalm-box {
-      background: var(--card);
-      border: 2px solid var(--gold);
-      border-radius: 4px;
-      padding: 32px;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .current-psalm-box .label {
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 12px;
-    }
-
-    .current-psalm-box h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      color: var(--gold-light);
-      margin-bottom: 8px;
-    }
-
-    #installBtn {
-      display: none;
-      background: var(--gold);
-      color: var(--dark);
-      border: none;
-      padding: 12px 24px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      margin: 20px auto;
-      transition: background 0.3s;
-    }
-
-    #installBtn:hover {
-      background: var(--gold-light);
-    }
-
-    @media (max-width: 600px) {
-      header { padding: 40px 20px 30px; }
-      .prayer-card { padding: 28px 24px; }
-      .rebbe-card { padding: 28px 24px; }
-      .tehilim-table { font-size: 0.9rem; }
-    }
+    .small-note{font-size:12px;color:var(--text-soft);line-height:1.6;margin-top:8px}
+    .shabbat-locked{opacity:.5;pointer-events:none}
+    .shabbat-unlock{text-align:center;padding:40px 20px;color:var(--gold)}
   </style>
 </head>
 <body>
+  <div class="backdrop"></div>
+  <div class="glow"></div>
+  <div class="stars" id="stars"></div>
 
-<header>
-  <span class="star-of-david">✡</span>
-  <div class="hebrew-title">אוֹר הַתּוֹרָה</div>
-  <h1>Ohr</h1>
-  <p>Luz Sagrada para sua Jornada Diária</p>
-  <div class="divider"></div>
-</header>
-
-<nav>
-  <button class="active" onclick="show('shacharit', this)">🌅 Shacharit</button>
-  <button onclick="show('rebbes', this)">✨ Reflexões dos Rebbes</button>
-  <button onclick="show('tehilim', this)">📖 Tehilim</button>
-</nav>
-
-<main>
-
-  <!-- ══════════════════════════════════════════
-       SEÇÃO 1 — SHACHARIT
-  ══════════════════════════════════════════ -->
-  <section id="shacharit" class="section active">
-
-    <div class="section-header">
-      <span class="hebrew">שַׁחֲרִית</span>
-      <h2>Shacharit — Oração da Manhã</h2>
-      <p>Nusach Sefard · Tradição Chassídica · Em português</p>
+  <div class="app">
+    <div class="topbar">
+      <div class="clock" id="clock">--:--</div>
+      <div class="pill" id="shabbatPill">Shabat em --</div>
     </div>
 
-    <!-- 1. Modeh Ani -->
-    <div class="prayer-card">
-      <span class="order">Oração 01 · Ao acordar</span>
-      <h3>Modeh Ani</h3>
-      <div class="hebrew-text">
-        מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם<br>
-        שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי b'chemla<br>
-        רַבָּה אֱמוּנָתֶךָ
+    <main class="screen active" id="home">
+      <div class="header">
+        <p class="eyebrow">Shalom, Yisrael Yehuda</p>
+        <h1 class="title">Ohr</h1>
+        <p class="subtitle">Conexão diária com HaShem</p>
       </div>
-      <p class="transliteration">
-        Modeh ani lefanecha, Melech chai v'kayam,<br>
-        shehechezarta bi nishmati b'chemla —<br>
-        raba emunatecha.
-      </p>
-      <p class="translation">
-        "Sou grato diante de Ti, Rei vivo e eterno, que devolveste minha alma a mim com misericórdia — grande é a Tua fidelidade."
-      </p>
-      <div class="kavana-box">
-        <span class="kavana-label">✦ Kavaná — Intenção do coração</span>
-        <p>Antes de qualquer palavra mundana, reconheça: cada manhã é um presente. Hashem devolveu sua alma porque ainda há missão a cumprir. Você foi escolhido para mais um dia.</p>
+
+      <div class="card hero">
+        <p class="section-label" id="prayerName">Shacharit</p>
+        <h2 class="hero-title">Oração do Momento</h2>
+        <p class="hero-hebrew" id="prayerHebrew">שַׁחֲרִית</p>
+        <p class="hero-desc" id="prayerDesc">Abertura dos canais de luz para o novo dia.</p>
+        
+        <div class="intent">
+          <small>Intenção (Kavaná)</small>
+          <p id="prayerIntent">"Que meu dia seja dedicado ao serviço de HaShem com integridade e amor."</p>
+        </div>
+        
+        <button class="btn" onclick="document.querySelector('[data-go=oracoes]').click()">Abrir Orações</button>
       </div>
-    </div>
 
-    <!-- 2. Netilat Yadayim -->
-    <div class="prayer-card">
-      <span class="order">Oração 02 · Lavagem das mãos</span>
-      <h3>Netilat Yadayim</h3>
-      <div class="hebrew-text">
-        בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם<br>
-        עַל נְטִילַת יָדַיִם
+      <div class="grid">
+        <div class="mini">
+          <span class="icon">📖</span>
+          <p class="label">Salmo do Dia</p>
+          <p class="value" id="psalmNumber">Salmo --</p>
+          <p class="hint" id="psalmHint">Carregando tema...</p>
+        </div>
+        <div class="mini">
+          <span class="icon">🕯️</span>
+          <p class="label">Contagem</p>
+          <p class="value" id="countdownTitle">Para o Shabat</p>
+          <p class="hint" id="countdownHint">Calculando tempo...</p>
+        </div>
       </div>
-      <p class="transliteration">
-        Baruch Atah Hashem, Elokeinu Melech haolam,<br>
-        al netilat yadayim.
-      </p>
-      <p class="translation">
-        "Bendito és Tu, Hashem, nosso D'us, Rei do universo, que nos santificou com Seus mandamentos e nos ordenou sobre a lavagem das mãos."
-      </p>
-      <div class="instruction">
-        <strong>Como fazer:</strong> Lave as mãos alternadamente três vezes — direita, esquerda, direita, esquerda, direita, esquerda — com um recipiente. Recite a brachá imediatamente após.
+
+      <div class="card quote">
+        <p class="section-label">Luz dos Rebbes</p>
+        <p class="quote-text" id="quoteText">"Seu pensamento é onde você está. Procure estar sempre em um lugar sagrado."</p>
+        <p class="quote-source" id="quoteSource">— Baal Shem Tov</p>
+        <div class="quote-tag">
+          <span>✨</span>
+          <span id="quoteTag">Chassidut</span>
+        </div>
       </div>
-      <div class="kavana-box">
-        <span class="kavana-label">✦ Kavaná</span>
-        <p>Assim como o Cohen purificava as mãos antes de servir no Beit HaMikdash, você purifica as suas para servir Hashem em mais um dia sagrado.</p>
+    </main>
+
+    <main class="screen" id="oracoes">
+      <div class="screen-title">
+        <h2>Orações</h2>
+        <p>Conexão sagrada através das palavras dos nossos sábios.</p>
       </div>
-    </div>
+      <div class="list" id="prayerList"></div>
+    </main>
 
-    <!-- 3. Asher Yatzar -->
-    <div class="prayer-card">
-      <span class="order">Oração 03 · Após usar o banheiro</span>
-      <h3>Asher Yatzar</h3>
-      <div class="hebrew-text">
-        אֲשֶׁר יָצַר אֶת הָאָדָם בְּחָכְמָה<br>
-        וּבָרָא בוֹ נְקָבִים נְקָבִים חֲלוּלִים חֲלוּלִים<br>
-        גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ<br>
-        שֶׁאִם יִפָּתֵחַ אֶחָד מֵהֶם אוֹ יִסָּתֵם אֶחָד מֵהֶם<br>
-        אִי אֶפְשַׁר לְהִתְקַיֵּם וְלַעֲמוֹד לְפָנֶיךָ<br>
-        בָּרוּךְ אַתָּה יְהֹוָה רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת
+    <main class="screen" id="estudos">
+      <div class="screen-title">
+        <h2>Salmos (Tehilim)</h2>
+        <p>Ciclo mensal para elevar a alma.</p>
       </div>
-      <p class="transliteration">
-        Asher yatzar et ha'adam b'chochma, uvara vo nekavim nekavim, chalulim chalulim. Galui v'yadua lifnei kisei chevodecha, she'im yipateach echad meihem o yisatem echad meihem, i efshar lehitkayem v'la'amod lefanecha. Baruch Atah Hashem, rofeh chol basar u'mafli la'asot.
-      </p>
-      <p class="translation">
-        "Que criou o ser humano com sabedoria e criou nele aberturas e cavidades. É revelado e conhecido diante do Trono de Tua glória que se uma delas se abrisse ou se fechasse indevidamente, seria impossível existir e estar diante de Ti. Bendito és Tu, Hashem, que cura toda carne e age maravilhosamente."
-      </p>
-      <div class="kavana-box">
-        <span class="kavana-label">✦ Kavaná</span>
-        <p>Esta brachá ensina humildade profunda — até o funcionamento do nosso corpo é milagre constante de Hashem. Cada respiração, um presente.</p>
+      <div id="psalmContent"></div>
+    </main>
+
+    <main class="screen" id="meditar">
+      <div class="screen-title">
+        <h2>Hitbodedut</h2>
+        <p>O isolamento produtivo e a conversa sincera com o Criador.</p>
       </div>
-    </div>
-
-    <!-- 4. Birkot HaShachar -->
-    <div class="prayer-card">
-      <span class="order">Oração 04 · Bênçãos da Manhã</span>
-      <h3>Birkot HaShachar</h3>
-      <div class="hebrew-text">בִּרְכוֹת הַשַּׁחַר</div>
-      <p style="color:var(--text-muted); font-style:italic; margin-bottom:20px;">Cada bênção é um olhar de gratidão sobre o que normalmente ignoramos. Recite devagar. Sinta cada palavra.</p>
-
-      <ul class="blessings-list">
-        <li>
-          <span class="num">01</span>
-          <span class="heb">אֲשֶׁר נָתַן לַשֶּׂכְוִי בִינָה לְהַבְחִין בֵּין יוֹם וּבֵין לָיְלָה</span>
-          <span class="trans">...que deu ao galo entendimento para distinguir entre o dia e a noite.</span>
-        </li>
-        <li>
-          <span class="num">02</span>
-          <span class="heb">שֶׁלֹּא עָשַׂנִי גּוֹי</span>
-          <span class="trans">...que não me fez idólatra.</span>
-        </li>
-        <li>
-          <span class="num">03</span>
-          <span class="heb">שֶׁלֹּא עָשַׂנִי עָבֶד</span>
-          <span class="trans">...que não me fez escravo.</span>
-        </li>
-        <li>
-          <span class="num">04 ♂</span>
-          <span class="heb">שֶׁלֹּא עָשַׂנִי אִשָּׁה</span>
-          <span class="trans">Homens: ...que não me fez mulher.</span>
-        </li>
-        <li>
-          <span class="num">04 ♀</span>
-          <span class="heb">שֶׁעָשַנִי כִּרְצוֹנוֹ</span>
-          <span class="trans">Mulheres: ...que me fez conforme Sua vontade.</span>
-        </li>
-        <li>
-          <span class="num">05</span>
-          <span class="heb">פּוֹקֵחַ עִוְרִים</span>
-          <span class="trans">...que abre os olhos dos cegos.</span>
-        </li>
-        <li>
-          <span class="num">06</span>
-          <span class="heb">מַלְבִּישׁ עֲרֻמִּים</span>
-          <span class="trans">...que veste os nus.</span>
-        </li>
-        <li>
-          <span class="num">07</span>
-          <span class="heb">מַתִּיר אֲסוּרִים</span>
-          <span class="trans">...que liberta os acorrentados.</span>
-        </li>
-        <li>
-          <span class="num">08</span>
-          <span class="heb">זוֹקֵף כְּפוּפִים</span>
-          <span class="trans">...que endireita os curvados.</span>
-        </li>
-        <li>
-          <span class="num">09</span>
-          <span class="heb">רוֹקַע הָאָרֶץ עַל הַמָּיִם</span>
-          <span class="trans">...que estende a terra sobre as águas.</span>
-        </li>
-        <li>
-          <span class="num">10</span>
-          <span class="heb">שֶׁעָשָׂה לִי כָּל צָרְכִּי</span>
-          <span class="trans">...que proveu todas as minhas necessidades.</span>
-        </li>
-        <li>
-          <span class="num">11</span>
-          <span class="heb">הַמֵּכִין מִצְעֲדֵי גָבֶר</span>
-          <span class="trans">...que firma os passos do homem.</span>
-        </li>
-        <li>
-          <span class="num">12</span>
-          <span class="heb">אוֹזֵר יִשְׂרָאֵל בִּגְבוּרָה</span>
-          <span class="trans">...que cinge Israel com força.</span>
-        </li>
-        <li>
-          <span class="num">13</span>
-          <span class="heb">עוֹטֵר יִשְׂרָאֵל בְּתִפְאָרָה</span>
-          <span class="trans">...que coroa Israel com esplendor.</span>
-        </li>
-        <li>
-          <span class="num">14</span>
-          <span class="heb">הַנּוֹתֵן לַיָּעֵף כֹּחַ</span>
-          <span class="trans">...que dá força ao cansado.</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- 5. Kriat Shema -->
-    <div class="prayer-card">
-      <span class="order">Oração 05 · Essencial</span>
-      <h3>Kriat Shema</h3>
-      <div class="hebrew-text">
-        שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד
+      <div class="card">
+        <p class="section-label">Meditação Guiada</p>
+        <div class="timer-display" id="timerDisplay">10:00</div>
+        <div class="timer-controls">
+          <button id="startBtn">Iniciar</button>
+          <button id="pauseBtn">Pausar</button>
+          <button id="resetBtn">Resetar</button>
+        </div>
+        <div style="margin-top:20px;text-align:center">
+          <label style="font-size:12px;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="audioToggle" style="cursor:pointer">
+            Som Ambiente - Chuva e Vento
+          </label>
+        </div>
+        <div class="med-step">
+          <strong>🕯️ Prepare seu Espaço</strong>
+          <p>Encontre um lugar tranquilo. Sente-se confortavelmente. Feche os olhos.</p>
+        </div>
+        <div class="med-step">
+          <strong>🌬️ Respire com Intenção</strong>
+          <p>Inspire profundamente pelo nariz. Expire lentamente pela boca. Deixe os pensamentos passarem como nuvens.</p>
+        </div>
+        <div class="med-step">
+          <strong>💬 Fale com HaShem</strong>
+          <p>Use suas próprias palavras. Seu coração é um templo. Aqui, você é ouvido. Aqui, você é amado.</p>
+        </div>
       </div>
-      <p class="transliteration">
-        Shema Yisrael, Adonai Eloheinu, Adonai Echad.
-      </p>
-      <p class="translation">
-        "Ouve, ó Israel, o Senhor é nosso Deus, o Senhor é Um."
-      </p>
-      <div class="kavana-box">
-        <span class="kavana-label">✦ Kavaná</span>
-        <p>Ao dizer 'Echad' (Um), aceite a soberania de Deus sobre os quatro pontos cardeais e sobre o céu e a terra. Unifique seu coração com a Unidade Divina.</p>
+    </main>
+
+    <main class="screen" id="sobre">
+      <div class="screen-title">
+        <h2>Sobre Ohr</h2>
+        <p>Conheça esta ferramenta de oração e paz espiritual.</p>
       </div>
-    </div>
-
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       SEÇÃO 2 — REBBES
-  ══════════════════════════════════════════ -->
-  <section id="rebbes" class="section">
-    <div class="section-header">
-      <span class="hebrew">חֲסִידוּת</span>
-      <h2>Luz dos Rebbes</h2>
-      <p>Reflexões Chassídicas para elevar a consciência</p>
-    </div>
-
-    <div class="rebbe-card">
-      <span class="rebbe-name">Baal Shem Tov</span>
-      <blockquote>"Seu pensamento é onde você está. Procure estar sempre em um lugar sagrado."</blockquote>
-      <div class="apply">
-        <span class="apply-label">Prática</span>
-        <p>Observe seus pensamentos hoje. Se eles se tornarem negativos, mude sua 'localização mental' para algo grato.</p>
+      <div class="card hero">
+        <p class="section-label">Ohr — Luz Espiritual</p>
+        <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)">Criado por Yisrael Yehuda</h3>
+        <p class="small-note" style="margin-top:16px">
+          Este aplicativo foi desenvolvido com o propósito de criar um espaço sagrado de conexão com Adonai. 
+          Cada detalhe foi pensado para oferecer uma experiência de oração profunda, autêntica e transformadora.
+        </p>
+        <button id="installBtn" class="btn" style="width:100%;margin-top:20px;background:linear-gradient(135deg,var(--gold),#efc870);display:none;">
+          ⬇️ Baixar Aplicativo (Um Clique)
+        </button>
+        <div style="margin-top:20px;padding:16px;background:var(--gold-soft);border-radius:16px;border:1px solid var(--border)">
+          <p style="margin:0;font-size:13px;line-height:1.8;color:var(--text)">
+            <strong>📧 Contato:</strong><br>
+            <a href="mailto:orhatorabrasil@gmail.com" style="color:var(--gold);text-decoration:none;font-weight:700">orhatorabrasil@gmail.com</a><br><br>
+            <strong>✨ Propósito:</strong><br>
+            Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
+            oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.
+          </p>
+        </div>
+        <p class="small-note" style="margin-top:20px;text-align:center;color:var(--gold);font-style:italic">
+          "A luz que você busca já habita o silêncio do seu coração."
+        </p>
       </div>
-    </div>
+    </main>
 
-    <div class="rebbe-card">
-      <span class="rebbe-name">Rebbe Nachman de Breslev</span>
-      <blockquote>"É proibido ser velho. Nunca se desespere. Comece de novo a cada momento."</blockquote>
-      <div class="apply">
-        <span class="apply-label">Prática</span>
-        <p>Se algo falhou hoje, não carregue o peso. Respire e recomece agora mesmo. Hashem ama recomeços.</p>
-      </div>
-    </div>
+    <nav class="nav">
+      <button class="active" data-go="home">
+        <span class="icon">🏠</span>
+        <span>Início</span>
+      </button>
+      <button data-go="oracoes">
+        <span class="icon">📜</span>
+        <span>Orações</span>
+      </button>
+      <button data-go="estudos">
+        <span class="icon">📖</span>
+        <span>Salmos</span>
+      </button>
+      <button data-go="meditar">
+        <span class="icon">🧘</span>
+        <span>Meditar</span>
+      </button>
+      <button data-go="sobre">
+        <span class="icon">ℹ️</span>
+        <span>Sobre</span>
+      </button>
+    </nav>
+  </div>
 
-    <div class="rebbe-card">
-      <span class="rebbe-name">O Rebbe de Lubavitch</span>
-      <blockquote>"Um pouco de luz dissipa muita escuridão. Sua boa ação pode mudar o mundo inteiro."</blockquote>
-      <div class="apply">
-        <span class="apply-label">Prática</span>
-        <p>Faça um pequeno ato de bondade (Tzedaká ou uma palavra gentil) hoje sem esperar nada em troca.</p>
-      </div>
-    </div>
-  </section>
+  <script>
+    // Configurações e Dados
+    const quotes = [
+      { text: "Seu pensamento é onde você está. Procure estar sempre em um lugar sagrado.", source: "Baal Shem Tov", tag: "Chassidut" },
+      { text: "É proibido ser velho. Nunca se desespere. Comece de novo a cada momento.", source: "Rebbe Nachman", tag: "Breslev" },
+      { text: "Um pouco de luz dissipa muita escuridão. Sua boa ação pode mudar o mundo.", source: "Rebbe de Lubavitch", tag: "Chabad" }
+    ];
 
-  <!-- ══════════════════════════════════════════
-       SEÇÃO 3 — TEHILIM
-  ══════════════════════════════════════════ -->
-  <section id="tehilim" class="section">
-    <div class="section-header">
-      <span class="hebrew">תְּהִלִּים</span>
-      <h2>Tehilim Diário</h2>
-      <p>O ciclo mensal dos Salmos do Rei David</p>
-    </div>
+    const prayers = {
+      morning: {
+        name: "Shacharit",
+        hebrew: "שַׁחֲרִית",
+        desc: "Oração da manhã - Renovação e Gratidão",
+        intent: "Que meu dia seja dedicado ao serviço de HaShem com integridade e amor.",
+        time: [5, 12]
+      },
+      afternoon: {
+        name: "Minchá",
+        hebrew: "מִנְחָה",
+        desc: "Oração da tarde - Elevação do mundano",
+        intent: "Que eu não me perca na correria e lembre de Quem sustenta tudo.",
+        time: [12, 18]
+      },
+      evening: {
+        name: "Arvit",
+        hebrew: "עַרְבִית",
+        desc: "Oração da noite - Entrega e confiança",
+        intent: "Confio minha alma em Tuas mãos enquanto o mundo repousa.",
+        time: [18, 24]
+      }
+    };
 
-    <div class="tehilim-intro">
-      <p>"Os Salmos quebram todas as barreiras e sobem direto ao Trono da Glória."</p>
-    </div>
+    const tehilimCycle = [
+      "1-8", "9-17", "18-22", "23-28", "29-34",
+      "35-38", "39-43", "44-48", "49-54", "55-59",
+      "60-65", "66-68", "69-71", "72-76", "77-78",
+      "79-82", "83-87", "88-89", "90-96", "97-103",
+      "104-105", "106-107", "108-112", "113-118", "119",
+      "120-134", "135-139", "140-144", "145-150", "Ciclo Completo"
+    ];
 
-    <table class="tehilim-table" id="tehilimTable">
-      <thead>
-        <tr>
-          <th>Dia</th>
-          <th>Salmos do Dia</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- JS preenche aqui -->
-      </tbody>
-    </table>
+    const prayerListContent = [
+      {
+        title: "Modeh Ani",
+        hebrew: "מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.",
+        translit: "Modeh ani lefanecha, Melech chai v'kayam, shehechezarta bi nishmati b'chemla — raba emunatecha.",
+        translation: "Sou grato diante de Ti, Rei vivo e eterno, que devolveste minha alma a mim com misericórdia — grande é a Tua fidelidade.",
+        badge: "Ao acordar",
+        desc: "A primeira oração ao despertar, agradecendo pelo retorno da alma."
+      },
+      {
+        title: "Netilat Yadayim",
+        hebrew: "בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עַל נְטִילַת יָדַיִם.",
+        translit: "Baruch Atah Hashem, Elokeinu Melech haolam, al netilat yadayim.",
+        translation: "Bendito és Tu, Hashem, nosso D'us, Rei do universo, que nos santificou com Seus mandamentos e nos ordenou sobre a lavagem das mãos.",
+        badge: "Pureza",
+        desc: "Lavagem ritual das mãos para iniciar o serviço sagrado."
+      },
+      {
+        title: "Asher Yatzar",
+        hebrew: "בָּרוּךְ אַתָּה יְהֹוָה... רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.",
+        translit: "Asher yatzar et ha'adam b'chochma... Baruch Atah Hashem, rofeh chol basar u'mafli la'asot.",
+        translation: "Bendito és Tu, Hashem, que cura toda carne e age maravilhosamente.",
+        badge: "Saúde",
+        desc: "Agradecimento pelo funcionamento perfeito do corpo humano."
+      },
+      {
+        title: "Kriat Shema",
+        hebrew: "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד",
+        translit: "Shema Yisrael, Adonai Eloheinu, Adonai Echad.",
+        translation: "Ouve, ó Israel, o Senhor é nosso Deus, o Senhor é Um.",
+        badge: "Essencial",
+        desc: "A declaração fundamental da unicidade de Adonai."
+      }
+    ];
 
-    <div class="current-psalm-box">
-      <span class="label">Ciclo de Hoje</span>
-      <h3 id="todayPsalms">Carregando...</h3>
-      <p style="color:var(--text-muted); font-style:italic;">Leia estes capítulos hoje para completar o ciclo mensal.</p>
-    </div>
-  </section>
+    // Navegação
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.onclick = () => {
+        const target = btn.getAttribute('data-go');
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+        document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      };
+    });
 
-</main>
+    // Atualizar Relógio e Dinâmica
+    function updateApp() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-<button id="installBtn">Instalar Aplicativo Ohr</button>
+      // Tema Noite/Dia
+      const hour = now.getHours();
+      document.body.classList.toggle('night', hour >= 18 || hour < 6);
 
-<script>
-  // Navegação simples
-  function show(sectionId, btn) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    
-    document.getElementById(sectionId).classList.add('active');
-    btn.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Tabela de Tehilim (Ciclo de 30 dias)
-  const tehilimCycle = [
-    "1-8", "9-17", "18-22", "23-28", "29-34",
-    "35-38", "39-43", "44-48", "49-54", "55-59",
-    "60-65", "66-68", "69-71", "72-76", "77-78",
-    "79-82", "83-87", "88-89", "90-96", "97-103",
-    "104-105", "106-107", "108-112", "113-118", "119",
-    "120-134", "135-139", "140-144", "145-150", "Ciclo Completo"
-  ];
-
-  function setupTehilim() {
-    const tbody = document.querySelector('#tehilimTable tbody');
-    const now = new Date();
-    const today = now.getDate(); // 1 a 31
-
-    tehilimCycle.forEach((range, index) => {
-      const dayNum = index + 1;
-      const tr = document.createElement('tr');
-      if (dayNum === today) tr.className = 'active-day';
+      // Oração do Momento
+      let p = prayers.morning;
+      if (hour >= 12 && hour < 18) p = prayers.afternoon;
+      else if (hour >= 18 || hour < 5) p = prayers.evening;
       
-      tr.innerHTML = `
-        <td class="day">Dia ${dayNum}</td>
-        <td class="psalms">Capítulos ${range}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+      document.getElementById('prayerName').textContent = p.name;
+      document.getElementById('prayerHebrew').textContent = p.hebrew;
+      document.getElementById('prayerDesc').textContent = p.desc;
+      document.getElementById('prayerIntent').textContent = p.intent;
 
-    // Atualiza o box de hoje
-    const todayRange = tehilimCycle[today - 1] || tehilimCycle[0];
-    document.getElementById('todayPsalms').innerText = `Capítulos ${todayRange}`;
-  }
+      // Salmo do Dia
+      const day = now.getDate();
+      const range = tehilimCycle[day - 1] || tehilimCycle[0];
+      document.getElementById('psalmNumber').textContent = `Dia ${day}`;
+      document.getElementById('psalmHint').textContent = `Capítulos ${range}`;
 
-  // PWA Install Logic
-  let deferredPrompt;
-  const installBtn = document.getElementById('installBtn');
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'block';
-  });
-
-  installBtn.addEventListener('click', async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      installBtn.style.display = 'none';
+      // Shabat Countdown
+      updateShabbat(now);
     }
-  });
 
-  // Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./service-worker.js');
-    });
-  }
+    function updateShabbat(now) {
+      const SHABBAT_DAY = 5; // Sexta
+      const SHABBAT_HOUR = 18;
+      let next = new Date(now);
+      next.setHours(SHABBAT_HOUR, 0, 0, 0);
+      
+      const diff = (SHABBAT_DAY - now.getDay() + 7) % 7;
+      next.setDate(now.getDate() + diff);
+      if (now.getDay() === 5 && now.getHours() >= 18) next.setDate(next.getDate() + 7);
 
-  // Init
-  setupTehilim();
-</script>
+      const t = next - now;
+      const d = Math.floor(t / (1000*60*60*24));
+      const h = Math.floor((t / (1000*60*60)) % 24);
+      
+      document.getElementById('shabbatPill').textContent = `Shabat em ${d}d ${h}h`;
+      document.getElementById('countdownHint').textContent = `Faltam ${d} dias e ${h} horas`;
+    }
 
+    // Renderizar Listas
+    function init() {
+      // Orações
+      const list = document.getElementById('prayerList');
+      list.innerHTML = prayerListContent.map(p => `
+        <details class="item">
+          <summary>
+            <div class="item-top">
+              <div>
+                <h3 class="item-title">${p.title}</h3>
+                <p class="item-hebrew">${p.hebrew.split(',')[0]}</p>
+              </div>
+              <span class="badge">${p.badge}</span>
+            </div>
+            <p class="item-desc">${p.desc}</p>
+          </summary>
+          <div class="item-body">
+            <div class="divider"></div>
+            <p class="body-label">Hebraico</p>
+            <p class="rtl">${p.hebrew}</p>
+            <p class="body-label">Transliteração</p>
+            <p class="translit">${p.translit}</p>
+            <p class="body-label">Tradução</p>
+            <p class="pt">${p.translation}</p>
+          </div>
+        </details>
+      `).join('');
+
+      // Tehilim Screen
+      const psalmDiv = document.getElementById('psalmContent');
+      psalmDiv.innerHTML = `
+        <div class="card">
+          <p class="section-label">Ciclo Mensal</p>
+          <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 15px;">
+            ${tehilimCycle.map((r, i) => `
+              <div style="padding:10px; background:var(--gold-soft); border-radius:12px; text-align:center; border:1px solid var(--border); ${i+1 === new Date().getDate() ? 'border-color:var(--gold); background:rgba(184,138,43,.2)' : ''}">
+                <small style="display:block; color:var(--gold); font-size:9px;">DIA ${i+1}</small>
+                <strong style="font-size:12px;">${r}</strong>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      // Quote Aleatória
+      const q = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById('quoteText').textContent = `"${q.text}"`;
+      document.getElementById('quoteSource').textContent = `— ${q.source}`;
+      document.getElementById('quoteTag').textContent = q.tag;
+
+      updateApp();
+      setInterval(updateApp, 60000);
+    }
+
+    // Timer Hitbodedut
+    let timer = null;
+    let timeLeft = 600;
+    function startTimer() {
+      if (timer) return;
+      timer = setInterval(() => {
+        timeLeft--;
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        document.getElementById('timerDisplay').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+        if (timeLeft <= 0) clearInterval(timer);
+      }, 1000);
+    }
+    document.getElementById('startBtn').onclick = startTimer;
+    document.getElementById('pauseBtn').onclick = () => { clearInterval(timer); timer = null; };
+    document.getElementById('resetBtn').onclick = () => { 
+      clearInterval(timer); timer = null; timeLeft = 600; 
+      document.getElementById('timerDisplay').textContent = "10:00"; 
+    };
+
+    // Stars Background
+    const starsContainer = document.getElementById('stars');
+    for(let i=0; i<40; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.width = s.style.height = (Math.random() * 2 + 1) + 'px';
+      starsContainer.appendChild(s);
+    }
+
+    init();
+  </script>
 </body>
 </html>
