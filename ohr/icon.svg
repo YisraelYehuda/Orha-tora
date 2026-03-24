@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="20" fill="#b88a2b"/>
+  <!-- Magen David -->
+  <path d="M50 20 L80 75 L20 75 Z" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <path d="M50 80 L80 25 L20 25 Z" fill="none" stroke="#ffffff" stroke-width="4"/>
+</svg>
