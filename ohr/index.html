@@ -277,7 +277,7 @@
         <div style="margin-top:20px;text-align:center">
           <label style="font-size:12px;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
             <input type="checkbox" id="audioToggle" style="cursor:pointer">
-            Som ambiente relaxante (432 Hz)
+            Som ambiente relaxante (174 Hz)
           </label>
         </div>
         <div class="med-step">
@@ -292,6 +292,33 @@
           <strong>💬 Fale com HaShem</strong>
           <p>Use suas próprias palavras. Seu coração é um templo. Aqui, você é ouvido. Aqui, você é amado.</p>
         </div>
+      </div>
+    </main>
+
+    <main class="screen" id="sobre">
+      <div class="screen-title">
+        <h2>Sobre</h2>
+        <p>Conheça o criador desta ferramenta de oração e paz.</p>
+      </div>
+      <div class="card hero">
+        <p class="section-label">Ohr — Luz Espiritual</p>
+        <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)">Criado por Yisrael Yehuda</h3>
+        <p class="small-note" style="margin-top:16px">
+          Este aplicativo foi desenvolvido com o propósito de criar um espaço sagrado de conexão com HaShem. 
+          Cada detalhe foi pensado para oferecer uma experiência de oração profunda, autêntica e transformadora.
+        </p>
+        <div style="margin-top:20px;padding:16px;background:var(--gold-soft);border-radius:16px;border:1px solid var(--border)">
+          <p style="margin:0;font-size:13px;line-height:1.8;color:var(--text)">
+            <strong>Contato:</strong><br>
+            📧 <a href="mailto:orhatorabrasil@gmail.com" style="color:var(--gold);text-decoration:none;font-weight:700">orhatorabrasil@gmail.com</a><br><br>
+            <strong>Propósito:</strong><br>
+            Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
+            oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com o Criador.
+          </p>
+        </div>
+        <p class="small-note" style="margin-top:20px;text-align:center;color:var(--gold);font-style:italic">
+          "A luz que você busca já habita o silêncio do seu coração."
+        </p>
       </div>
     </main>
 
@@ -311,6 +338,10 @@
       <button data-go="meditar">
         <span class="icon">🧘</span>
         <span>Meditar</span>
+      </button>
+      <button data-go="sobre">
+        <span class="icon">ℹ️</span>
+        <span>Sobre</span>
       </button>
     </nav>
   </div>
@@ -379,9 +410,9 @@
     const prayerTexts = {
       shema: {
         title: "Shemá Yisrael",
-        hebrew: "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד.",
-        translit: "Shemá Yisrael, Adonai Elohênu, Adonai Echad.",
-        translation: "Ouve, ó Israel, o Eterno é nosso Deus, o Eterno é Um."
+        hebrew: "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד. בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד.",
+        translit: "Shemá Yisrael, Adonai Elohênu, Adonai Echad. Baruch shem kevod malchuto le'olam va'ed.",
+        translation: "Ouve, ó Israel, o Eterno é nosso Deus, o Eterno é Um. Bendito seja o nome da glória de Seu reino por toda a eternidade."
       },
       modAni: {
         title: "Modé Ani",
@@ -411,7 +442,7 @@
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
       
-      osc.frequency.value = 432; // Frequência de cura
+      osc.frequency.value = 174; // Frequência de cura e serenidade
       osc.type = 'sine';
       
       gain.gain.setValueAtTime(0.05, audioContext.currentTime);
