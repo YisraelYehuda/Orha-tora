@@ -127,7 +127,8 @@
     }
 
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-    .mini{padding:16px;border-radius:22px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
+    .mini{padding:16px;border-radius:22px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:transform .2s}
+    .mini:active{transform:scale(.97)}
     .mini .icon{font-size:22px;display:block;margin-bottom:8px}
     .mini .label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 4px}
     .mini .value{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.1;margin:0;color:var(--text)}
@@ -188,8 +189,9 @@
     .nav .icon{font-size:18px;line-height:1}
 
     .small-note{font-size:12px;color:var(--text-soft);line-height:1.6;margin-top:8px}
-    .shabbat-locked{opacity:.5;pointer-events:none}
-    .shabbat-unlock{text-align:center;padding:40px 20px;color:var(--gold)}
+    .day-cell{padding:10px; background:var(--gold-soft); border-radius:12px; text-align:center; border:1px solid var(--border); cursor:pointer; transition:all .2s}
+    .day-cell:hover{border-color:var(--gold); background:rgba(184,138,43,.1)}
+    .day-cell.active{border-color:var(--gold); background:rgba(184,138,43,.2); box-shadow:0 0 10px rgba(184,138,43,.2)}
   </style>
 </head>
 <body>
@@ -225,11 +227,11 @@
       </div>
 
       <div class="grid">
-        <div class="mini">
+        <div class="mini" onclick="document.querySelector('[data-go=estudos]').click()">
           <span class="icon">📖</span>
           <p class="label">Salmo do Dia</p>
           <p class="value" id="psalmNumber">Salmo --</p>
-          <p class="hint" id="psalmHint">Carregando tema...</p>
+          <p class="hint" id="psalmHint">Clique para ler</p>
         </div>
         <div class="mini">
           <span class="icon">🕯️</span>
@@ -261,7 +263,7 @@
     <main class="screen" id="estudos">
       <div class="screen-title">
         <h2>Salmos (Tehilim)</h2>
-        <p>Ciclo mensal para elevar a alma.</p>
+        <p>O Sefer Tehilim é dividido para ser completado uma vez por mês. Cada dia possui salmos específicos.</p>
       </div>
       <div id="psalmContent"></div>
     </main>
@@ -324,9 +326,6 @@
             oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.
           </p>
         </div>
-        <p class="small-note" style="margin-top:20px;text-align:center;color:var(--gold);font-style:italic">
-          "A luz que você busca já habita o silêncio do seu coração."
-        </p>
       </div>
     </main>
 
@@ -355,7 +354,6 @@
   </div>
 
   <script>
-    // Configurações e Dados
     const quotes = [
       { text: "Seu pensamento é onde você está. Procure estar sempre em um lugar sagrado.", source: "Baal Shem Tov", tag: "Chassidut" },
       { text: "É proibido ser velho. Nunca se desespere. Comece de novo a cada momento.", source: "Rebbe Nachman", tag: "Breslev" },
@@ -363,36 +361,15 @@
     ];
 
     const prayers = {
-      morning: {
-        name: "Shacharit",
-        hebrew: "שַׁחֲרִית",
-        desc: "Oração da manhã - Renovação e Gratidão",
-        intent: "Que meu dia seja dedicado ao serviço de HaShem com integridade e amor.",
-        time: [5, 12]
-      },
-      afternoon: {
-        name: "Minchá",
-        hebrew: "מִנְחָה",
-        desc: "Oração da tarde - Elevação do mundano",
-        intent: "Que eu não me perca na correria e lembre de Quem sustenta tudo.",
-        time: [12, 18]
-      },
-      evening: {
-        name: "Arvit",
-        hebrew: "עַרְבִית",
-        desc: "Oração da noite - Entrega e confiança",
-        intent: "Confio minha alma em Tuas mãos enquanto o mundo repousa.",
-        time: [18, 24]
-      }
+      morning: { name: "Shacharit", hebrew: "שַׁחֲרִית", desc: "Oração da manhã - Renovação e Gratidão", intent: "Que meu dia seja dedicado ao serviço de HaShem com integridade e amor.", time: [5, 12] },
+      afternoon: { name: "Minchá", hebrew: "מִנְחָה", desc: "Oração da tarde - Elevação do mundano", intent: "Que eu não me perca na correria e lembre de Quem sustenta tudo.", time: [12, 18] },
+      evening: { name: "Arvit", hebrew: "עַרְבִית", desc: "Oração da noite - Entrega e confiança", intent: "Confio minha alma em Tuas mãos enquanto o mundo repousa.", time: [18, 24] }
     };
 
     const tehilimCycle = [
-      "1-8", "9-17", "18-22", "23-28", "29-34",
-      "35-38", "39-43", "44-48", "49-54", "55-59",
-      "60-65", "66-68", "69-71", "72-76", "77-78",
-      "79-82", "83-87", "88-89", "90-96", "97-103",
-      "104-105", "106-107", "108-112", "113-118", "119",
-      "120-134", "135-139", "140-144", "145-150", "Ciclo Completo"
+      "1-8", "9-17", "18-22", "23-28", "29-34", "35-38", "39-43", "44-48", "49-54", "55-59",
+      "60-65", "66-68", "69-71", "72-76", "77-78", "79-82", "83-87", "88-89", "90-96", "97-103",
+      "104-105", "106-107", "108-112", "113-118", "119", "120-134", "135-139", "140-144", "145-150", "Ciclo Completo"
     ];
 
     const prayerListContent = [
@@ -414,83 +391,55 @@
       },
       {
         title: "Asher Yatzar",
-        hebrew: "בָּרוּךְ אַתָּה יְהֹוָה... רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.",
-        translit: "Asher yatzar et ha'adam b'chochma... Baruch Atah Hashem, rofeh chol basar u'mafli la'asot.",
-        translation: "Bendito és Tu, Hashem, que cura toda carne e age maravilhosamente.",
+        hebrew: "בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר יָצַר אֶת הָאָדָם בְּחָכְמָה, וּבָרָא בוֹ נְקָבִים נְקָבִים, חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ, שֶׁאִם יִפָּתֵחַ אֶחָד מֵהֶם, אוֹ יִסָּתֵם אֶחָד מֵהֶם, אִי אֶפְשַׁר לְהִתְקַיֵּם וְלַעֲמוֹד לְפָנֶיךָ. בָּרוּךְ אַתָּה יְהֹוָה, רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.",
+        translit: "Baruch Atah Hashem... Asher yatzar et ha'adam b'chochma... Baruch Atah Hashem, rofeh chol basar u'mafli la'asot.",
+        translation: "Bendito és Tu, Hashem... que criou o ser humano com sabedoria... que cura toda carne e age maravilhosamente.",
         badge: "Saúde",
         desc: "Agradecimento pelo funcionamento perfeito do corpo humano."
       },
       {
-        title: "Kriat Shema",
-        hebrew: "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד",
-        translit: "Shema Yisrael, Adonai Eloheinu, Adonai Echad.",
-        translation: "Ouve, ó Israel, o Senhor é nosso Deus, o Senhor é Um.",
-        badge: "Essencial",
-        desc: "A declaração fundamental da unicidade de Adonai."
+        title: "Shemá Yisrael (Completo)",
+        hebrew: `<strong>Shemá (Devarim 6:4-9):</strong><br>שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד׃<br>בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד<br>וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ׃ וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ׃ וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶך...<br><br><strong>Vehayá (Devarim 11:13-21):</strong><br>וְהָיָה אִם־שָׁמֹעַ תִּשְׁמְעוּ אֶל־מִצְוֺתַי...<br><br><strong>Vayômer (Bemidbar 15:37-41):</strong><br>וַיֹּאמֶר יְהוָה אֶל־מֹשֶׁה לֵּאמֹר...`,
+        translit: "Shema Yisrael, Adonai Eloheinu, Adonai Echad...",
+        translation: `<strong>Ouve Israel (Deuteronômio 6:4-9):</strong><br>Ouve Israel, Adonai é nosso Deus, Adonai é Um. Bendito seja o Nome da glória de Seu reinado para todo o sempre. Amarás a Adonai, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força...<br><br><strong>E será (Deuteronômio 11:13-21):</strong><br>E será, se obedecerdes diligentemente os Meus preceitos... darei a chuva a vossa terra no seu momento propício...<br><br><strong>Adonai falou (Números 15:37-41):</strong><br>Adonai falou a Moshé, dizendo: Fale aos filhos de Israel... que façam para si franjas (tsitsit)... Eu sou Adonai, vosso Deus. Verdadeiro.`,
+        badge: "Torá",
+        desc: "A declaração fundamental da fé judaica, completa com as três porções da Torá."
       }
     ];
 
-    // Navegação
-    document.querySelectorAll('.nav button').forEach(btn => {
-      btn.onclick = () => {
-        const target = btn.getAttribute('data-go');
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(target).classList.add('active');
-        document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      };
-    });
-
-    // Atualizar Relógio e Dinâmica
     function updateApp() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-
-      // Tema Noite/Dia
       const hour = now.getHours();
       document.body.classList.toggle('night', hour >= 18 || hour < 6);
-
-      // Oração do Momento
       let p = prayers.morning;
       if (hour >= 12 && hour < 18) p = prayers.afternoon;
       else if (hour >= 18 || hour < 5) p = prayers.evening;
-      
       document.getElementById('prayerName').textContent = p.name;
       document.getElementById('prayerHebrew').textContent = p.hebrew;
       document.getElementById('prayerDesc').textContent = p.desc;
       document.getElementById('prayerIntent').textContent = p.intent;
-
-      // Salmo do Dia
       const day = now.getDate();
-      const range = tehilimCycle[day - 1] || tehilimCycle[0];
       document.getElementById('psalmNumber').textContent = `Dia ${day}`;
-      document.getElementById('psalmHint').textContent = `Capítulos ${range}`;
-
-      // Shabat Countdown
+      document.getElementById('psalmHint').textContent = `Capítulos ${tehilimCycle[day-1]}`;
       updateShabbat(now);
     }
 
     function updateShabbat(now) {
-      const SHABBAT_DAY = 5; // Sexta
-      const SHABBAT_HOUR = 18;
+      const SHABBAT_DAY = 5;
       let next = new Date(now);
-      next.setHours(SHABBAT_HOUR, 0, 0, 0);
-      
+      next.setHours(18, 0, 0, 0);
       const diff = (SHABBAT_DAY - now.getDay() + 7) % 7;
       next.setDate(now.getDate() + diff);
       if (now.getDay() === 5 && now.getHours() >= 18) next.setDate(next.getDate() + 7);
-
       const t = next - now;
       const d = Math.floor(t / (1000*60*60*24));
       const h = Math.floor((t / (1000*60*60)) % 24);
-      
       document.getElementById('shabbatPill').textContent = `Shabat em ${d}d ${h}h`;
       document.getElementById('countdownHint').textContent = `Faltam ${d} dias e ${h} horas`;
     }
 
-    // Renderizar Listas
     function init() {
-      // Orações
       const list = document.getElementById('prayerList');
       list.innerHTML = prayerListContent.map(p => `
         <details class="item">
@@ -498,7 +447,7 @@
             <div class="item-top">
               <div>
                 <h3 class="item-title">${p.title}</h3>
-                <p class="item-hebrew">${p.hebrew.split(',')[0]}</p>
+                <p class="item-hebrew">${p.hebrew.substring(0, 20)}...</p>
               </div>
               <span class="badge">${p.badge}</span>
             </div>
@@ -508,70 +457,63 @@
             <div class="divider"></div>
             <p class="body-label">Hebraico</p>
             <p class="rtl">${p.hebrew}</p>
-            <p class="body-label">Transliteração</p>
-            <p class="translit">${p.translit}</p>
-            <p class="body-label">Tradução</p>
+            <p class="body-label">Tradução Chassídica</p>
             <p class="pt">${p.translation}</p>
           </div>
         </details>
       `).join('');
 
-      // Tehilim Screen
       const psalmDiv = document.getElementById('psalmContent');
       psalmDiv.innerHTML = `
         <div class="card">
-          <p class="section-label">Ciclo Mensal</p>
-          <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 15px;">
+          <p class="section-label">Clique no dia para ler</p>
+          <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; margin-top: 15px;">
             ${tehilimCycle.map((r, i) => `
-              <div style="padding:10px; background:var(--gold-soft); border-radius:12px; text-align:center; border:1px solid var(--border); ${i+1 === new Date().getDate() ? 'border-color:var(--gold); background:rgba(184,138,43,.2)' : ''}">
+              <div class="day-cell ${i+1 === new Date().getDate() ? 'active' : ''}" onclick="window.open('https://www.sefaria.org/Psalms.' + '${r}'.split('-')[0], '_blank')">
                 <small style="display:block; color:var(--gold); font-size:9px;">DIA ${i+1}</small>
-                <strong style="font-size:12px;">${r}</strong>
+                <strong style="font-size:11px;">${r}</strong>
               </div>
             `).join('')}
           </div>
+          <p class="small-note" style="text-align:center; margin-top:15px;">Ao clicar, você será levado aos capítulos no Sefaria.</p>
         </div>
       `;
 
-      // Quote Aleatória
-      const q = quotes[Math.floor(Math.random() * quotes.length)];
-      document.getElementById('quoteText').textContent = `"${q.text}"`;
-      document.getElementById('quoteSource').textContent = `— ${q.source}`;
-      document.getElementById('quoteTag').textContent = q.tag;
+      document.querySelectorAll('.nav button').forEach(btn => {
+        btn.onclick = () => {
+          const target = btn.getAttribute('data-go');
+          document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+          document.getElementById(target).classList.add('active');
+          document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        };
+      });
 
       updateApp();
       setInterval(updateApp, 60000);
+      const starsContainer = document.getElementById('stars');
+      for(let i=0; i<40; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.width = s.style.height = (Math.random() * 2 + 1) + 'px';
+        starsContainer.appendChild(s);
+      }
     }
 
-    // Timer Hitbodedut
-    let timer = null;
-    let timeLeft = 600;
-    function startTimer() {
+    let timer = null, timeLeft = 600;
+    document.getElementById('startBtn').onclick = () => {
       if (timer) return;
       timer = setInterval(() => {
         timeLeft--;
-        const m = Math.floor(timeLeft / 60);
-        const s = timeLeft % 60;
+        const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
         document.getElementById('timerDisplay').textContent = `${m}:${s.toString().padStart(2,'0')}`;
         if (timeLeft <= 0) clearInterval(timer);
       }, 1000);
-    }
-    document.getElementById('startBtn').onclick = startTimer;
-    document.getElementById('pauseBtn').onclick = () => { clearInterval(timer); timer = null; };
-    document.getElementById('resetBtn').onclick = () => { 
-      clearInterval(timer); timer = null; timeLeft = 600; 
-      document.getElementById('timerDisplay').textContent = "10:00"; 
     };
-
-    // Stars Background
-    const starsContainer = document.getElementById('stars');
-    for(let i=0; i<40; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      s.style.left = Math.random() * 100 + '%';
-      s.style.top = Math.random() * 100 + '%';
-      s.style.width = s.style.height = (Math.random() * 2 + 1) + 'px';
-      starsContainer.appendChild(s);
-    }
+    document.getElementById('pauseBtn').onclick = () => { clearInterval(timer); timer = null; };
+    document.getElementById('resetBtn').onclick = () => { clearInterval(timer); timer = null; timeLeft = 600; document.getElementById('timerDisplay').textContent = "10:00"; };
 
     init();
   </script>
