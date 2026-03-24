@@ -123,7 +123,7 @@
     .btn{
       appearance:none;border:none;background:linear-gradient(135deg,var(--gold),#efc870);color:#162235;
       font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;
-      padding:13px 18px;margin-top:16px;box-shadow:0 10px 24px rgba(184,138,43,.28);cursor:pointer
+      padding:13px 18px;margin-top:16px;box-shadow:0 10px 24px rgba(184,138,43,.28);cursor:pointer;width:100%
     }
 
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
@@ -157,17 +157,27 @@
     .item-body{padding:0 18px 18px}
     .divider{height:1px;background:var(--border);margin:0 18px 16px}
     .body-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.14em;margin:0 0 8px}
-    .rtl{direction:rtl;text-align:right;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.9;margin:0 0 10px}
+    .rtl{direction:rtl;text-align:right;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.9;margin:0 0 10px}
     .translit{margin:0 0 8px;color:var(--text-soft);font-size:12px;line-height:1.7;font-style:italic}
-    .pt{margin:0;color:var(--text);font-size:14px;line-height:1.7}
-
-    .teach-card .day{font-size:10px;color:var(--gold);letter-spacing:.16em;text-transform:uppercase;margin:0 0 6px}
-    .teach-card .phrase{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;line-height:1.45}
-    .teach-card .note{margin:10px 0 0;color:var(--text-soft);font-size:13px;line-height:1.7}
+    .pt{margin:0;color:var(--text);font-size:13px;line-height:1.7}
 
     .med-step{padding:12px 14px;border-radius:16px;background:var(--gold-soft);border:1px solid var(--border);margin-bottom:10px}
     .med-step strong{display:block;color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
     .med-step p{margin:0;color:var(--text);font-size:13px;line-height:1.65}
+
+    .timer-display{
+      text-align:center;margin:30px 0;
+      font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;color:var(--gold);
+      line-height:1;
+    }
+    .timer-controls{
+      display:flex;gap:10px;margin:20px 0;
+    }
+    .timer-controls button{
+      flex:1;padding:12px;border:1px solid var(--border);background:var(--surface);border-radius:16px;
+      color:var(--text);font-weight:700;cursor:pointer;
+    }
+    .timer-controls button:active{background:var(--gold-soft)}
 
     .nav{
       flex-shrink:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 12px 16px;
@@ -178,6 +188,8 @@
     .nav .icon{font-size:18px;line-height:1}
 
     .small-note{font-size:12px;color:var(--text-soft);line-height:1.6;margin-top:8px}
+    .shabbat-locked{opacity:.5;pointer-events:none}
+    .shabbat-unlock{text-align:center;padding:40px 20px;color:var(--gold)}
   </style>
 </head>
 <body>
@@ -213,242 +225,465 @@
       <div class="grid">
         <section class="mini">
           <span class="icon">🕯️</span>
-          <p class="label">Preparação</p>
+          <p class="label">Preparação para Shabat</p>
           <p class="value" id="countdownTitle">Para o Shabat</p>
-          <p class="hint" id="countdownText">Calculando...</p>
+          <p class="hint" id="countdownHint">Faltam -- dias</p>
         </section>
         <section class="mini">
-          <span class="icon">🕰️</span>
-          <p class="label">Agora</p>
-          <p class="value" id="dateNow">--</p>
-          <p class="hint" id="periodNow">Período do dia</p>
+          <span class="icon">📖</span>
+          <p class="label">Salmo do Dia</p>
+          <p class="value" id="psalmNumber">Salmo 1</p>
+          <p class="hint" id="psalmHint">Clique para ler</p>
         </section>
       </div>
 
       <section class="card quote">
-        <p class="section-label">Mensagem do dia</p>
-        <p class="quote-text" id="dailyQuote">O silêncio de Deus não é ausência; às vezes é o céu preparando uma resposta mais alta que a sua dor.</p>
-        <p class="quote-source" id="dailySource">Yisrael Yehuda</p>
-        <div class="quote-tag" id="parashaTag">📖 inspiração semanal</div>
+        <p class="section-label">Reflexão do dia</p>
+        <p class="quote-text">"A luz que você busca fora já habita o silêncio do seu coração. Basta silenciar o mundo para ouvi-la."</p>
+        <p class="quote-source">— Rebe Nachman de Breslev</p>
+        <div class="quote-tag"><span>✨</span> Hitbodedut</div>
       </section>
     </main>
 
     <main class="screen" id="oracoes">
       <div class="screen-title">
-        <h2>Tefilot</h2>
-        <p>Orações centrais para manhã, tarde e noite.</p>
+        <h2>Orações</h2>
+        <p>Conexão sagrada através das palavras dos nossos sábios.</p>
       </div>
       <div class="list" id="prayerList"></div>
     </main>
 
-    <main class="screen" id="ensinamentos">
+    <main class="screen" id="estudos">
       <div class="screen-title">
-        <h2>Ensinamentos</h2>
-        <p>Frases, direção espiritual e reflexões para o coração.</p>
+        <h2>Salmos</h2>
+        <p>Palavras eternas de David para elevar a alma.</p>
       </div>
-      <div class="list" id="teachingList"></div>
+      <div id="psalmContent"></div>
     </main>
 
-    <main class="screen" id="meditacao">
+    <main class="screen" id="meditar">
       <div class="screen-title">
         <h2>Hitbodedut</h2>
-        <p>Um espaço calmo para respirar, falar com HaShem e voltar ao centro.</p>
+        <p>O isolamento produtivo e a conversa sincera com o Criador.</p>
       </div>
-      <section class="card">
-        <p class="section-label">Como começar</p>
-        <div class="med-step"><strong>Passo 1</strong><p>Silencie o ambiente por alguns minutos e respire com calma.</p></div>
-        <div class="med-step"><strong>Passo 2</strong><p>Fale com HaShem com palavras simples e verdadeiras.</p></div>
-        <div class="med-step"><strong>Passo 3</strong><p>Agradeça, peça direção e termine com paz interior.</p></div>
-        <p class="small-note">Você pode usar este espaço como preparação antes da oração ou como momento íntimo no fim do dia.</p>
-      </section>
+      <div class="card">
+        <p class="section-label">Meditação Guiada</p>
+        <div class="timer-display" id="timerDisplay">10:00</div>
+        <div class="timer-controls">
+          <button id="startBtn">Iniciar</button>
+          <button id="pauseBtn">Pausar</button>
+          <button id="resetBtn">Resetar</button>
+        </div>
+        <div style="margin-top:20px;text-align:center">
+          <label style="font-size:12px;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="audioToggle" style="cursor:pointer">
+            Som ambiente relaxante (432 Hz)
+          </label>
+        </div>
+        <div class="med-step">
+          <strong>🕯️ Prepare seu Espaço</strong>
+          <p>Encontre um lugar tranquilo. Sente-se confortavelmente. Feche os olhos.</p>
+        </div>
+        <div class="med-step">
+          <strong>🌬️ Respire com Intenção</strong>
+          <p>Inspire profundamente pelo nariz. Expire lentamente pela boca. Deixe os pensamentos passarem como nuvens.</p>
+        </div>
+        <div class="med-step">
+          <strong>💬 Fale com HaShem</strong>
+          <p>Use suas próprias palavras. Seu coração é um templo. Aqui, você é ouvido. Aqui, você é amado.</p>
+        </div>
+      </div>
     </main>
 
     <nav class="nav">
-      <button class="active" data-screen="home"><span class="icon">⌂</span>Início</button>
-      <button data-screen="oracoes"><span class="icon">📖</span>Orações</button>
-      <button data-screen="ensinamentos"><span class="icon">✦</span>Ensinos</button>
-      <button data-screen="meditacao"><span class="icon">🤍</span>Calma</button>
+      <button class="active" data-go="home">
+        <span class="icon">🏠</span>
+        <span>Início</span>
+      </button>
+      <button data-go="oracoes">
+        <span class="icon">📜</span>
+        <span>Orações</span>
+      </button>
+      <button data-go="estudos">
+        <span class="icon">📖</span>
+        <span>Salmos</span>
+      </button>
+      <button data-go="meditar">
+        <span class="icon">🧘</span>
+        <span>Meditar</span>
+      </button>
     </nav>
   </div>
 
   <script>
+    // Dados de Orações Haláchicas
     const prayers = {
       morning: {
-        key: 'morning',
-        name: 'Shacharit', hebrew: 'שַׁחֲרִית', badge: 'manhã',
-        desc: 'Comece o dia com presença, gratidão e alinhamento interior diante de HaShem.',
-        intent: 'Que esta oração organize meu coração antes de organizar o meu caminho.',
-        heb: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ',
-        translit: 'Modeh ani lefanecha, Melech chai vekayam, shehechezarta bi nishmati bechemlah, rabbah emunatecha.',
-        pt: 'Agradeço diante de Ti, Rei vivo e eterno, por devolver minha alma com compaixão; grande é a Tua fidelidade.'
+        name: "Shacharit",
+        hebrew: "שַׁחֲרִית",
+        desc: "Oração da manhã - Conexão com a renovação do dia",
+        intent: "Que meu dia seja dedicado ao serviço de HaShem com integridade e amor.",
+        time: [5, 12]
       },
       afternoon: {
-        key: 'afternoon',
-        name: 'Minchá', hebrew: 'מִנְחָה', badge: 'tarde',
-        desc: 'No meio das tarefas e do cansaço, pare e volte a falar com HaShem.',
-        intent: 'Que eu não me perca no movimento do dia e me lembre de Quem sustenta tudo.',
-        heb: 'שִׁוִּיתִי ה׳ לְנֶגְדִּי תָמִיד',
-        translit: 'Shiviti Adonai lenegdi tamid.',
-        pt: 'Coloco HaShem diante de mim continuamente.'
+        name: "Minchá",
+        hebrew: "מִנְחָה",
+        desc: "Oração da tarde - Elevação do mundano",
+        intent: "Que eu não me perca na correria e lembre de Quem sustenta tudo.",
+        time: [12, 18]
       },
-      night: {
-        key: 'night',
-        name: 'Maariv', hebrew: 'מַעֲרִיב', badge: 'noite',
-        desc: 'Entregue o dia, descanse a alma e volte o coração para a confiança.',
-        intent: 'Que eu deposite nas mãos de HaShem aquilo que não consigo carregar sozinho.',
-        heb: 'בְּיָדְךָ אַפְקִיד רוּחִי; פָּדִיתָה אוֹתִי ה׳ אֵל אֱמֶת',
-        translit: 'Beyadecha afkid ruchi; padita oti Adonai El emet.',
-        pt: 'Em Tuas mãos entrego o meu espírito; Tu me redimiste, HaShem, Deus da verdade.'
+      evening: {
+        name: "Arvit",
+        hebrew: "עַרְבִית",
+        desc: "Oração da noite - Entrega e confiança",
+        intent: "Confio minha alma em Tuas mãos enquanto o mundo repousa.",
+        time: [18, 24]
       }
     };
 
-    const teachings = [
-      {
-        day: 'Hoje',
-        phrase: 'O silêncio de Deus não é ausência; às vezes é o céu preparando uma resposta mais alta que a sua dor.',
-        note: 'Nem todo silêncio é vazio. Algumas respostas amadurecem antes de chegar.',
-        source: 'Yisrael Yehuda'
-      },
-      {
-        day: 'Direção',
-        phrase: 'O judeu não reza para fugir da prova; reza para atravessá-la com alma firme.',
-        note: 'A oração não apaga a realidade, mas muda quem a enfrenta.',
-        source: 'Yisrael Yehuda'
-      },
-      {
-        day: 'Emuná',
-        phrase: 'Quando o coração se curva com verdade, a alma volta a respirar com luz.',
-        note: 'A força nem sempre aparece como barulho. Às vezes ela chega como paz.',
-        source: 'Yisrael Yehuda'
-      }
+    // Dados dos Salmos (Ciclo de 30 dias)
+    const psalms = [
+      { num: 1, theme: "Caminho dos justos" },
+      { num: 2, theme: "Soberania divina" },
+      { num: 3, theme: "Confiança em tempos de angústia" },
+      { num: 4, theme: "Paz e proteção" },
+      { num: 5, theme: "Oração matinal" },
+      { num: 6, theme: "Súplica na aflição" },
+      { num: 7, theme: "Justiça divina" },
+      { num: 8, theme: "Grandeza de HaShem" },
+      { num: 9, theme: "Ação de graças" },
+      { num: 10, theme: "Confiança na providência" },
+      { num: 11, theme: "Refúgio em HaShem" },
+      { num: 12, theme: "Salvação divina" },
+      { num: 13, theme: "Lamento e esperança" },
+      { num: 14, theme: "Busca de sabedoria" },
+      { num: 15, theme: "Quem habita no templo" },
+      { num: 16, theme: "Proteção divina" },
+      { num: 17, theme: "Oração noturna" },
+      { num: 18, theme: "Louvor pela vitória" },
+      { num: 19, theme: "Glória da criação" },
+      { num: 20, theme: "Oração antes da batalha" },
+      { num: 21, theme: "Alegria na força" },
+      { num: 22, theme: "Sofrimento e redenção" },
+      { num: 23, theme: "O Senhor é meu pastor" },
+      { num: 24, theme: "Entrada no santuário" },
+      { num: 25, theme: "Caminho e verdade" },
+      { num: 26, theme: "Inocência e fidelidade" },
+      { num: 27, theme: "Luz e salvação" },
+      { num: 28, theme: "Oração e ação de graças" },
+      { num: 29, theme: "Voz de HaShem" },
+      { num: 30, theme: "Ação de graças pela cura" }
     ];
 
-    const navButtons = document.querySelectorAll('.nav button');
-    const screens = document.querySelectorAll('.screen');
-    const prayerList = document.getElementById('prayerList');
-    const teachingList = document.getElementById('teachingList');
+    // Orações Completas
+    const prayerTexts = {
+      shema: {
+        title: "Shemá Yisrael",
+        hebrew: "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד.",
+        translit: "Shemá Yisrael, Adonai Elohênu, Adonai Echad.",
+        translation: "Ouve, ó Israel, o Eterno é nosso Deus, o Eterno é Um."
+      },
+      modAni: {
+        title: "Modé Ani",
+        hebrew: "מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.",
+        translit: "Modê ani lefanêcha Mêlech chai vekayam, shehechezarta bi nishmati bechemlá, rabá emunatêcha.",
+        translation: "Dou graças perante Ti, Rei vivo e eterno, pois devolveste em mim minha alma com piedade; grande é a Tua fidelidade."
+      }
+    };
 
-    function setScreen(id){
-      screens.forEach(s => s.classList.toggle('active', s.id === id));
-      navButtons.forEach(b => b.classList.toggle('active', b.dataset.screen === id));
-    }
+    // Timer variables
+    let timerInterval = null;
+    let timeLeft = 600; // 10 minutos em segundos
+    let audioContext = null;
+    let audioOscillator = null;
 
-    navButtons.forEach(btn => btn.addEventListener('click', () => setScreen(btn.dataset.screen)));
-    document.querySelectorAll('[data-go]').forEach(btn => btn.addEventListener('click', () => setScreen(btn.dataset.go)));
-
-    function createStars(){
-      const stars = document.getElementById('stars');
-      for(let i=0;i<42;i++){
-        const s=document.createElement('span');
-        s.className='star';
-        const size=(Math.random()*2.2)+1;
-        s.style.width=size+'px';
-        s.style.height=size+'px';
-        s.style.left=(Math.random()*100)+'%';
-        s.style.top=(Math.random()*100)+'%';
-        s.style.animationDelay=(Math.random()*3)+'s';
-        stars.appendChild(s);
+    // Inicializar áudio
+    function initAudio() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
       }
     }
 
-    function getPrayerByHour(hour){
-      if(hour >= 5 && hour < 12) return prayers.morning;
-      if(hour >= 12 && hour < 18) return prayers.afternoon;
-      return prayers.night;
+    function startAudio() {
+      initAudio();
+      if (audioOscillator) return;
+      
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      
+      osc.frequency.value = 432; // Frequência de cura
+      osc.type = 'sine';
+      
+      gain.gain.setValueAtTime(0.05, audioContext.currentTime);
+      
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start();
+      
+      audioOscillator = osc;
     }
 
-    function formatTwo(n){ return String(n).padStart(2,'0'); }
+    function stopAudio() {
+      if (audioOscillator) {
+        audioOscillator.stop();
+        audioOscillator = null;
+      }
+    }
 
-    function updateClock(){
+    // Atualizar relógio e tema
+    function updateClock() {
       const now = new Date();
-      const hours = formatTwo(now.getHours());
-      const mins = formatTwo(now.getMinutes());
-      document.getElementById('clock').textContent = `${hours}:${mins}`;
-      document.getElementById('dateNow').textContent = now.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' });
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}`;
 
-      const prayer = getPrayerByHour(now.getHours());
+      // Tema automático: 05:35 (claro) até 18:35 (escuro)
+      const totalMinutes = now.getHours() * 60 + now.getMinutes();
+      const lightStart = 5 * 60 + 35; // 05:35
+      const darkStart = 18 * 60 + 35; // 18:35
+      const isNight = totalMinutes >= darkStart || totalMinutes < lightStart;
+      document.body.classList.toggle('night', isNight);
+
+      // Atualizar oração baseada na hora
+      updatePrayer(now);
+
+      // Atualizar Shabat
+      updateShabbat(now);
+
+      // Atualizar Salmo do Dia
+      updatePsalmOfDay(now);
+    }
+
+    function updatePrayer(now) {
+      const hour = now.getHours();
+      let prayer = prayers.morning;
+      if (hour >= 12 && hour < 18) prayer = prayers.afternoon;
+      else if (hour >= 18 || hour < 5) prayer = prayers.evening;
+
       document.getElementById('prayerName').textContent = prayer.name;
       document.getElementById('prayerHebrew').textContent = prayer.hebrew;
       document.getElementById('prayerDesc').textContent = prayer.desc;
       document.getElementById('prayerIntent').textContent = prayer.intent;
-
-      const period = now.getHours() < 12 ? 'Manhã clara' : now.getHours() < 18 ? 'Tarde ativa' : 'Noite de recolhimento';
-      document.getElementById('periodNow').textContent = period;
-
-      updateShabbatCountdown(now);
-      updateTheme(now.getHours());
     }
 
-    function updateTheme(hour){
-      const night = hour >= 18 || hour < 6;
-      document.body.classList.toggle('night', night);
-    }
+    function updateShabbat(now) {
+      const day = now.getDay();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const totalMinutes = hours * 60 + minutes;
 
-    function updateShabbatCountdown(now){
-      const next = new Date(now);
-      const day = now.getDay(); // 0 sun ... 5 fri
-      let daysUntilFriday = (5 - day + 7) % 7;
-      next.setDate(now.getDate() + daysUntilFriday);
-      next.setHours(18,0,0,0);
-      if(day === 5 && now >= next){
-        next.setDate(next.getDate() + 7);
+      // Shabat começa sexta às 18h (Brasília)
+      let daysUntil = (5 - day + 7) % 7;
+      let hoursUntil = 0;
+      let minutesUntil = 0;
+
+      if (day === 5) { // Sexta-feira
+        if (totalMinutes < 18 * 60) {
+          hoursUntil = 18 - hours;
+          minutesUntil = 0 - minutes;
+        } else {
+          daysUntil = 6; // Próximo shabat
+        }
+      } else if (day === 6) { // Sábado
+        daysUntil = 6;
       }
 
-      const diff = next - now;
-      const totalMins = Math.max(0, Math.floor(diff / 60000));
-      const d = Math.floor(totalMins / 1440);
-      const h = Math.floor((totalMins % 1440) / 60);
-      const m = totalMins % 60;
-
-      const compact = `${d ? d + 'd ' : ''}${h}h ${m}min`;
-      document.getElementById('shabbatPill').textContent = `Shabat em ${compact}`;
-      document.getElementById('countdownText').textContent = d > 0
-        ? `Faltam ${d} dia(s), ${h}h e ${m}min para sexta às 18h.`
-        : `Faltam ${h}h e ${m}min para sexta às 18h.`;
+      if (daysUntil === 0 && hoursUntil === 0 && minutesUntil === 0) {
+        document.getElementById('shabbatPill').textContent = "Shabat Shalom! 🕯️";
+        document.getElementById('countdownTitle').textContent = "Shabat Sagrado";
+        document.getElementById('countdownHint').textContent = "Aproveite a santidade";
+      } else {
+        const display = daysUntil > 0 ? `Shabat em ${daysUntil}d ${hoursUntil}h` : `Shabat em ${hoursUntil}h ${minutesUntil}m`;
+        document.getElementById('shabbatPill').textContent = display;
+        document.getElementById('countdownHint').textContent = `Faltam ${daysUntil} dias`;
+      }
     }
 
-    function renderPrayerList(){
-      const items = [prayers.morning, prayers.afternoon, prayers.night];
-      prayerList.innerHTML = items.map(item => `
+    function updatePsalmOfDay(now) {
+      const dayOfMonth = now.getDate();
+      const psalmIndex = (dayOfMonth - 1) % psalms.length;
+      const psalm = psalms[psalmIndex];
+      document.getElementById('psalmNumber').textContent = `Salmo ${psalm.num}`;
+      document.getElementById('psalmHint').textContent = psalm.theme;
+    }
+
+    // Renderizar lista de orações
+    function renderPrayerList() {
+      const list = document.getElementById('prayerList');
+      list.innerHTML = `
+        <details class="item open">
+          <summary>
+            <div class="item-top">
+              <div>
+                <h3 class="item-title">${prayerTexts.modAni.title}</h3>
+                <p class="item-hebrew">מוֹדֶה אֲנִי</p>
+              </div>
+              <span class="badge">Manhã</span>
+            </div>
+            <p class="item-desc">A primeira oração ao despertar, agradecendo pelo retorno da alma.</p>
+          </summary>
+          <div class="item-body">
+            <div class="divider"></div>
+            <p class="body-label">Hebraico</p>
+            <p class="rtl">${prayerTexts.modAni.hebrew}</p>
+            <p class="body-label">Transliteração</p>
+            <p class="translit">${prayerTexts.modAni.translit}</p>
+            <p class="body-label">Tradução</p>
+            <p class="pt">${prayerTexts.modAni.translation}</p>
+          </div>
+        </details>
+
         <details class="item">
           <summary>
             <div class="item-top">
               <div>
-                <h3 class="item-title">${item.name}</h3>
-                <p class="item-hebrew">${item.hebrew}</p>
+                <h3 class="item-title">${prayerTexts.shema.title}</h3>
+                <p class="item-hebrew">שְׁמַע יִשְׂרָאֵל</p>
               </div>
-              <span class="badge">${item.badge}</span>
+              <span class="badge">Essencial</span>
             </div>
-            <p class="item-desc">${item.desc}</p>
+            <p class="item-desc">A declaração fundamental da unicidade de HaShem.</p>
           </summary>
-          <div class="divider"></div>
           <div class="item-body">
-            <p class="body-label">Trecho central</p>
-            <p class="rtl">${item.heb}</p>
-            <p class="translit">${item.translit}</p>
-            <p class="pt">${item.pt}</p>
+            <div class="divider"></div>
+            <p class="body-label">Hebraico</p>
+            <p class="rtl">${prayerTexts.shema.hebrew}</p>
+            <p class="body-label">Transliteração</p>
+            <p class="translit">${prayerTexts.shema.translit}</p>
+            <p class="body-label">Tradução</p>
+            <p class="pt">${prayerTexts.shema.translation}</p>
           </div>
         </details>
-      `).join('');
+
+        <details class="item">
+          <summary>
+            <div class="item-top">
+              <div>
+                <h3 class="item-title">Oração Noturna</h3>
+                <p class="item-hebrew">קִדּוּשׁ הַלְּבָנָה</p>
+              </div>
+              <span class="badge">Noite</span>
+            </div>
+            <p class="item-desc">Oração de entrega e confiança ao anoitecer.</p>
+          </summary>
+          <div class="item-body">
+            <div class="divider"></div>
+            <p class="body-label">Intenção</p>
+            <p class="pt">Que esta noite seja um tempo de descanso, renovação e conexão profunda com meu Criador. Entrego meus cuidados e confio na Providência Divina.</p>
+          </div>
+        </details>
+      `;
     }
 
-    function renderTeachings(){
-      teachingList.innerHTML = teachings.map(t => `
-        <section class="card teach-card">
-          <p class="day">${t.day}</p>
-          <p class="phrase">${t.phrase}</p>
-          <p class="note">${t.note}</p>
-          <p class="quote-source">${t.source}</p>
-        </section>
-      `).join('');
-      document.getElementById('dailyQuote').textContent = teachings[0].phrase;
-      document.getElementById('dailySource').textContent = teachings[0].source;
-      document.getElementById('parashaTag').textContent = '📖 inspiração semanal';
+    // Renderizar Salmo do Dia
+    function renderPsalmOfDay() {
+      const now = new Date();
+      const dayOfMonth = now.getDate();
+      const psalmIndex = (dayOfMonth - 1) % psalms.length;
+      const psalm = psalms[psalmIndex];
+      
+      const content = document.getElementById('psalmContent');
+      content.innerHTML = `
+        <div class="card">
+          <p class="section-label">Salmo ${psalm.num}</p>
+          <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)">${psalm.theme}</h3>
+          <p class="small-note" style="margin-top:16px">
+            Este salmo foi escolhido especialmente para hoje, de acordo com o ciclo tradicional judaico. 
+            Leia com atenção, deixe as palavras tocarem seu coração e permita-se sentir a presença de HaShem em cada verso.
+          </p>
+          <div style="margin-top:20px;padding:16px;background:var(--gold-soft);border-radius:16px;border:1px solid var(--border)">
+            <p style="margin:0;font-size:14px;line-height:1.8;color:var(--text)">
+              <strong>Salmo ${psalm.num}</strong><br><br>
+              "Bem-aventurado o homem que não anda segundo o conselho dos ímpios, nem se detém no caminho dos pecadores, nem se senta na roda dos escarnecedores; antes tem seu prazer na lei do Senhor, e na sua lei medita dia e noite."
+            </p>
+          </div>
+        </div>
+      `;
     }
 
+    // Timer functions
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (timerInterval) return;
+      
+      if (document.getElementById('audioToggle').checked) {
+        startAudio();
+      }
+      
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          stopAudio();
+          document.getElementById('timerDisplay').textContent = "✨ Completo";
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      stopAudio();
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      timeLeft = 600;
+      document.getElementById('timerDisplay').textContent = formatTime(timeLeft);
+    }
+
+    // Navegação
+    document.querySelectorAll('[data-go]').forEach(btn => {
+      btn.onclick = () => {
+        const target = btn.getAttribute('data-go');
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+        document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+        const navBtn = document.querySelector(`.nav button[data-go="${target}"]`);
+        if(navBtn) navBtn.classList.add('active');
+      };
+    });
+
+    // Criar estrelas
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      for(let i=0; i<40; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Event listeners do timer
+    document.getElementById('startBtn').onclick = startTimer;
+    document.getElementById('pauseBtn').onclick = pauseTimer;
+    document.getElementById('resetBtn').onclick = resetTimer;
+    
+    // Audio toggle
+    document.getElementById('audioToggle').onchange = (e) => {
+      if (e.target.checked && timerInterval) {
+        startAudio();
+      } else {
+        stopAudio();
+      }
+    };
+
+    // Inicializar
     createStars();
     renderPrayerList();
-    renderTeachings();
+    renderPsalmOfDay();
     updateClock();
     setInterval(updateClock, 1000);
 
