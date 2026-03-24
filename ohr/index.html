@@ -447,7 +447,6 @@
     }
 
     let audioNodes = [];
-    let raindropsInterval = null;
     let windGustInterval = null;
 
     function startAudio() {
@@ -456,7 +455,7 @@
       
       const masterGain = audioContext.createGain();
       masterGain.gain.setValueAtTime(0, audioContext.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0.22, audioContext.currentTime + 2);
+      masterGain.gain.linearRampToValueAtTime(0.20, audioContext.currentTime + 2);
       masterGain.connect(audioContext.destination);
       
       // Cria ruído rosa (mais suave que branco) para simular chuva de fundo
@@ -473,7 +472,7 @@
         b4 = 0.049922035 * b3 + 0.950066025 * b4;
         b5 = 0.362025049 * b4 + 0.637974951 * b5;
         b6 = 0.214992697 * b5 + 0.785007303 * b6;
-        pinkNoiseData[i] = b6 * 0.25;
+        pinkNoiseData[i] = b6 * 0.28;
       }
       
       const pinkNoiseSource = audioContext.createBufferSource();
@@ -483,47 +482,14 @@
       // Filtro para suavizar (chuva de fundo) - removendo ruídos ásperos
       const rainFilter = audioContext.createBiquadFilter();
       rainFilter.type = 'lowpass';
-      rainFilter.frequency.value = 3200;
-      rainFilter.Q.value = 0.6;
+      rainFilter.frequency.value = 3500;
+      rainFilter.Q.value = 0.65;
       
       // Conectar ruído rosa
       pinkNoiseSource.connect(rainFilter);
       rainFilter.connect(masterGain);
       pinkNoiseSource.start();
       audioNodes.push(pinkNoiseSource, rainFilter);
-      
-      // Simular pingos de chuva individuais (HD) - mais suave
-      raindropsInterval = setInterval(() => {
-        const numDrops = Math.floor(Math.random() * 3) + 2; // 2-4 pingos
-        for (let d = 0; d < numDrops; d++) {
-          setTimeout(() => {
-            const dropOsc = audioContext.createOscillator();
-            const dropGain = audioContext.createGain();
-            const dropFilter = audioContext.createBiquadFilter();
-            
-            // Frequência do pingo (som agudo e nítido)
-            dropOsc.frequency.value = 850 + Math.random() * 350;
-            dropOsc.type = 'sine';
-            
-            // Filtro para dar corpo ao pingo
-            dropFilter.type = 'highpass';
-            dropFilter.frequency.value = 650;
-            
-            // Envelope do pingo (muito rápido) - reduzido para menos áspero
-            dropGain.gain.setValueAtTime(0.06, audioContext.currentTime);
-            dropGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
-            
-            dropOsc.connect(dropFilter);
-            dropFilter.connect(dropGain);
-            dropGain.connect(masterGain);
-            
-            dropOsc.start(audioContext.currentTime);
-            dropOsc.stop(audioContext.currentTime + 0.15);
-            
-            audioNodes.push(dropOsc, dropGain, dropFilter);
-          }, d * 80);
-        }
-      }, 800);
       
       // Simular rajadas de vento ocasionais (som úmido e relaxante)
       windGustInterval = setInterval(() => {
@@ -543,7 +509,7 @@
           
           // Envelope do vento (gradual) - mais suave
           windGain.gain.setValueAtTime(0, audioContext.currentTime);
-          windGain.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 0.8);
+          windGain.gain.linearRampToValueAtTime(0.10, audioContext.currentTime + 0.8);
           windGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 2.5);
           
           windOsc.connect(windFilter);
@@ -557,55 +523,11 @@
         }
       }, 3000);
       
-      // Simular trovões distantes ocasionais (suave e relaxante)
-      const thunderInterval = setInterval(() => {
-        if (Math.random() > 0.85) { // 15% de chance a cada intervalo
-          // Trovão é um ruído curto e grave
-          const thunderBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.3, audioContext.sampleRate);
-          const thunderData = thunderBuffer.getChannelData(0);
-          
-          // Gerar ruído para trovão
-          for (let i = 0; i < thunderBuffer.length; i++) {
-            thunderData[i] = (Math.random() * 2 - 1) * 0.35;
-          }
-          
-          const thunderSource = audioContext.createBufferSource();
-          thunderSource.buffer = thunderBuffer;
-          
-          const thunderGain = audioContext.createGain();
-          const thunderFilter = audioContext.createBiquadFilter();
-          
-          // Filtro para suavizar o trovão
-          thunderFilter.type = 'lowpass';
-          thunderFilter.frequency.value = 380;
-          thunderFilter.Q.value = 0.3;
-          
-          // Envelope do trovão
-          thunderGain.gain.setValueAtTime(0, audioContext.currentTime);
-          thunderGain.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.05);
-          thunderGain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
-          
-          thunderSource.connect(thunderFilter);
-          thunderFilter.connect(thunderGain);
-          thunderGain.connect(masterGain);
-          
-          thunderSource.start(audioContext.currentTime);
-          
-          audioNodes.push(thunderSource, thunderGain, thunderFilter);
-        }
-      }, 5000);
-      
-      audioNodes.push(thunderInterval);
-      
       audioNodes.push(masterGain);
     }
 
-    let thunderInterval = null;
-
     function stopAudio() {
-      if (raindropsInterval) clearInterval(raindropsInterval);
       if (windGustInterval) clearInterval(windGustInterval);
-      if (thunderInterval) clearInterval(thunderInterval);
       
       if (audioNodes.length > 0) {
         const masterGain = audioNodes[audioNodes.length - 1];
