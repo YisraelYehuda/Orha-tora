@@ -399,9 +399,9 @@
       },
       {
         title: "Shemá Yisrael (Completo)",
-        hebrew: `<strong>Shemá (Devarim 6:4-9):</strong><br>שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד׃<br>בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד<br>וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ׃ וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ׃ וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶך...<br><br><strong>Vehayá (Devarim 11:13-21):</strong><br>וְהָיָה אִם־שָׁמֹעַ תִּשְׁמְעוּ אֶל־מִצְוֺתַי...<br><br><strong>Vayômer (Bemidbar 15:37-41):</strong><br>וַיֹּאמֶר יְהוָה אֶל־מֹשֶׁה לֵּאמֹר...`,
-        translit: "Shema Yisrael, Adonai Eloheinu, Adonai Echad...",
-        translation: `<strong>Ouve Israel (Deuteronômio 6:4-9):</strong><br>Ouve Israel, Adonai é nosso Deus, Adonai é Um. Bendito seja o Nome da glória de Seu reinado para todo o sempre. Amarás a Adonai, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força...<br><br><strong>E será (Deuteronômio 11:13-21):</strong><br>E será, se obedecerdes diligentemente os Meus preceitos... darei a chuva a vossa terra no seu momento propício...<br><br><strong>Adonai falou (Números 15:37-41):</strong><br>Adonai falou a Moshé, dizendo: Fale aos filhos de Israel... que façam para si franjas (tsitsit)... Eu sou Adonai, vosso Deus. Verdadeiro.`,
+        hebrew: `<strong>שְׁמַע יִשְׂרָאֵל</strong><br>שְׁמַע יִשְׂרָאֵל י־הוָה אֱלֹקֵינוּ י־הוָה אֶחָד<br><br><strong>בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד</strong><br><br><strong>וְאָהַבְתָּ (Ve'ahavta)</strong><br>וְאָהַבְתָּ אֵת י־הוָה אֱלֹקֶיךָ בְּכָל לְבָבְךָ וּבְכָל נַפְשְׁךָ וּבְכָל מְאֹדֶךָ<br><br><strong>וְהָיָה אִם שָׁמוֹעַ (Vehayá Im Shamoa)</strong><br>וְהָיָה אִם שָׁמוֹעַ תִּשְׁמְעוּ אֶל מִצְוֹתַי<br><br><strong>וַיֹּאמֶר (Vayomer)</strong><br>וַיֹּאמֶר י־הוָה אֶל מֹשֶׁה לֵּאמֹר`,
+        translit: "Shema Yisrael, Adonai Eloheinu, Adonai Echad. Baruch Shem Kevod Malchuto Le'olam Va'ed.",
+        translation: `<strong>Ouve, ó Israel: Hashem é nosso Deus, Hashem é Um.</strong><br><br><strong>Bendito seja o Nome da glória de Seu Reino para todo o sempre.</strong><br><br><strong>Amarás Hashem, teu Deus,</strong> com todo o teu coração, com toda a tua alma e com todas as tuas forças. Estas palavras estarão sobre o teu coração. Ensinarás aos teus filhos e falarás delas constantemente, ao sentar, ao andar, ao deitar e ao levantar.<br><br><strong>Se ouvirdes atentamente os mandamentos de Hashem,</strong> amando-O e servindo-O com todo o coração, Ele dará chuva no tempo certo e trará sustento. Cuidado para não desviar o coração e se afastar do caminho.<br><br><strong>Hashem disse a Moshê:</strong> Fala aos filhos de Israel que façam tzitzit em suas vestes. Ao vê-los, lembrarão de todos os mandamentos e não seguirão os desejos do coração e dos olhos. Eu sou Hashem, que vos tirei do Egito.<br><br><em>Recite com kavaná (intenção profunda). Cubra os olhos ao dizer "Shemá Yisrael".</em>`,
         badge: "Torá",
         desc: "A declaração fundamental da fé judaica, completa com as três porções da Torá."
       }
@@ -440,6 +440,41 @@
     }
 
     function init() {
+    let updateNotification = null;
+    let swRegistration = null;
+
+    // Registrar o Service Worker e verificar atualizações
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js').then(reg => {
+        swRegistration = reg;
+        
+        // Verificar atualizações periodicamente
+        setInterval(() => reg.update(), 60000);
+        
+        // Escutar por novas versões do Service Worker
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Nova versão disponível
+              showUpdateNotification();
+            }
+          });
+        });
+      });
+    }
+
+    function showUpdateNotification() {
+      if (updateNotification) return;
+      
+      updateNotification = document.createElement('div');
+      updateNotification.style.cssText = 'position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--text); padding: 14px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 9999; display: flex; gap: 12px; align-items: center; max-width: 90%; font-size: 14px; font-weight: 600;';
+      
+      updateNotification.innerHTML = '<span>Atualizar App</span><button onclick="window.location.reload()" style="background: var(--text); color: var(--gold); border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 12px;">Atualizar</button>';
+      
+      document.body.appendChild(updateNotification);
+    }
+
       const list = document.getElementById('prayerList');
       list.innerHTML = prayerListContent.map(p => `
         <details class="item">

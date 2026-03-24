@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ohr-v5';
+const CACHE_NAME = 'ohr-v6';
 const ASSETS = [
   './',
   './index.html',
@@ -49,4 +49,11 @@ self.addEventListener('fetch', (event) => {
       return cached || networked;
     })
   );
+});
+
+// Notificar clientes sobre atualizações disponíveis
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
