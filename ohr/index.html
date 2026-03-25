@@ -194,19 +194,15 @@
     .day-cell.active{border-color:var(--gold); background:rgba(184,138,43,.2); box-shadow:0 0 10px rgba(184,138,43,.2)}
     
     /* Update Button Styles */
-    #update-btn {
+    #update-btn-container {
       display: none;
-      background: linear-gradient(135deg, #4a90e2, #357abd);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px;
-      font-weight: 700;
-      font-size: 13px;
       margin-top: 20px;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--gold), #efc870);
+      border-radius: 16px;
+      text-align: center;
       cursor: pointer;
-      width: 100%;
-      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+      box-shadow: 0 4px 12px rgba(184, 138, 43, 0.3);
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
@@ -224,131 +220,156 @@
   <div class="app">
     <div class="topbar">
       <div class="clock" id="clock">--:--</div>
-      <div class="pill" id="parasha-pill">Carregando...</div>
+      <div class="pill" id="shabbatPill">Shabat em --</div>
     </div>
 
-    <!-- HOME -->
-    <div class="screen active" id="home">
+    <main class="screen active" id="home">
       <div class="header">
-        <p class="eyebrow">Shalom Aleichem</p>
-        <h1 class="title">Luz na<br/>Jornada</h1>
-        <p class="subtitle">Encontre paz na presença de HaShem</p>
+        <p class="eyebrow">Shalom, Yisrael Yehuda</p>
+        <h1 class="title">Ohr</h1>
+        <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
       <div class="card hero">
-        <p class="section-label">Momento Atual</p>
-        <h2 class="hero-title" id="time-title">--</h2>
-        <p class="hero-hebrew" id="time-hebrew">--</p>
-        <p class="hero-desc" id="time-desc">Prepare seu coração para a conexão.</p>
+        <p class="section-label" id="prayerName">Shacharit</p>
+        <h2 class="hero-title">Oração do Momento</h2>
+        <p class="hero-hebrew" id="prayerHebrew">שַׁחֲרִית</p>
+        <p class="hero-desc" id="prayerDesc">Abertura dos canais de luz para o novo dia.</p>
+        
         <div class="intent">
-          <small>Kavaná</small>
-          <p id="kavana-text">"Põe-me como selo sobre o teu coração..."</p>
+          <small>Intenção (Kavaná)</small>
+          <p id="prayerIntent">"Que meu dia seja dedicado ao serviço de HaShem com integridade e amor."</p>
         </div>
-        <button class="btn" onclick="document.querySelector('[data-go=tefila]').click()">Abrir Rezas</button>
+        
+        <button class="btn" onclick="document.querySelector('[data-go=oracoes]').click()">Abrir Orações</button>
       </div>
 
       <div class="grid">
-        <div class="mini" onclick="document.querySelector('[data-go=tehilim]').click()">
-          <span class="icon">📜</span>
-          <p class="label">Tehilim</p>
-          <p class="value" id="psalm-day">Dia --</p>
+        <div class="mini" onclick="document.querySelector('[data-go=estudos]').click()">
+          <span class="icon">📖</span>
+          <p class="label">Salmo do Dia</p>
+          <p class="value" id="psalmNumber">Salmo --</p>
+          <p class="hint" id="psalmHint">Clique para ler</p>
         </div>
-        <div class="mini" onclick="document.querySelector('[data-go=medita]').click()">
+        <div class="mini">
           <span class="icon">🕯️</span>
-          <p class="label">Hitbodedut</p>
-          <p class="value">Silêncio</p>
+          <p class="label">Contagem</p>
+          <p class="value" id="countdownTitle">Para o Shabat</p>
+          <p class="hint" id="countdownHint">Calculando tempo...</p>
         </div>
       </div>
 
       <div class="card quote">
-        <p class="quote-text" id="daily-quote">"O mundo inteiro é uma ponte muito estreita, e o principal é não ter medo algum."</p>
-        <p class="quote-source">— Rebe Nachman de Breslev</p>
-        <div class="quote-tag"><span>✨</span> Chassidut</div>
+        <p class="section-label">Luz dos Rebbes</p>
+        <p class="quote-text" id="quoteText">"Seu pensamento é onde você está. Procure estar sempre em um lugar sagrado."</p>
+        <p class="quote-source" id="quoteSource">— Baal Shem Tov</p>
+        <div class="quote-tag">
+          <span>✨</span>
+          <span id="quoteTag">Chassidut</span>
+        </div>
       </div>
-    </div>
+    </main>
 
-    <!-- TEFILA -->
-    <div class="screen" id="tefila">
+    <main class="screen" id="oracoes">
       <div class="screen-title">
         <h2>Orações</h2>
-        <p>Conexão através das palavras sagradas</p>
+        <p>Conexão sagrada através das palavras dos nossos sábios.</p>
       </div>
-      <div class="list" id="prayer-list"></div>
-    </div>
+      <div class="list" id="prayerList"></div>
+    </main>
 
-    <!-- TEHILIM -->
-    <div class="screen" id="tehilim">
+    <main class="screen" id="estudos">
       <div class="screen-title">
-        <h2>Salmos</h2>
-        <p>O clamor da alma ao Criador</p>
+        <h2>Salmos (Tehilim)</h2>
+        <p>O Sefer Tehilim é dividido para ser completado uma vez por mês. Cada dia possui salmos específicos.</p>
       </div>
-      <div id="psalm-content"></div>
-    </div>
+      <div id="psalmContent"></div>
+    </main>
 
-    <!-- MEDITA -->
-    <div class="screen" id="medita">
+    <main class="screen" id="meditar">
       <div class="screen-title">
         <h2>Hitbodedut</h2>
-        <p>Conversa particular com HaShem</p>
+        <p>O isolamento produtivo e a conversa sincera com o Criador.</p>
       </div>
       <div class="card">
-        <div class="med-step">
-          <strong>1. O Lugar</strong>
-          <p>Encontre um canto calmo, onde possa falar livremente.</p>
-        </div>
-        <div class="med-step">
-          <strong>2. Abertura</strong>
-          <p>"Mestre do Universo, ajuda-me a encontrar as palavras certas."</p>
-        </div>
-        <div class="med-step">
-          <strong>3. Gratidão</strong>
-          <p>Agradeça por cada detalhe, por menor que pareça.</p>
-        </div>
+        <p class="section-label">Meditação Guiada</p>
         <div class="timer-display" id="timerDisplay">10:00</div>
         <div class="timer-controls">
           <button id="startBtn">Iniciar</button>
           <button id="pauseBtn">Pausar</button>
-          <button id="resetBtn">Reiniciar</button>
+          <button id="resetBtn">Resetar</button>
+        </div>
+        <div style="margin-top:20px;text-align:center">
+          <label style="font-size:12px;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="audioToggle" style="cursor:pointer">
+            Som Ambiente - Chuva e Vento
+          </label>
+        </div>
+        <div class="med-step">
+          <strong>🕯️ Prepare seu Espaço</strong>
+          <p>Encontre um lugar tranquilo. Sente-se confortavelmente. Feche os olhos.</p>
+        </div>
+        <div class="med-step">
+          <strong>🌬️ Respire com Intenção</strong>
+          <p>Inspire profundamente pelo nariz. Expire lentamente pela boca. Deixe os pensamentos passarem como nuvens.</p>
+        </div>
+        <div class="med-step">
+          <strong>💬 Fale com HaShem</strong>
+          <p>Use suas próprias palavras. Seu coração é um templo. Aqui, você é ouvido. Aqui, você é amado.</p>
         </div>
       </div>
-    </div>
+    </main>
 
-    <!-- SOBRE -->
-    <div class="screen" id="sobre">
+    <main class="screen" id="sobre">
       <div class="screen-title">
-        <h2>Sobre</h2>
-        <p>Ohr — Sua luz diária</p>
+        <h2>Sobre Ohr</h2>
+        <p>Conheça esta ferramenta de oração e paz espiritual.</p>
       </div>
-      <div class="card">
-        <p class="pt">O <strong>Ohr</strong> foi criado para ser um refúgio digital. Um espaço de calma, oração e reflexão para o judeu moderno e para todos que buscam a Luz.</p>
-        <p class="pt" style="margin-top:10px">Desenvolvido com amor para ajudar na prática diária de conexão com o Criador.</p>
+      <div class="card hero">
+        <p class="section-label">Ohr — Luz Espiritual</p>
+        <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)">Criado por Yisrael Yehuda</h3>
+        <p class="small-note" style="margin-top:16px">
+          Este aplicativo foi desenvolvido com o propósito de criar um espaço sagrado de conexão com Adonai. 
+          Cada detalhe foi pensado para oferecer uma experiêcia de oração profunda, autêntica e transformadora.
+        </p>
         
         <!-- Botão de Atualização -->
-        <button id="update-btn" onclick="updateAppNow()">
-          ✨ Nova Atualização Disponível! <br/>
-          <small>Clique para atualizar agora</small>
+        <div id="update-btn-container" onclick="window.location.reload()">
+          <strong style="color: #162235; font-size: 15px;">✨ Nova Atualização Disponível!</strong><br/>
+          <small style="color: #162235; font-weight: 600;">Clique aqui para atualizar agora</small>
+        </div>
+
+        <button id="installBtn" class="btn" style="width:100%;margin-top:20px;background:linear-gradient(135deg,var(--gold),#efc870);display:none;">
+          ⬇️ Baixar Aplicativo (Um Clique)
         </button>
-        
-        <p class="small-note" style="margin-top:20px; text-align:center">Versão 1.0.7 — OrHaTora</p>
+        <div style="margin-top:20px;padding:16px;background:var(--gold-soft);border-radius:16px;border:1px solid var(--border)">
+          <p style="margin:0;font-size:13px;line-height:1.8;color:var(--text)">
+            <strong>📧 Contato:</strong><br>
+            <a href="mailto:orhatorabrasil@gmail.com" style="color:var(--gold);text-decoration:none;font-weight:700">orhatorabrasil@gmail.com</a><br><br>
+            <strong>✨ Propósito:</strong><br>
+            Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
+            oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.
+          </p>
+        </div>
       </div>
-    </div>
+    </main>
 
     <nav class="nav">
       <button class="active" data-go="home">
         <span class="icon">🏠</span>
         <span>Início</span>
       </button>
-      <button data-go="tefila">
-        <span class="icon">🛐</span>
-        <span>Rezas</span>
-      </button>
-      <button data-go="tehilim">
+      <button data-go="oracoes">
         <span class="icon">📜</span>
+        <span>Orações</span>
+      </button>
+      <button data-go="estudos">
+        <span class="icon">📖</span>
         <span>Salmos</span>
       </button>
-      <button data-go="medita">
-        <span class="icon">🕯️</span>
-        <span>Calma</span>
+      <button data-go="meditar">
+        <span class="icon">🧘</span>
+        <span>Meditar</span>
       </button>
       <button data-go="sobre">
         <span class="icon">ℹ️</span>
@@ -358,116 +379,136 @@
   </div>
 
   <script>
-    const prayers = [
-      { id: 'modeh', title: 'Modeh Ani', heb: 'מוֹדֶה אֲנִי', desc: 'Ao acordar', body: 'Modeh ani lefanecha, Melech chai vekayam, shehechezarta bi nishmati bechemla, raba emunatecha.', pt: 'Dou graças perante Ti, Rei vivo e eterno, por teres restaurado em mim minha alma com piedade; grande é a Tua fidelidade.' },
-      { id: 'shema', title: 'Shemá Israel', heb: 'שְׁמַע יִשְׂרָאֵל', desc: 'Declaração de Fé', body: 'Shemá Yisrael, Adonai Eloheinu, Adonai Echad.', pt: 'Ouve Israel, o Eterno é nosso Deus, o Eterno é Um.' },
-      { id: 'asher', title: 'Asher Yatzar', heb: 'אֲשֶׁר יָצַר', desc: 'Saúde do corpo', body: 'Baruch ata Adonai, Eloheinu Melech haolam, asher yatzar et haadam bechochma...', pt: 'Bendito és Tu, Eterno nosso Deus, Rei do Universo, que formaste o homem com sabedoria...' },
-      { id: 'food', title: 'Mezonot', heb: 'בּוֹרֵא מִינֵי מְזוֹנוֹת', desc: 'Alimentos', body: 'Baruch ata Adonai, Eloheinu Melech haolam, bore minei mezonot.', pt: 'Bendito és Tu, Eterno nosso Deus, Rei do Universo, que crias várias espécies de alimentos.' }
-    ];
-
     const quotes = [
-      "Onde quer que eu vá, estou indo para a Terra de Israel.",
-      "A alegria não é apenas um detalhe, é a base de tudo.",
-      "Nunca desista! Não existe desespero no mundo.",
-      "A fala tem um poder enorme de curar a alma.",
-      "Saiba que cada movimento que você faz para o bem cria um anjo."
+      { text: "Seu pensamento é onde você está. Procure estar sempre em um lugar sagrado.", source: "Baal Shem Tov", tag: "Chassidut" },
+      { text: "É proibido ser velho. Nunca se desespere. Comece de novo a cada momento.", source: "Rebbe Nachman", tag: "Breslev" },
+      { text: "Um pouco de luz dissipa muita escuridão. Sua boa ação pode mudar o mundo.", source: "Rebbe de Lubavitch", tag: "Chabad" }
     ];
 
-    const tehilimCycle = ["1-9","10-17","18-22","23-28","29-34","35-38","39-43","44-48","49-54","55-59","60-65","66-68","69-71","72-76","77-78","79-82","83-87","88-89","90-96","97-103","104-105","106-107","108-112","113-118","119:1-88","119:89-176","120-134","135-139","140-144","145-150"];
+    const prayers = {
+      morning: { name: "Shacharit", hebrew: "שַׁחֲרִית", desc: "Oração da manhã - Renovação e Gratidão", intent: "Que meu dia seja dedicado ao serviço de HaShem com integridade e amor.", time: [5, 12] },
+      afternoon: { name: "Minchá", hebrew: "מִנְחָה", desc: "Oração da tarde - Elevação do mundano", intent: "Que eu não me perca na correria e lembre de Quem sustenta tudo.", time: [12, 18] },
+      evening: { name: "Arvit", hebrew: "עַרְבִית", desc: "Oração da noite - Entrega e confiança", intent: "Confio minha alma em Tuas mãos enquanto o mundo repousa.", time: [18, 24] }
+    };
 
-    let swRegistration = null;
+    const tehilimCycle = [
+      "1-8", "9-17", "18-22", "23-28", "29-34", "35-38", "39-43", "44-48", "49-54", "55-59",
+      "60-65", "66-68", "69-71", "72-76", "77-78", "79-82", "83-87", "88-89", "90-96", "97-103",
+      "104-105", "106-107", "108-112", "113-118", "119", "120-134", "135-139", "140-144", "145-150", "Ciclo Completo"
+    ];
+
+    const prayerListContent = [
+      {
+        title: "Modeh Ani",
+        hebrew: "מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם, שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶךָ.",
+        translit: "Modeh ani lefanecha, Melech chai v'kayam, shehechezarta bi nishmati b'chemla — raba emunatecha.",
+        translation: "Sou grato diante de Ti, Rei vivo e eterno, que devolveste minha alma a mim com misericórdia — grande é a Tua fidelidade.",
+        badge: "Ao acordar",
+        desc: "A primeira oração ao despertar, agradecendo pelo retorno da alma."
+      },
+      {
+        title: "Netilat Yadayim",
+        hebrew: "בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, עַל נְטִילַת יָדַיִם.",
+        translit: "Baruch Atah Hashem, Elokeinu Melech haolam, al netilat yadayim.",
+        translation: "Bendito és Tu, Hashem, nosso D'us, Rei do universo, que nos santificou com Seus mandamentos e nos ordenou sobre a lavagem das mãos.",
+        badge: "Pureza",
+        desc: "Lavagem ritual das mãos para iniciar o serviço sagrado."
+      },
+      {
+        title: "Asher Yatzar",
+        hebrew: "בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר יָצַר אֶת הָאָדָם בְּחָכְמָה, וּבָרָא בוֹ נְקָבִים נְקָבִים, חֲלוּלִים חֲלוּלִים. גָּלוּי וְיָדוּעַ לִפְנֵי כִסֵּא כְבוֹדֶךָ, שֶׁאִם יִפָּתֵחַ אֶחָד מֵהֶם, אוֹ יִסָּתֵם אֶחָד מֵהֶם, אִי אֶפְשַׁר לְהִתְקַיֵּם וְלַעֲמוֹד לְפָנֶיךָ. בָּרוּךְ אַתָּה יְהֹוָה, רוֹפֵא כָל בָּשָׂר וּמַפְלִיא לַעֲשׂוֹת.",
+        translit: "Baruch Atah Hashem... Asher yatzar et ha'adam b'chochma... Baruch Atah Hashem, rofeh chol basar u'mafli la'asot.",
+        translation: "Bendito és Tu, Hashem... que criou o ser humano com sabedoria... que cura toda carne e age maravilhosamente.",
+        badge: "Saúde",
+        desc: "Agradecimento pelo funcionamento perfeito do corpo humano."
+      },
+      {
+        title: "Shemá Yisrael (Completo)",
+        hebrew: `<strong>שְׁמַע יִשְׂרָאֵל</strong><br>שְׁמַע יִשְׂרָאֵל י־הוָה אֱלֹקֵינוּ י־הוָה אֶחָד<br><br><strong>בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד</strong><br><br><strong>וְאָהַבְתָּ (Ve'ahavta)</strong><br>וְאָהַבְתָּ אֵת י־הוָה אֱלֹקֶיךָ בְּכָל לְבָבְךָ וּבְכָל נַפְשְׁךָ וּבְכָל מְאֹדֶךָ<br><br><strong>וְהָיָה אִם שָׁמוֹעַ (Vehayá Im Shamoa)</strong><br>וְהָיָה אִם שָׁמוֹעַ תִּשְׁמְעוּ אֶל מִצְוֹתַי<br><br><strong>וַיֹּאמֶר (Vayomer)</strong><br>וַיֹּאמֶר י־הוָה אֶל מֹשֶׁה לֵּאמֹר`,
+        translit: "Shema Yisrael, Adonai Eloheinu, Adonai Echad. Baruch Shem Kevod Malchuto Le'olam Va'ed.",
+        translation: `<strong>Ouve, ó Israel: Hashem é nosso Deus, Hashem é Um.</strong><br><br><strong>Bendito seja o Nome da glória de Seu Reino para todo o sempre.</strong><br><br><strong>Amarás Hashem, teu Deus,</strong> com todo o teu coração, com toda a tua alma e com todas as tuas forças. Estas palavras estarão sobre o teu coração. Ensinarás aos teus filhos e falarás delas constantemente, ao sentar, ao andar, ao deitar e ao levantar.<br><br><strong>Se ouvirdes atentamente os mandamentos de Hashem,</strong> amando-O e servindo-O com todo o coração, Ele dará chuva no tempo certo e trará sustento. Cuidado para não desviar o coração e se afastar do caminho.<br><br><strong>Hashem disse a Moshê:</strong> Fala aos filhos de Israel que façam tzitzit em suas vestes. Ao vê-los, lembrarão de todos os mandamentos e não seguirão os desejos do coração e dos olhos. Eu sou Hashem, que vos tirei do Egito.<br><br><em>Recite com kavaná (intenção profunda). Cubra os olhos ao dizer "Shemá Yisrael".</em>`,
+        badge: "Torá",
+        desc: "A declaração fundamental da fé judaica, completa com as três porções da Torá. <a href='https://yisraelyehuda.github.io/Orha-tora/#oracoes' target='_blank' style='color: var(--gold); text-decoration: underline; font-weight: bold;'>Ler Shemá Completo</a>"
+      }
+    ];
 
     function updateApp() {
       const now = new Date();
-      document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-      const hr = now.getHours();
-      let title = "Bom Dia", heb = "Boker Tov", desc = "A luz se renova a cada manhã.";
-      if(hr >= 12 && hr < 18) { title = "Boa Tarde"; heb = "Tzohora-im Tovim"; desc = "Mantenha a chama acesa no meio do dia."; }
-      if(hr >= 18 || hr < 5) { title = "Boa Noite"; heb = "Layla Tov"; desc = "Descanse sob as asas da Shechiná."; document.body.classList.add('night'); }
-      else { document.body.classList.remove('night'); }
-      
-      document.getElementById('time-title').textContent = title;
-      document.getElementById('time-hebrew').textContent = heb;
-      document.getElementById('time-desc').textContent = desc;
-      document.getElementById('psalm-day').textContent = `Dia ${now.getDate()}`;
+      document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const hour = now.getHours();
+      document.body.classList.toggle('night', hour >= 18 || hour < 6);
+      let p = prayers.morning;
+      if (hour >= 12 && hour < 18) p = prayers.afternoon;
+      else if (hour >= 18 || hour < 5) p = prayers.evening;
+      document.getElementById('prayerName').textContent = p.name;
+      document.getElementById('prayerHebrew').textContent = p.hebrew;
+      document.getElementById('prayerDesc').textContent = p.desc;
+      document.getElementById('prayerIntent').textContent = p.intent;
+      const day = now.getDate();
+      document.getElementById('psalmNumber').textContent = `Dia ${day}`;
+      document.getElementById('psalmHint').textContent = `Capítulos ${tehilimCycle[day-1]}`;
+      updateShabbat(now);
     }
 
-    // Lógica do Service Worker e Botão de Atualização
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js').then(reg => {
-          swRegistration = reg;
-          
-          // Verificar se já existe um worker esperando
-          if (reg.waiting) {
-            showUpdateBtn();
-          }
+    function updateShabbat(now) {
+      const SHABBAT_DAY = 5;
+      let next = new Date(now);
+      next.setHours(18, 0, 0, 0);
+      const diff = (SHABBAT_DAY - now.getDay() + 7) % 7;
+      next.setDate(now.getDate() + diff);
+      if (now.getDay() === 5 && now.getHours() >= 18) next.setDate(next.getDate() + 7);
+      const t = next - now;
+      const d = Math.floor(t / (1000*60*60*24));
+      const h = Math.floor((t / (1000*60*60)) % 24);
+      document.getElementById('shabbatPill').textContent = `Shabat em ${d}d ${h}h`;
+      document.getElementById('countdownHint').textContent = `Faltam ${d} dias e ${h} horas`;
+    }
 
-          // Escutar por novos workers que chegam ao estado 'waiting'
+    function init() {
+      // Service Worker e Atualização
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js').then(reg => {
+          setInterval(() => reg.update(), 60000);
           reg.addEventListener('updatefound', () => {
             const newWorker = reg.installing;
             newWorker.addEventListener('statechange', () => {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                showUpdateBtn();
+                const updateBtn = document.getElementById('update-btn-container');
+                if (updateBtn) updateBtn.style.display = 'block';
               }
             });
           });
+          if (reg.waiting) {
+            const updateBtn = document.getElementById('update-btn-container');
+            if (updateBtn) updateBtn.style.display = 'block';
+          }
         });
-      });
-
-      let refreshing = false;
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (!refreshing) {
-          window.location.reload();
-          refreshing = true;
-        }
-      });
-    }
-
-    function showUpdateBtn() {
-      const btn = document.getElementById('update-btn');
-      if (btn) btn.style.display = 'block';
-    }
-
-    function updateAppNow() {
-      if (swRegistration && swRegistration.waiting) {
-        swRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
-      } else {
-        window.location.reload();
       }
-    }
 
-    function init() {
-      document.getElementById('parasha-pill').textContent = "Vayikra";
-      document.getElementById('daily-quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-      
-      const list = document.getElementById('prayer-list');
-      prayers.forEach(p => {
-        const det = document.createElement('details');
-        det.className = 'item';
-        det.innerHTML = `
+      const list = document.getElementById('prayerList');
+      list.innerHTML = prayerListContent.map(p => `
+        <details class="item">
           <summary>
             <div class="item-top">
               <div>
                 <h3 class="item-title">${p.title}</h3>
-                <p class="item-hebrew">${p.heb}</p>
+                <p class="item-hebrew">${p.hebrew.substring(0, 20)}...</p>
               </div>
-              <span class="badge">${p.desc}</span>
+              <span class="badge">${p.badge}</span>
             </div>
+            <p class="item-desc">${p.desc}</p>
           </summary>
           <div class="item-body">
             <div class="divider"></div>
-            <p class="body-label">Hebraico / Transliteração</p>
-            <p class="rtl">${p.heb}</p>
-            <p class="translit">${p.body}</p>
-            <p class="body-label">Tradução</p>
-            <p class="pt">${p.pt}</p>
+            <p class="body-label">Hebraico</p>
+            <p class="rtl">${p.hebrew}</p>
+            <p class="body-label">Tradução Chassídica</p>
+            <p class="pt">${p.translation}</p>
           </div>
-        `;
-        list.appendChild(det);
-      });
+        </details>
+      `).join('');
 
-      const psalmDiv = document.getElementById('psalm-content');
+      const psalmDiv = document.getElementById('psalmContent');
       psalmDiv.innerHTML = `
         <div class="card">
           <p class="section-label">Clique no dia para ler</p>
