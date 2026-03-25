@@ -371,126 +371,44 @@
 
         .footer-text {
             font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .footer-date {
-            color: var(--secondary);
-            margin-top: 1rem;
-            font-weight: bold;
-        }
-
-        /* SEARCH RESULTS */
-        .search-results {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 0.5rem;
-            z-index: 999;
-        }
-
-        .search-results.active {
-            display: block;
-        }
-
-        .search-result-item {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .search-result-item:hover {
-            background: #f5f5f5;
-            padding-left: 2rem;
-        }
-
-        .result-title {
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .result-preview {
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 0.3rem;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .search-bar {
-                max-width: 100%;
-                margin: 1rem 0;
-            }
-
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.85rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .modal-content {
-                padding: 2rem;
-                max-height: 95vh;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
+            opacity: 0.8;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=David+Libre:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- HEADER -->
+
     <header>
         <div class="header-container">
-            <div class="logo">✡ OrHaTora</div>
+            <div class="logo">OrHaTora</div>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Pesquisar oração, termo...">
-                <div class="search-results" id="searchResults"></div>
+                <input type="text" placeholder="Buscar orações, salmos ou estudos...">
             </div>
-            <ul class="nav-links">
-                <li><a href="#home">Início</a></li>
-                <li><a href="#shema">Shemá</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-            </ul>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#" onclick="openModal('sobre')">Sobre</a></li>
+                    <li><a href="#" onclick="openModal('contato')">Contato</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <!-- HERO -->
     <section class="hero">
-        <h1>OrHaTora</h1>
-        <p>Portal de Oração e Conexão com Hashem</p>
-        <div class="hebrew-text">שמע ישראל יהוה אלהינו יהוה אחד</div>
-        <p style="font-size: 1rem; opacity: 0.8;">Ouve, Israel: O Eterno é nosso Deus, o Eterno é Um</p>
+        <h1>Conexão com a Luz da Torá</h1>
+        <p class="hebrew-text">אוֹר הַתּוֹרָה - בָּרוּךְ אַתָּה יְהוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם</p>
+        <p>Encontre paz e elevação espiritual através das orações e ensinamentos da nossa tradição milenar.</p>
     </section>
 
-    <!-- MAIN CONTENT -->
     <div class="container">
-        <!-- CARDS GRID -->
-        <div class="cards-grid" id="cardsGrid">
+        <div class="cards-grid">
             <div class="card" onclick="openModal('shema-shacharit')">
                 <div class="card-title">
-                    <span class="card-icon">🌅</span>
+                    <span class="card-icon">☀️</span>
                     Kriat Shemá - Shacharit
                 </div>
                 <div class="card-description">
-                    Leitura do Shemá da manhã com todas as bênçãos rituais, hebraico, transliteração e tradução Haredi/Chabad/Breslev.
+                    A oração central do Shemá Yisrael para a manhã, com tradução completa e transliteração para sua conexão diária.
                 </div>
                 <button class="card-button">Ler Oração →</button>
             </div>
@@ -573,37 +491,22 @@
                     <div class="section-title">Shemá Yisrael - Primeiro Parágrafo (Devarim 6:4-9)</div>
                     <div class="hebrew">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד</div>
                     <div class="transliteration">Shemá Yisrael, Adonai Eloheinu, Adonai Echad</div>
-                    <div class="translation">Ouve, Israel: O Eterno é nosso Deus, o Eterno é Um. Cubra os olhos com a mão direita ao recitar este versículo em voz alta.</div>
-                    <p style="margin-top: 1.5rem; font-weight: bold; color: var(--secondary);">Baruch Shem Kevod Malchuto Le'olam Va'ed</p>
-                    <div class="transliteration">Bendito seja o nome da glória de Seu reino por toda a eternidade (sussurrar).</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Ve'ahavta - Amor a Hashem</div>
-                    <div class="hebrew">וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל לְבָבְךָ וּבְכָל נַפְשְׁךָ וּבְכָל מְאֹדֶךָ</div>
-                    <div class="transliteration">Ve'ahavta et Adonai Elohecha b'chol levavcha uv'chol nafshcha uv'chol me'odecha</div>
-                    <div class="translation">Amarás ao Eterno, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força. E estas palavras que hoje te ordeno estarão sobre o teu coração.</div>
+                    <div class="translation">Ouve Israel, Adonai é nosso Deus, Adonai é Um. (Sussurrar: Bendito seja o Nome da glória de Seu reinado para todo o sempre.)</div>
+                    <div class="translation">Amarás a Adonai, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força. E estas palavras que Eu te ordeno hoje estarão sobre o teu coração. As ensinarás a fundo aos teus filhos e falarás delas ao estares sentado em tua casa e ao andares pelo caminho, ao deitares e ao levantares. [Deverás] atá-las como sinal [Tefilin] sobre tua mão e serão como lembretes [acima da testa] entre teus olhos. E as escreverás sobre os umbrais de tua casa e em teus portões.</div>
                 </div>
 
                 <div class="prayer-section">
                     <div class="section-title">Segundo Parágrafo (Devarim 11:13-21)</div>
                     <div class="hebrew">וְהָיָה אִם שָׁמֹעַ תִּשְׁמְעוּ אֶל מִצְוֹתַי אֲשֶׁר אָנֹכִי מְצַוֶּה אֶתְכֶם הַיּוֹם</div>
                     <div class="transliteration">Ve'hayá im shamoa tishmeu el mitzvotai asher anochi metzaveh etchem hayom</div>
-                    <div class="translation">E será que, se obedecerdes diligentemente aos Meus mandamentos que hoje vos ordeno, de amar o Eterno vosso Deus e de O servir com todo o vosso coração e com toda a vossa alma...</div>
+                    <div class="translation">E acontecerá que, se obedecerdes diligentemente aos Meus preceitos que hoje vos ordeno, de amar a Adonai, vosso Deus, e servi-Lo com todo vosso coração e com toda vossa alma, darei a chuva a vossa terra no seu momento propício, tanto a antecipada [de outono], como a tardia [de primavera], e colherás teu cereal, teu vinho e teu azeite. E darei erva no teu campo para o teu gado, e comerás e te saciarás. Porém, guardai-vos para que vosso coração não seja tentado e vos desvieis e adorareis deuses estranhos e prostrar-vos-ei a eles. Pois então se acenderá a ira de Adonai contra vós e fechará os céus e não haverá chuva, e a terra não dará o seu produto, e desaparecereis rapidamente da boa terra que Adonai vos dá. Por isso, ponde estas Minhas palavras sobre vosso coração e sobre vossa alma e as atareis como sinal sobre vossa mão, e serão como lembretes [acima da testa] entre vossos olhos. E as ensinareis a vossos filhos a falar delas ao estar sentado em vossa casa e ao andar pelo caminho, ao deitar-te e ao levantar-te. E as escreverás sobre os umbrais de tua casa e em teus portões, para que se prolonguem vossos dias e os dias de vossos filhos sobre a terra que Adonai jurou entregar a vossos pais pelo tempo que os céus estiverem sobre a terra.</div>
                 </div>
 
                 <div class="prayer-section">
                     <div class="section-title">Terceiro Parágrafo - Tzitzit (Bamidbar 15:37-41)</div>
                     <div class="hebrew">וַיֹּאמֶר יְהוָה אֶל מֹשֶׁה לֵּאמֹר דַּבֵּר אֶל בְנֵי יִשְׂרָאֵל</div>
                     <div class="transliteration">Vayomer Adonai el Moshe lemor, Daber el B'nei Yisrael</div>
-                    <div class="translation">O Eterno falou a Moisés dizendo: Fala aos filhos de Israel e dize-lhes que façam para si franjas nas extremidades de seus trajes, e que coloquem um fio azul na franja de cada extremidade.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Conclusão - Emet Veyatziv</div>
-                    <div class="hebrew">אֱמֶת וְיַצִּיב וְנָכוֹן וְקַיָּם דָּבָר זֶה עָלֵינוּ לְעוֹלָם</div>
-                    <div class="transliteration">Emet ve'yatziv ve'nachon ve'kayam davar zeh aleinu le'olam</div>
-                    <div class="translation">Verdade e firmeza, correto e permanente é este dever para conosco eternamente. Que o Eterno nosso Deus cumpra Sua promessa e nos guie com Sua verdade.</div>
+                    <div class="translation">Adonai falou a Moshé, dizendo: Fale aos filhos de Israel e diga-lhes que façam para si franjas* sobre os cantos de suas vestes em todas as suas gerações, e que ponham um fio azul às franjas* de cada canto. E isto será para vós como tsitsit* e os vereis e lembrareis de todos os preceitos de Adonai e os cumprieis; e não seguireis atrás de vosso coração e atrás de vossos olhos, pelos quais vos desviais — para que possais lembrar e cumprir todos os Meus preceitos e ser sagrados para vosso Deus. Eu sou Adonai, vosso Deus, que vos tirei da Terra do Egito para ser vosso Deus; Eu sou Adonai, vosso Deus: Verdadeiro.</div>
                 </div>
             </div>
         </div>
@@ -628,12 +531,18 @@
                     <div class="section-title">Shemá Yisrael - Noite</div>
                     <div class="hebrew">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד</div>
                     <div class="transliteration">Shemá Yisrael, Adonai Eloheinu, Adonai Echad</div>
-                    <div class="translation">Ouve, Israel: O Eterno é nosso Deus, o Eterno é Um. Recite com intensa concentração, especialmente nos primeiros dois versículos.</div>
+                    <div class="translation">Ouve Israel, Adonai é nosso Deus, Adonai é Um. (Sussurrar: Bendito seja o Nome da glória de Seu reinado para todo o sempre.)</div>
+                    <div class="translation">Amarás a Adonai, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força. E estas palavras que Eu te ordeno hoje estarão sobre o teu coração. As ensinarás a fundo aos teus filhos e falarás delas ao estares sentado em tua casa e ao andares pelo caminho, ao deitares e ao levantares. [Deverás] atá-las como sinal [Tefilin] sobre tua mão e serão como lembretes [acima da testa] entre teus olhos. E as escreverás sobre os umbrais de tua casa e em teus portões.</div>
                 </div>
 
                 <div class="prayer-section">
-                    <div class="section-title">Os Três Parágrafos (como em Shacharit)</div>
-                    <div class="translation">Os mesmos três parágrafos da manhã são recitados à noite com a mesma concentração e devoção. O Shemá da noite é tão importante quanto o da manhã, pois reafirma nossa conexão com a Unicidade de Hashem ao encerrar o dia.</div>
+                    <div class="section-title">Segundo Parágrafo</div>
+                    <div class="translation">E acontecerá que, se obedecerdes diligentemente aos Meus preceitos que hoje vos ordeno, de amar a Adonai, vosso Deus, e servi-Lo com todo vosso coração e com toda vossa alma, darei a chuva a vossa terra no seu momento propício, tanto a antecipada [de outono], como a tardia [de primavera], e colherás teu cereal, teu vinho e teu azeite. E darei erva no teu campo para o teu gado, e comerás e te saciarás. Porém, guardai-vos para que vosso coração não seja tentado e vos desvieis e adorareis deuses estranhos e prostrar-vos-ei a eles. Pois então se acenderá a ira de Adonai contra vós e fechará os céus e não haverá chuva, e a terra não dará o seu produto, e desaparecereis rapidamente da boa terra que Adonai vos dá. Por isso, ponde estas Minhas palavras sobre vosso coração e sobre vossa alma e as atareis como sinal sobre vossa mão, e serão como lembretes [acima da testa] entre vossos olhos. E as ensinareis a vossos filhos a falar delas ao estar sentado em vossa casa e ao andar pelo caminho, ao deitar-te e ao levantar-te. E as escreverás sobre os umbrais de tua casa e em teus portões, para que se prolonguem vossos dias e os dias de vossos filhos sobre a terra que Adonai jurou entregar a vossos pais pelo tempo que os céus estiverem sobre a terra.</div>
+                </div>
+
+                <div class="prayer-section">
+                    <div class="section-title">Terceiro Parágrafo</div>
+                    <div class="translation">Adonai falou a Moshé, dizendo: Fale aos filhos de Israel e diga-lhes que façam para si franjas* sobre os cantos de suas vestes em todas as suas gerações, e que ponham um fio azul às franjas* de cada canto. E isto será para vós como tsitsit* e os vereis e lembrareis de todos os preceitos de Adonai e os cumprieis; e não seguireis atrás de vosso coração e atrás de vossos olhos, pelos quais vos desviais — para que possais lembrar e cumprir todos os Meus preceitos e ser sagrados para vosso Deus. Eu sou Adonai, vosso Deus, que vos tirei da Terra do Egito para ser vosso Deus; Eu sou Adonai, vosso Deus: Verdadeiro.</div>
                 </div>
 
                 <div class="prayer-section">
@@ -672,26 +581,15 @@
                     <div class="section-title">Shemá Yisrael - Noite</div>
                     <div class="hebrew">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד</div>
                     <div class="transliteration">Shemá Yisrael, Adonai Eloheinu, Adonai Echad</div>
-                    <div class="translation">Ouve, Israel: O Eterno é nosso Deus, o Eterno é Um. Recite com concentração profunda, visualizando a Unicidade de Hashem.</div>
+                    <div class="translation">Ouve Israel, Adonai é nosso Deus, Adonai é Um. (Sussurrar: Bendito seja o Nome da glória de Seu reinado para todo o sempre.)</div>
+                    <div class="translation">Amarás a Adonai, teu Deus, com todo o teu coração, com toda a tua alma e com toda a tua força. E estas palavras que Eu te ordeno hoje estarão sobre o teu coração. As ensinarás a fundo aos teus filhos e falarás delas ao estares sentado em tua casa e ao andares pelo caminho, ao deitares e ao levantares. [Deverás] atá-las como sinal [Tefilin] sobre tua mão e serão como lembretes [acima da testa] entre teus olhos. E as escreverás sobre os umbrais de tua casa e em teus portões.</div>
                 </div>
 
                 <div class="prayer-section">
                     <div class="section-title">Hamapil - Bênção do Sono</div>
-                    <div class="hebrew">בָּרוּךְ אַתָּה יְהוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם הַמַּפִּיל חֲבָלֵי שֵׁנָה עַל עֵינַי וּתְנוּמָה עַל עַפְעַפַּי</div>
-                    <div class="transliteration">Baruch Atá Adonai, Eloheinu Melech ha'olam, hamapil chavlei shena al einai, utnuma al afapai</div>
-                    <div class="translation">Bendito sejas Tu, Eterno nosso Deus, Rei do universo, que faz cair as correntes do sono sobre meus olhos e o repouso sobre minhas pálpebras. Esta é a última bênção antes do sono - não coma, beba ou converse após recitá-la.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Proteção Noturna - Yoshev Be'seter Elyon</div>
-                    <div class="hebrew">יוֹשֵׁב בְּסֵתֶר עֶלְיוֹן בְּצֵל שַׁדַּי יִתְלוֹנָן</div>
-                    <div class="transliteration">Yoshev b'seter elyon, b'tzel Shadai yitlonen</div>
-                    <div class="translation">Aquele que habita no abrigo do Altíssimo, à sombra do Todo-Poderoso se abrigará. Esta prece oferece proteção espiritual durante o sono contra pensamentos impuros e pesadelos.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Nota Importante</div>
-                    <div class="translation">Após recitar a bênção Hamapil, não se deve comer, beber ou conversar até acordar. Esta oração oferece proteção espiritual durante o sono e deve ser recitada com concentração e devoção. O sono é considerado um sexagésimo da morte, e portanto, esta prece nos prepara para este estado sagrado.</div>
+                    <div class="hebrew">בָּרוּךְ אַתָּה יְהוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם הַמַּפִּיל חֶבְלֵי שֵׁנָה עַל עֵינָי</div>
+                    <div class="transliteration">Baruch Atá Adonai, Eloheinu Melech ha'olam, hamapil chevlei shená al einai...</div>
+                    <div class="translation">Bendito sejas Tu, Eterno nosso Deus, Rei do universo, que fazes cair os laços do sono sobre meus olhos e o adormecimento sobre minhas pálpebras.</div>
                 </div>
             </div>
         </div>
@@ -701,48 +599,45 @@
     <div id="bnei-noach" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Sheva Mitzvot Bnei Noach - 7 Mandamentos Universais</h2>
+                <h2 class="modal-title">Sheva Mitzvot Bnei Noach</h2>
                 <button class="close-btn" onclick="closeModal('bnei-noach')">&times;</button>
             </div>
             <div class="prayer-text">
+                <p>As 7 Leis de Noé são mandamentos que, de acordo com a Torá, foram dados por Deus a toda a humanidade como um código de ética e espiritualidade universal.</p>
+                
                 <div class="prayer-section">
-                    <div class="section-title">Os Sete Mandamentos para Não-Judeus</div>
-                    <div class="translation">Os Sete Mandamentos de Noé (Sheva Mitzvot Bnei Noach) são as leis universais que Hashem deu a toda a humanidade através de Noé após o Dilúvio. Qualquer pessoa que observe estes mandamentos é considerada um "Justo entre as Nações" e tem parte no Mundo Vindouro. Estes mandamentos representam a base moral e espiritual para toda a humanidade.</div>
+                    <div class="section-title">1. Não cometer idolatria</div>
+                    <div class="translation">Reconhecer que existe apenas um único Criador do universo e não atribuir poder divino a qualquer outra entidade.</div>
                 </div>
 
                 <div class="prayer-section">
-                    <div class="section-title">1. Proibição de Idolatria</div>
-                    <div class="translation">Não adorar ídolos ou qualquer coisa criada. Reconhecer a unicidade de Hashem como o único Criador e Sustentador do universo. Este mandamento estabelece o monoteísmo como fundação da fé genuína.</div>
+                    <div class="section-title">2. Não blasfemar</div>
+                    <div class="translation">Respeitar o nome do Criador e não usar Sua autoridade para fins vãos ou destrutivos.</div>
                 </div>
 
                 <div class="prayer-section">
-                    <div class="section-title">2. Proibição de Blasfêmia</div>
-                    <div class="translation">Não blasfemar contra o Nome de Hashem. Tratar o Nome Divino com respeito absoluto e reverência. Reconhecer que Hashem é sagrado e merecedor de honra e adoração.</div>
+                    <div class="section-title">3. Não assassinar</div>
+                    <div class="translation">Valorizar a vida humana como sagrada, pois cada ser humano é criado à imagem de Deus.</div>
                 </div>
 
                 <div class="prayer-section">
-                    <div class="section-title">3. Proibição de Derramamento de Sangue</div>
-                    <div class="translation">Não cometer assassinato. Toda vida humana é sagrada e criada à imagem de Hashem. Proteger a vida é um dever fundamental de todo ser humano.</div>
+                    <div class="section-title">4. Não cometer relações sexuais ilícitas</div>
+                    <div class="translation">Manter a santidade da família e respeitar os limites morais nos relacionamentos.</div>
                 </div>
 
                 <div class="prayer-section">
-                    <div class="section-title">4. Proibição de Imoralidade Sexual</div>
-                    <div class="translation">Não cometer adultério, incesto ou relações homossexuais. Manter a santidade do matrimônio e da família como instituições divinas.</div>
+                    <div class="section-title">5. Não roubar</div>
+                    <div class="translation">Respeitar a propriedade alheia e agir com honestidade em todas as transações.</div>
                 </div>
 
                 <div class="prayer-section">
-                    <div class="section-title">5. Proibição de Roubo</div>
-                    <div class="translation">Não roubar. Respeitar a propriedade alheia e agir com justiça e honestidade nas transações. A propriedade é um direito divino que deve ser honrado.</div>
+                    <div class="section-title">6. Não comer carne de um animal vivo</div>
+                    <div class="translation">Demonstrar compaixão por todas as criaturas e evitar a crueldade desnecessária com os animais.</div>
                 </div>
 
                 <div class="prayer-section">
-                    <div class="section-title">6. Proibição de Comer Carne de Animal Vivo</div>
-                    <div class="translation">Não comer um membro de um animal enquanto ainda está vivo. Mostrar compaixão pelos animais e reconhecer que a vida é sagrada em todas as suas formas.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">7. Estabelecimento de Cortes de Justiça</div>
-                    <div class="translation">Estabelecer um sistema de justiça e tribunais para fazer cumprir as leis. Buscar a verdade, a justiça e a paz na sociedade. Cada comunidade deve ter estruturas para aplicar estes princípios morais.</div>
+                    <div class="section-title">7. Estabelecer tribunais de justiça</div>
+                    <div class="translation">Criar um sistema legal justo que garanta a aplicação destas leis e a ordem social.</div>
                 </div>
             </div>
         </div>
@@ -756,30 +651,9 @@
                 <button class="close-btn" onclick="closeModal('sobre')">&times;</button>
             </div>
             <div class="prayer-text">
-                <div class="prayer-section">
-                    <div class="section-title">Missão</div>
-                    <div class="translation">OrHaTora é um portal dedicado a facilitar a conexão espiritual com Hashem através da oração judaica autêntica. Nosso objetivo é tornar as preces sagradas acessíveis a judeus, simpatizantes do judaísmo, não-judeus e Bnei Noach, com traduções precisas na tradição Haredi, Chabad e Breslev.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">História</div>
-                    <div class="translation">Fundado no dia 9 de Adar de 5786, o OrHaTora nasceu da visão de criar um espaço sagrado onde a Torá e a oração pudessem ser estudadas e praticadas com profundidade e reverência. Este portal é complemento do App Ohr, permitindo aos usuários acessar o Shemá completo e outras orações com facilidade.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Conteúdo Autêntico</div>
-                    <div class="translation">Todo o conteúdo do OrHaTora é baseado no Sidur Tehilat Hashem (Nusach Ari/Chabad), garantindo precisão halachica e fidelidade à tradição judaica ortodoxa. As traduções refletem a profundidade chassídica e a alma das preces, não apenas a literalidade das palavras.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Para Todos</div>
-                    <div class="translation">OrHaTora acolhe judeus que desejam aprofundar sua prática espiritual, simpatizantes do judaísmo em busca de conhecimento autêntico, não-judeus interessados na sabedoria judaica, e Bnei Noach que seguem os Sete Mandamentos de Noé com devoção.</div>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Baruch Hashem</div>
-                    <div class="translation">Que este portal seja uma bênção para todos que o visitam e uma ferramenta poderosa para elevar a alma e fortalecer a conexão com o Criador. Que Hashem abençoe todos os que buscam a verdade e a santidade através da oração sincera.</div>
-                </div>
+                <p>O <strong>OrHaTora</strong> (Luz da Torá) nasceu do desejo de tornar as orações e ensinamentos judaicos acessíveis a todos que buscam uma conexão verdadeira com o Criador.</p>
+                <p>Nossa missão é fornecer ferramentas espirituais — orações, salmos e orientações — baseadas na fidelidade à tradição e na busca pela elevação da alma.</p>
+                <p>Acreditamos que a oração é a ponte que une o finito ao Infinito, e que através das palavras sagradas podemos transformar nossa realidade e o mundo ao nosso redor.</p>
             </div>
         </div>
     </div>
@@ -788,66 +662,33 @@
     <div id="contato" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Entre em Contato</h2>
+                <h2 class="modal-title">Contato</h2>
                 <button class="close-btn" onclick="closeModal('contato')">&times;</button>
             </div>
             <div class="prayer-text">
-                <div class="prayer-section">
-                    <div class="section-title">Formulário de Contato</div>
-                    <form style="display: flex; flex-direction: column; gap: 1rem;">
-                        <input type="text" placeholder="Seu Nome" style="padding: 0.8rem; border: 2px solid var(--secondary); border-radius: 8px; font-family: inherit;">
-                        <input type="email" placeholder="Seu Email" style="padding: 0.8rem; border: 2px solid var(--secondary); border-radius: 8px; font-family: inherit;">
-                        <textarea placeholder="Sua Mensagem" rows="5" style="padding: 0.8rem; border: 2px solid var(--secondary); border-radius: 8px; font-family: inherit; resize: none;"></textarea>
-                        <button type="submit" style="padding: 0.8rem; background: linear-gradient(135deg, var(--primary), #2d2d44); color: var(--secondary); border: 2px solid var(--secondary); border-radius: 50px; cursor: pointer; font-weight: bold; transition: var(--transition);">Enviar Mensagem</button>
-                    </form>
-                </div>
-
-                <div class="prayer-section">
-                    <div class="section-title">Informações</div>
-                    <div class="translation">
-                        <p><strong>Criador:</strong> Yisrael Yehudá</p>
-                        <p><strong>Data de Criação:</strong> 9 de Adar de 5786</p>
-                        <p><strong>Propósito:</strong> Portal de oração e conexão espiritual com Hashem</p>
-                    </div>
-                </div>
+                <p>Gostaríamos muito de ouvir você. Seja para uma dúvida, sugestão ou para compartilhar um relato de conexão espiritual.</p>
+                <p style="margin-top: 1rem;"><strong>Email:</strong> contato@orhatora.com.br</p>
+                <p><strong>Siga-nos:</strong> @orhatora_oficial</p>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <div class="footer-content">
-            <div class="footer-text">
-                © 2026 OrHaTora - Portal de Oração Judaica
-            </div>
-            <div class="footer-text">
-                Criado com devoção e amor pela Torá
-            </div>
-            <div class="footer-date">
-                Fundado no dia 9 de Adar de 5786
-            </div>
-            <div class="footer-text" style="margin-top: 1.5rem; font-size: 1.1rem;">
-                ברוך השם
-            </div>
+            <p class="logo" style="font-size: 1.5rem; margin-bottom: 1rem;">OrHaTora</p>
+            <p class="footer-text">&copy; 2026 OrHaTora - Todos os direitos reservados. Elevando almas através da oração.</p>
         </div>
     </footer>
 
     <script>
-        // MODAL FUNCTIONS
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
         // Close modal when clicking outside
@@ -857,53 +698,6 @@
                 document.body.style.overflow = 'auto';
             }
         }
-
-        // SEARCH FUNCTIONALITY
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-
-        const searchData = [
-            { title: 'Kriat Shemá - Shacharit', modal: 'shema-shacharit', preview: 'Leitura do Shemá da manhã com bênçãos...' },
-            { title: 'Kriat Shemá - Arvit', modal: 'shema-arvit', preview: 'Leitura do Shemá da noite...' },
-            { title: 'Kriat Shemá - Al HaMitá', modal: 'shema-hamita', preview: 'Leitura do Shemá antes de dormir...' },
-            { title: 'Sheva Mitzvot Bnei Noach', modal: 'bnei-noach', preview: 'Os 7 mandamentos universais...' },
-            { title: 'Sobre OrHaTora', modal: 'sobre', preview: 'Conheça a história e missão...' },
-            { title: 'Contato', modal: 'contato', preview: 'Entre em contato conosco...' }
-        ];
-
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase();
-            
-            if (query.length === 0) {
-                searchResults.classList.remove('active');
-                return;
-            }
-
-            const filtered = searchData.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                item.preview.toLowerCase().includes(query)
-            );
-
-            if (filtered.length === 0) {
-                searchResults.innerHTML = '<div class="search-result-item">Nenhum resultado encontrado</div>';
-            } else {
-                searchResults.innerHTML = filtered.map(item => `
-                    <div class="search-result-item" onclick="openModal('${item.modal}'); searchResults.classList.remove('active'); searchInput.value = '';">
-                        <div class="result-title">${item.title}</div>
-                        <div class="result-preview">${item.preview}</div>
-                    </div>
-                `).join('');
-            }
-
-            searchResults.classList.add('active');
-        });
-
-        // Close search results when clicking outside
-        document.addEventListener('click', function(event) {
-            if (event.target !== searchInput && event.target !== searchResults) {
-                searchResults.classList.remove('active');
-            }
-        });
     </script>
 </body>
 </html>
