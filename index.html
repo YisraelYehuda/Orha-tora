@@ -354,6 +354,102 @@
             line-height: 1.8;
         }
 
+        /* Detalhes Ornamentais */
+        .ornament {
+            text-align: center;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            opacity: 0.6;
+            letter-spacing: 0.5rem;
+        }
+
+        .prayer-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--secondary), transparent);
+            margin: 2rem 0;
+            opacity: 0.3;
+        }
+
+        /* Ícones Sociais */
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), #efc870);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .social-link:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+        }
+
+        .social-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Categorias de Orações */
+        .prayer-category {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--secondary);
+            opacity: 0.8;
+        }
+
+        .prayer-category:last-child {
+            border-bottom: none;
+        }
+
+        .category-title {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Refinamento de Hebraico */
+        .hebrew {
+            font-family: 'David Libre', serif;
+            font-size: 1.2rem;
+            line-height: 2.2;
+            color: var(--primary);
+            margin: 1.5rem 0;
+            text-align: right;
+            direction: rtl;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        /* Refinamento de Transliteração */
+        .transliteration {
+            font-style: italic;
+            color: #666;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            padding: 0.8rem 1rem;
+            background: rgba(212, 175, 55, 0.05);
+            border-left: 3px solid var(--secondary);
+            border-radius: 4px;
+        }
+
         /* FOOTER */
         footer {
             background: linear-gradient(135deg, var(--primary) 0%, #2d2d44 100%);
@@ -480,6 +576,10 @@
                 <button class="close-btn" onclick="closeModal('shema-shacharit')">&times;</button>
             </div>
             <div class="prayer-text">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <p style="color: var(--secondary); font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">Oração Central do Judaísmo</p>
+                    <div class="ornament">✦ ✦ ✦</div>
+                </div>
                 <div class="prayer-section">
                     <div class="section-title">Introdução - Ribono Shel Olam</div>
                     <div class="hebrew">רִבּוֹנוֹ שֶׁל עוֹלָם, הִנְנִי מוֹחֵל וּמוֹחֶלֶת לְכָל מִי שֶׁהִכְעִיס אוֹ הִכְעִיס אוֹתִי</div>
@@ -520,6 +620,10 @@
                 <button class="close-btn" onclick="closeModal('shema-arvit')">&times;</button>
             </div>
             <div class="prayer-text">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <p style="color: var(--secondary); font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">Leitura Noturna do Shemá</p>
+                    <div class="ornament">✦ ✦ ✦</div>
+                </div>
                 <div class="prayer-section">
                     <div class="section-title">Bênção - Maariv Aravim</div>
                     <div class="hebrew">בָּרוּךְ אַתָּה יְהוָה אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם אֲשֶׁר בִּדְבָרוֹ מַעֲרִיב עֲרָבִים</div>
@@ -563,6 +667,10 @@
                 <button class="close-btn" onclick="closeModal('shema-hamita')">&times;</button>
             </div>
             <div class="prayer-text">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <p style="color: var(--secondary); font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">Proteção Noturna e Repouso Sagrado</p>
+                    <div class="ornament">✦ ✦ ✦</div>
+                </div>
                 <div class="prayer-section">
                     <div class="section-title">Ribono Shel Olam - Perdão e Proteção</div>
                     <div class="hebrew">רִבּוֹנוֹ שֶׁל עוֹלָם, אֲנִי מוֹחֵל וּמוֹחֶלֶת לְכָל מִי שֶׁהִכְעִיס אוֹ הִכְעִיס אוֹתִי</div>
@@ -666,9 +774,33 @@
                 <button class="close-btn" onclick="closeModal('contato')">&times;</button>
             </div>
             <div class="prayer-text">
-                <p>Gostaríamos muito de ouvir você. Seja para uma dúvida, sugestão ou para compartilhar um relato de conexão espiritual.</p>
-                <p style="margin-top: 1rem;"><strong>Email:</strong> contato@orhatora.com.br</p>
-                <p><strong>Siga-nos:</strong> @orhatora_oficial</p>
+                <p style="text-align: center; font-size: 1.05rem; line-height: 1.8; color: var(--text-dark);">Gostaríamos muito de ouvir você. Seja para uma dúvida, sugestão ou para compartilhar um relato de conexão espiritual.</p>
+                
+                <div class="ornament">✦ ✦ ✦</div>
+                
+                <div class="social-links">
+                    <a href="mailto:orhatorabrasil@gmail.com" class="social-link">
+                        <span class="social-icon">📧</span>
+                        <span>Email</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@yod.torah?_r=1&_t=ZS-94zLaAh4CTE" target="_blank" class="social-link">
+                        <span class="social-icon">🎵</span>
+                        <span>TikTok</span>
+                    </a>
+                </div>
+                
+                <div class="ornament" style="margin-top: 2rem;">✦ ✦ ✦</div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05)); border-radius: 12px; border-left: 4px solid var(--secondary);">
+                    <p style="margin: 0; color: var(--text-dark); font-size: 0.95rem; line-height: 1.8;">
+                        <strong style="color: var(--secondary);">📧 Email Direto:</strong><br>
+                        orhatorabrasil@gmail.com
+                    </p>
+                    <p style="margin: 1rem 0 0; color: var(--text-dark); font-size: 0.95rem; line-height: 1.8;">
+                        <strong style="color: var(--secondary);">🎵 Redes Sociais:</strong><br>
+                        <a href="https://www.tiktok.com/@yod.torah?_r=1&_t=ZS-94zLaAh4CTE" target="_blank" style="color: var(--secondary); text-decoration: none; font-weight: 700;">@yod.torah</a> no TikTok
+                    </p>
+                </div>
             </div>
         </div>
     </div>
