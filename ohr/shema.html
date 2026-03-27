@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shemá Yisrael — Ohr</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a1a;
+      color: #f0e6d3;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .shema-header {
+      text-align: center;
+      padding: 30px 20px 20px;
+      border-bottom: 1px solid #2a2a4a;
+      margin-bottom: 24px;
+    }
+
+    .shema-header h1 {
+      font-size: 2.4rem;
+      color: #c9a84c;
+      font-weight: 700;
+      letter-spacing: 2px;
+      direction: rtl;
+    }
+
+    .shema-header .subtitle {
+      font-size: 0.95rem;
+      color: #8888aa;
+      margin-top: 6px;
+    }
+
+    /* Seletor de tradição */
+    .tradition-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .tab-btn {
+      padding: 10px 22px;
+      border-radius: 30px;
+      border: 1px solid #3a3a6a;
+      background: transparent;
+      color: #aaaacc;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .tab-btn:hover { background: #1a1a3a; color: #c9a84c; }
+
+    .tab-btn.active {
+      background: #c9a84c;
+      color: #0a0a1a;
+      border-color: #c9a84c;
+      font-weight: 700;
+    }
+
+    /* Seções da tradição */
+    .tradition-section { display: none; }
+    .tradition-section.active { display: block; }
+
+    .tradition-badge {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .tradition-badge span {
+      display: inline-block;
+      background: #1a1a3a;
+      border: 1px solid #c9a84c;
+      color: #c9a84c;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    /* Bloco de oração */
+    .prayer-block {
+      background: #111128;
+      border: 1px solid #2a2a4a;
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+    }
+
+    .prayer-block h3 {
+      font-size: 1rem;
+      color: #c9a84c;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #2a2a4a;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Texto hebraico */
+    .hebrew {
+      direction: rtl;
+      font-size: 1.5rem;
+      line-height: 2.2rem;
+      color: #f0e6d3;
+      font-family: 'Times New Roman', serif;
+      margin-bottom: 16px;
+      text-align: right;
+    }
+
+    .hebrew .highlight {
+      color: #c9a84c;
+      font-weight: bold;
+    }
+
+    /* Transliteração */
+    .translit {
+      font-size: 0.9rem;
+      color: #8888aa;
+      font-style: italic;
+      line-height: 1.8;
+      margin-bottom: 14px;
+      border-left: 3px solid #2a2a4a;
+      padding-left: 12px;
+    }
+
+    /* Tradução */
+    .translation {
+      font-size: 0.95rem;
+      color: #c8bfa8;
+      line-height: 1.8;
+      background: #0d0d22;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    /* Nota */
+    .note {
+      font-size: 0.82rem;
+      color: #666688;
+      line-height: 1.6;
+      padding: 10px;
+      border-radius: 8px;
+      background: #0d0d1a;
+      border-left: 3px solid #c9a84c;
+      margin-top: 10px;
+    }
+
+    /* Versículo especial */
+    .special-verse {
+      text-align: center;
+      padding: 14px;
+      background: #0d0d22;
+      border-radius: 10px;
+      margin: 10px 0;
+      border: 1px dashed #3a3a6a;
+    }
+
+    .special-verse .hebrew {
+      font-size: 1.3rem;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .special-verse .translit { border: none; padding: 0; text-align: center; }
+
+    /* Rodapé da oração */
+    .kavana {
+      margin-top: 16px;
+      padding: 14px;
+      background: #12121f;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: #9999bb;
+      line-height: 1.7;
+      text-align: center;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <div class="shema-header">
+    <h1>שְׁמַע יִשְׂרָאֵל</h1>
+    <p class="subtitle">A declaração central do povo de Israel — três tradições, um único HaShem</p>
+  </div>
+
+  <!-- ABAS DE TRADIÇÃO -->
+  <div class="tradition-tabs">
+    <button class="tab-btn active" onclick="showTradition('haredi')">🕍 Haredi</button>
+    <button class="tab-btn" onclick="showTradition('chabad')">✡️ Chabad</button>
+    <button class="tab-btn" onclick="showTradition('breslov')">🕯️ Breslov</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TRADIÇÃO HAREDI -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="tradition-section active" id="haredi">
+    <div class="tradition-badge"><span>Nusach Ashkenaz — Tradição Haredi</span></div>
+
+    <!-- PARASHOT 1 -->
+    <div class="prayer-block">
+      <h3>📜 Primeira Parashah — Devarim 6:4–9</h3>
+
+      <!-- Versículo central -->
+      <div class="special-verse">
+        <div class="hebrew"><span class="highlight">שְׁמַע יִשְׂרָאֵל</span> יְהוָה אֱלֹהֵינוּ יְהוָה <span class="highlight">אֶחָד</span></div>
+        <div class="translit">Shemá Yisraél, Adonai Eloheinu, Adonai Echad</div>
+      </div>
+
+      <div class="translation">Ouve, Israel: O Eterno é nosso D'us, o Eterno é Um.</div>
+
+      <div class="special-verse">
+        <div class="hebrew">בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד</div>
+        <div class="translit">Baruch shem kevod malchutô leolam vaed</div>
+      </div>
+      <div class="translation">Bendito seja o nome da glória do Seu reino para sempre e eternamente.</div>
+      <div class="note">⚠️ Este versículo é recitado em voz baixa, exceto no Yom Kipur, quando é dito em voz alta.</div>
+
+      <br/>
+      <div class="hebrew">
+        וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכׇל־לְבָבְךָ וּבְכׇל־נַפְשְׁךָ וּבְכׇל־מְאֹדֶךָ׃
+        וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ׃
+        וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ
+        וּבְשׇׁכְבְּךָ וּבְקוּמֶךָ׃
+        וּקְשַׁרְתָּם לְאוֹת עַל־יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ׃
+        וּכְתַבְתָּם עַל־מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ׃
+      </div>
+      <div class="translit">
+        Veahavtá et Adonai Elohecha bechol levavchá uvechol nafshechá uvechol meodechá.
+        Vehayu hadevarim haelê asher anochi metzavechá hayom al levavechá.
+        Veshinantam levanechá vedibartrá bam beshivtechá beveitechá uvlechtechá vaderech,
+        uvshochbechá uvkumechá.
+        Ukshartam leot al yadechá vehayu letotafot bein einechá.
+        Uchtavtam al mezuzot beitechá uvishearechá.
+      </div>
+      <div class="translation">
+        Amarás o Eterno, teu D'us, com todo o teu coração, com toda a tua alma e com toda a tua força.
+        Estas palavras que Eu te ordeno hoje estarão sobre o teu coração.
+        Ensiná-las-ás a teus filhos e falarás delas quando estiveres sentado em tua casa,
+        quando caminhares pelo caminho, quando te deitares e quando te levantares.
+        Amarrá-las-ás como sinal em tua mão e serão como frontais entre teus olhos.
+        Escreverás nas mezuzot de tua casa e em teus portões.
+      </div>
+    </div>
+
+    <!-- PARASHAH 2 -->
+    <div class="prayer-block">
+      <h3>📜 Segunda Parashah — Devarim 11:13–21</h3>
+      <div class="hebrew">
+        וְהָיָה אִם־שָׁמֹעַ תִּשְׁמְעוּ אֶל־מִצְוֹתַי אֲשֶׁר אָנֹכִי מְצַוֶּה אֶתְכֶם הַיּוֹם
+        לְאַהֲבָה אֶת־יְהוָה אֱלֹהֵיכֶם וּלְעׇבְדוֹ בְּכׇל־לְבַבְכֶם וּבְכׇל־נַפְשְׁכֶם׃
+        וְנָתַתִּי מְטַר־אַרְצְכֶם בְּעִתּוֹ יוֹרֶה וּמַלְקוֹשׁ וְאָסַפְתָּ דְגָנֶךָ וְתִירֹשְׁךָ וְיִצְהָרֶךָ׃
+        וְנָתַתִּי עֵשֶׂב בְּשָׂדְךָ לִבְהֶמְתֶּךָ וְאָכַלְתָּ וְשָׂבָעְתָּ׃
+        הִשָּׁמְרוּ לָכֶם פֶּן יִפְתֶּה לְבַבְכֶם וְסַרְתֶּם וַעֲבַדְתֶּם אֱלֹהִים אֲחֵרִים וְהִשְׁתַּחֲוִיתֶם לָהֶם׃
+        וְחָרָה אַף־יְהוָה בָּכֶם וְעָצַר אֶת־הַשָּׁמַיִם וְלֹא־יִהְיֶה מָטָר וְהָאֲדָמָה לֹא תִתֵּן אֶת־יְבוּלָהּ
+        וַאֲבַדְתֶּם מְהֵרָה מֵעַל הָאָרֶץ הַטֹּבָה אֲשֶׁר יְהוָה נֹתֵן לָכֶם׃
+        וְשַׂמְתֶּם אֶת־דְּבָרַי אֵלֶּה עַל־לְבַבְכֶם וְעַל־נַפְשְׁכֶם
+        וּקְשַׁרְתֶּם אֹתָם לְאוֹת עַל־יֶדְכֶם וְהָיוּ לְטוֹטָפֹת בֵּין עֵינֵיכֶם׃
+        וְלִמַּדְתֶּם אֹתָם אֶת־בְּנֵיכֶם לְדַבֵּר בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ
+        וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשׇׁכְבְּךָ וּבְקוּמֶךָ׃
+        וּכְתַבְתָּם עַל מְזוּזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ׃
+        לְמַעַן יִרְבּוּ יְמֵיכֶם וִימֵי בְנֵיכֶם עַל הָאֲדָמָה אֲשֶׁר נִשְׁבַּע יְהוָה לַאֲבֹתֵיכֶם לָתֵת לָהֶם
+        כִּימֵי הַשָּׁמַיִם עַל הָאָרֶץ׃
+      </div>
+      <div class="translit">
+        Vehayá im shamoa tishmeú el mitzvotai asher anochi metzavê etchem hayom,
+        leahavá et Adonai Eloheichem uleovdô bechol levavchem uvechol nafshéchem.
+        Venatatí metar artzechem beito yorê umalcosh, veasaftá deganeká vetiroshechá veyitzhareká.
+        Venatatí esev besadechá livhemteká veachaltá vesavaatá.
+        Hishameru lachem pen yiftê levavchem vesartem vaavadtem elohim acherim vehishtachavitem lahem.
+        Vecharah af Adonai bachem veatzar et hashamaim velo yihyê matar,
+        vehaadamá lo titen et yevulah vaavadtem meherah meal haaretz hatovah asher Adonai noten lachem.
+        Vesamtem et devarai elê al levavchem veal nafshéchem,
+        ukshártem otam leot al yedchem vehayu letotafot bein eineichem.
+        Velimadtem otam et beneichem ledaber bam beshivtechá beveitechá,
+        uvlechtechá vaderech uvshochbechá uvkumeká.
+        Uchtavtam al mezuzot beitechá uvishearechá.
+        Lemaan yirbu yemeichem vimei veneichem al haadamá asher nishba Adonai laavoteichem latet lahem,
+        kimei hashamaim al haaretz.
+      </div>
+      <div class="translation">
+        Acontecerá que se ouvirdes atentamente os Meus mandamentos que vos ordeno hoje,
+        para amardes o Eterno, vosso D'us, e servi-Lo com todo o vosso coração e com toda a vossa alma,
+        darei a chuva de vossa terra em seu tempo, a chuva da primeira e da última estação,
+        e recolhereis vosso trigo, vosso vinho e vosso azeite.
+        Darei erva em teu campo para o teu gado, e comerás e te fartarás.
+        Guardai-vos para que vosso coração não seja seduzido, e vos afasteis e sirvais a outros deuses e vos prosterneis a eles.
+        Porque a ira do Eterno se acenderá contra vós, e Ele fechará os céus e não haverá chuva,
+        e a terra não dará o seu fruto, e vós perecereis rapidamente da boa terra que o Eterno vos dá.
+        Colocarei estas Minhas palavras em vosso coração e em vossa alma,
+        e as amarrareis como sinal em vossa mão e serão como frontais entre vossos olhos.
+        Ensinai-as a vossos filhos para falarem delas quando estiverdes sentados em vossa casa,
+        quando caminhares pelo caminho, quando vos deitardes e quando vos levantardes.
+        Escrevei-as nas mezuzot de vossa casa e em vossos portões.
+        Para que se multipliquem vossos dias e os dias de vossos filhos na terra
+        que o Eterno jurou a vossos pais para lhes dar,
+        como os dias do céu sobre a terra.
+      </div>
+    </div>
+
+    <!-- PARASHAH 3 -->
+    <div class="prayer-block">
+      <h3>📜 Terceira Parashah — Bamidbar 15:37–41</h3>
+      <div class="hebrew">
+        וַיֹּאמֶר יְהוָה אֶל מֹשֶׁה לֵּאמֹר׃
+        דַּבֵּר אֶל בְּנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם
+        וְעָשׂוּ לָהֶם צִיצִת עַל כַּנְפֵי בִגְדֵיהֶם לְדֹרֹתָם
+        וְנָתְנוּ עַל צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת׃
+        וְהָיָה לָכֶם לְצִיצִת וּרְאִיתֶם אֹתוֹ וּזְכַרְתֶּם אֶת כָּל מִצְוֹת יְהוָה
+        וַעֲשִׂיתֶם אֹתָם וְלֹא תָתוּרוּ אַחֲרֵי לְבַבְכֶם וְאַחֲרֵי עֵינֵיכֶם
+        אֲשֶׁר אַתֶּם זֹנִים אַחֲרֵיהֶם׃
+        לְמַעַן תִּזְכְּרוּ וַעֲשִׂיתֶם אֶת כָּל מִצְוֹתָי וִהְיִיתֶם קְדֹשִׁים לֵאלֹהֵיכֶם׃
+        אֲנִי יְהוָה אֱלֹהֵיכֶם אֲשֶׁר הוֹצֵאתִי אֶתְכֶם מֵאֶרֶץ מִצְרַיִם לִהְיוֹת לָכֶם לֵאלֹהִים
+        אֲנִי יְהוָה אֱלֹהֵיכֶם׃
+      </div>
+      <div class="translit">
+        Vayomer Adonai el Moshê lemor.
+        Daber el Bnei Yisrael veamartá alelhem,
+        veasu lahem tzitzit al kanfei vigdeihem ledorotam,
+        venatenu al tzitzit hakanaf petil techelet.
+        Vehayá lachem letzitzit ureitem otô uzechartem et kol mitzvot Adonai
+        vaasitem otam velo taturu acharei levavchem veacharei eineichem
+        asher atem zonim achareihem.
+        Lemaan tizkeru vaasitem et kol mitzvotai vihyitem kedoshim lEloheichem.
+        Ani Adonai Eloheichem asher hotzeti etchem meEretz Mitzraim lihyot lachem lElohim,
+        Ani Adonai Eloheichem.
+      </div>
+      <div class="translation">
+        E o Eterno falou a Moisés, dizendo:
+        Fala aos filhos de Israel e dize-lhes que façam franjas nos cantos de suas vestes,
+        por suas gerações, e que ponham na franja do canto um fio de azul-celeste.
+        E será para vós como franja, e a vereis e vos lembrareis de todos os mandamentos do Eterno,
+        e os cumprireis, e não seguireis após vosso coração e após vossos olhos,
+        pelos quais vós andastes errantes.
+        Para que vos lembreis e cumprais todos os Meus mandamentos, e sereis santos para o vosso D'us.
+        Eu sou o Eterno, vosso D'us, que vos tirei da Terra do Egito para ser vosso D'us.
+        Eu sou o Eterno, vosso D'us.
+      </div>
+      <div class="note">
+        ✨ A palavra <strong>אֱמֶת (Emet — Verdade)</strong> é acrescentada ao fim, ligando a última palavra
+        <em>"Eloheichem"</em> da terceira parashah com a próxima seção da tefila — o <em>Emet veYatziv</em>.
+      </div>
+    </div>
+
+    <div class="kavana">
+      💙 Kavaná Haredi: Ao recitar o Shemá, concentre-se em aceitar o <em>ol malchut shamáyim</em> —
+      o jugo do Reino dos Céus — com temor, amor e inteireza de coração.
+    </div>
+  </div><!-- fim haredi -->
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TRADIÇÃO CHABAD -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="tradition-section" id="chabad">
+    <div class="tradition-badge"><span>Nusach Ari — Tradição Chabad-Lubavitch</span></div>
+
+    <div class="prayer-block">
+      <h3>📜 Introdução ao Shemá — Nusach Ari</h3>
+      <div class="note">
+        📖 No Nusach Ari do Alter Rebbe, o Shemá é precedido por uma declaração de <em>ahaváh</em> (amor)
+        e aceitação do mandamento de amar a HaShem. Recita-se também:
+        <em>"Hareini mekabel alai mitzvat aseh shel veahavta lereachá kamocha"</em> —
+        aceito sobre mim o mandamento positivo de amar ao próximo como a si mesmo.
+      </div>
+    </div>
+
+    <div class="prayer-block">
+      <h3>📜 Primeira Parashah — com ênfase Chabad</h3>
+
+      <div class="special-verse">
+        <div class="hebrew"><span class="highlight">שְׁמַע יִשְׂרָאֵל</span> יְהוָה אֱלֹהֵינוּ יְהוָה <span class="highlight">אֶחָד</span></div>
+        <div class="translit">Shemá Yisraél, Adonai Eloheinu, Adonai Echad</div>
+      </div>
+      <div class="translation">Ouve, Israel: O Eterno é nosso D'us, o Eterno é Um.</div>
+      <div class="note">
+        ✡️ Chabad enfatiza: ao pronunciar <em>Echad</em>, contemple que HaShem é o único Ser verdadeiro
+        que preenche todos os mundos — <em>melo kol haaretz kevodo</em>. O Dalet do Echad (ד) é prolongado
+        para meditar na unidade divina que abrange os quatro cantos do universo.
+      </div>
+
+      <div class="special-verse">
+        <div class="hebrew">בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד</div>
+        <div class="translit">Baruch shem kevod malchutô leolam vaed</div>
+      </div>
+      <div class="translation">Bendito seja o nome da glória do Seu reino para sempre e eternamente.</div>
+
+      <div class="hebrew">
+        וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכׇל־לְבָבְךָ וּבְכׇל־נַפְשְׁךָ וּבְכׇל־מְאֹדֶךָ׃
+        וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ׃
+        וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ
+        וּבְשׇׁכְבְּךָ וּבְקוּמֶךָ׃
+        וּקְשַׁרְתָּם לְאוֹת עַל־יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ׃
+        וּכְתַבְתָּם עַל־מְזֻזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ׃
+      </div>
+      <div class="translation">
+        Amarás o Eterno, teu D'us, com todo o teu coração, com toda a tua alma e com toda a tua força.
+        Estas palavras que Eu te ordeno hoje estarão sobre o teu coração.
+        Ensiná-las-ás a teus filhos e falarás delas quando estiveres sentado em tua casa,
+        quando caminhares pelo caminho, quando te deitares e quando te levantares.
+        Amarrá-las-ás como sinal em tua mão e serão como frontais entre teus olhos.
+        Escreverás nas mezuzot de tua casa e em teus portões.
+      </div>
+      <div class="note">
+        ✡️ Chabad ensina: <em>Veahavtá</em> — o amor a HaShem não é apenas sentimento, mas um estado de
+        <em>bitul</em> (anulação do ego) diante da Fonte infinita. Quando o homem se anula, a luz divina
+        pode habitar nele plenamente. — Tanya, capítulo 3.
+      </div>
+    </div>
+
+    <div class="prayer-block">
+      <h3>📜 Segunda Parashah — Devarim 11:13–21</h3>
+      <div class="hebrew">
+        וְהָיָה אִם־שָׁמֹעַ תִּשְׁמְעוּ אֶל־מִצְוֹתַי אֲשֶׁר אָנֹכִי מְצַוֶּה אֶתְכֶם הַיּוֹם
+        לְאַהֲבָה אֶת־יְהוָה אֱלֹהֵיכֶם וּלְעׇבְדוֹ בְּכׇל־לְבַבְכֶם וּבְכׇל־נַפְשְׁכֶם׃
+        וְנָתַתִּי מְטַר־אַרְצְכֶם בְּעִתּוֹ יוֹרֶה וּמַלְקוֹשׁ וְאָסַפְתָּ דְגָנֶךָ וְתִירֹשְׁךָ וְיִצְהָרֶךָ׃
+        וְנָתַתִּי עֵשֶׂב בְּשָׂדְךָ לִבְהֶמְתֶּךָ וְאָכַלְתָּ וְשָׂבָעְתָּ׃
+        הִשָּׁמְרוּ לָכֶם פֶּן יִפְתֶּה לְבַבְכֶם וְסַרְתֶּם וַעֲבַדְתֶּם אֱלֹהִים אֲחֵרִים וְהִשְׁתַּחֲוִיתֶם לָהֶם׃
+        וְחָרָה אַף־יְהוָה בָּכֶם וְעָצַר אֶת־הַשָּׁמַיִם וְלֹא־יִהְיֶה מָטָר וְהָאֲדָמָה לֹא תִתֵּן אֶת־יְבוּלָהּ
+        וַאֲבַדְתֶּם מְהֵרָה מֵעַל הָאָרֶץ הַטֹּבָה אֲשֶׁר יְהוָה נֹתֵן לָכֶם׃
+        וְשַׂמְתֶּם אֶת־דְּבָרַי אֵלֶּה עַל־לְבַבְכֶם וְעַל־נַפְשְׁכֶם
+        וּקְשַׁרְתֶּם אֹתָם לְאוֹת עַל־יֶדְכֶם וְהָיוּ לְטוֹטָפֹת בֵּין עֵינֵיכֶם׃
+        וְלִמַּדְתֶּם אֹתָם אֶת־בְּנֵיכֶם לְדַבֵּר בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ
+        וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשׇׁכְבְּךָ וּבְקוּמֶךָ׃
+        וּכְתַבְתָּם עַל מְזוּזוֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ׃
+        לְמַעַן יִרְבּוּ יְמֵיכֶם וִימֵי בְנֵיכֶם עַל הָאֲדָמָה אֲשֶׁר נִשְׁבַּע יְהוָה לַאֲבֹתֵיכֶם לָתֵת לָהֶם
+        כִּימֵי הַשָּׁמַיִם עַל הָאָרֶץ׃
+      </div>
+      <div class="translation">
+        Acontecerá que se ouvirdes atentamente os Meus mandamentos que vos ordeno hoje,
+        para amardes o Eterno, vosso D'us, e servi-Lo com todo o vosso coração e com toda a vossa alma,
+        darei a chuva de vossa terra em seu tempo, a chuva da primeira e da última estação,
+        e recolhereis vosso trigo, vosso vinho e vosso azeite.
+        Darei erva em teu campo para o teu gado, e comerás e te fartarás.
+        Guardai-vos para que vosso coração não seja seduzido, e vos afasteis e sirvais a outros deuses e vos prosterneis a eles.
+        Porque a ira do Eterno se acenderá contra vós, e Ele fechará os céus e não haverá chuva,
+        e a terra não dará o seu fruto, e vós perecereis rapidamente da boa terra que o Eterno vos dá.
+        Colocarei estas Minhas palavras em vosso coração e em vossa alma,
+        e as amarrareis como sinal em vossa mão e serão como frontais entre vossos olhos.
+        Ensinai-as a vossos filhos para falarem delas quando estiverdes sentados em vossa casa,
+        quando caminhares pelo caminho, quando vos deitardes e quando vos levantardes.
+        Escrevei-as nas mezuzot de vossa casa e em vossos portões.
+        Para que se multipliquem vossos dias e os dias de vossos filhos na terra
+        que o Eterno jurou a vossos pais para lhes dar,
+        como os dias do céu sobre a terra.
+      </div>
+    </div>
+
+    <div class="prayer-block">
+      <h3>📜 Terceira Parashah — Bamidbar 15:37–41</h3>
+      <div class="hebrew">
+        וַיֹּאמֶר יְהוָה אֶל מֹשֶׁה לֵּאמֹר׃
+        דַּבֵּר אֶל בְּנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם
+        וְעָשׂוּ לָהֶם צִיצִת עַל כַּנְפֵי בִגְדֵיהֶם לְדֹרֹתָם
+        וְנָתְנוּ עַל צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת׃
+  </div>
+</div>
+
+</body>
+</html>
