@@ -465,6 +465,24 @@
         וְנָתְנוּ עַל צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת׃
   </div>
 </div>
+<script>
+  function showTradition(id) {
+    const sections = document.querySelectorAll('.tradition-section');
+    const buttons = document.querySelectorAll('.tab-btn');
 
+    sections.forEach(section => section.classList.remove('active'));
+    buttons.forEach(button => button.classList.remove('active'));
+
+    const targetSection = document.getElementById(id);
+    if (targetSection) {
+      targetSection.classList.add('active');
+    }
+
+    const clickedButton = document.querySelector(`.tab-btn[onclick="showTradition('${id}')"]`);
+    if (clickedButton) {
+      clickedButton.classList.add('active');
+    }
+  }
+</script>
 </body>
 </html>
