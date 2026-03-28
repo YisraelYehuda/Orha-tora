@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hitbodedut — Ohr</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a1a;
+      color: #f0e6d3;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      text-align: center;
+      padding: 30px 20px 20px;
+      border-bottom: 1px solid #2a2a4a;
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-size: 2.2rem;
+      color: #c9a84c;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .page-header .subtitle {
+      font-size: 0.96rem;
+      color: #8888aa;
+      line-height: 1.7;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .intro-card,
+    .content-card,
+    .signature-card {
+      background: #111128;
+      border: 1px solid #2a2a4a;
+      border-radius: 18px;
+      padding: 22px 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+    }
+
+    .intro-card h2,
+    .content-card h2 {
+      color: #c9a84c;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .intro-card p,
+    .content-card p {
+      color: #d6ccb7;
+      line-height: 1.9;
+      font-size: 0.97rem;
+      margin-bottom: 12px;
+    }
+
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .cat-btn {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid #3a3a6a;
+      background: transparent;
+      color: #d8d0bf;
+      cursor: pointer;
+      font-size: 0.92rem;
+      transition: all 0.25s ease;
+    }
+
+    .cat-btn:hover {
+      background: #1a1a3a;
+      color: #c9a84c;
+    }
+
+    .cat-btn.active {
+      background: #c9a84c;
+      color: #0a0a1a;
+      border-color: #c9a84c;
+      font-weight: 700;
+    }
+
+    .category-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .category-panel.active {
+      display: block;
+    }
+
+    .phrase-box {
+      background: #0d0d22;
+      border: 1px dashed #3a3a6a;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .phrase-box .label {
+      color: #c9a84c;
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .phrase-box .quote {
+      color: #f0e6d3;
+      font-style: italic;
+      line-height: 1.8;
+      font-size: 0.98rem;
+    }
+
+    .guide-title {
+      color: #c9a84c;
+      font-size: 0.98rem;
+      margin-bottom: 10px;
+      margin-top: 6px;
+    }
+
+    .guide-text {
+      white-space: pre-line;
+      color: #d6ccb7;
+      line-height: 1.95;
+      font-size: 0.97rem;
+    }
+
+    .signature-card {
+      text-align: center;
+      background: linear-gradient(180deg, #111128 0%, #161634 100%);
+    }
+
+    .signature-card p {
+      color: #d6ccb7;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .signature-mark {
+      color: #c9a84c;
+      font-weight: 700;
+      margin-top: 8px;
+      display: block;
+      font-size: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>🕯️ Hitbodedut</h1>
+    <p class="subtitle">
+      Um espaço de verdade, silêncio e encontro com HaShem.
+    </p>
+  </div>
+
+  <div class="intro-card">
+    <h2>📖 O que é Hitbodedut?</h2>
+    <p>
+      Hitbodedut é a prática judaica de se isolar por alguns momentos para falar com HaShem com as próprias palavras, com sinceridade, humildade e coração aberto.
+    </p>
+    <p>
+      Não é uma reza decorada. Não é performance. Não é formalidade vazia.
+    </p>
+    <p>
+      É a alma falando com o Criador.
+    </p>
+    <p>
+      É você diante de HaShem.
+    </p>
+    <p>
+      No caminho de Breslov, especialmente nos ensinamentos de Rebbe Nachman, o Hitbodedut é uma das formas mais profundas de purificar a mente, fortalecer a fé, quebrar a angústia e renovar a conexão com o Eterno.
+    </p>
+    <p>
+      Escolha abaixo uma direção para sua conversa com HaShem.
+    </p>
+  </div>
+
+  <div class="content-card">
+    <div class="category-tabs">
+      <button class="cat-btn active" onclick="showHitCategory('gratidao', this)">💙 GRATIDÃO</button>
+      <button class="cat-btn" onclick="showHitCategory('teshuva', this)">🔥 TESHUVÁ</button>
+      <button class="cat-btn" onclick="showHitCategory('paz', this)">🕊️ PAZ</button>
+      <button class="cat-btn" onclick="showHitCategory('forca', this)">💪 FORÇA</button>
+      <button class="cat-btn" onclick="showHitCategory('ansiedade', this)">🌿 ANSIEDADE</button>
+    </div>
+
+    <div class="category-panel active" id="gratidao">
+      <div class="phrase-box">
+        <div class="label">💙 GRATIDÃO — Hakarat HaTov</div>
+        <div class="quote">Frase do Rebbe Nachman:<br>"Quem é rico? Aquele que se alegra com sua parte."</div>
+      </div>
+      <div class="guide-title">Mini-guia:</div>
+      <div class="guide-text">Feche os olhos. Respire fundo.
+Antes de pedir, agradeça.
+HaShem te deu o presente mais precioso: mais um dia de vida, mais uma chance de se aproximar d'Ele.
+Comece dizendo em voz alta ou no coração:
+"Ribono Shel Olam — Mestre do Universo, obrigado por meu nefesh, por minha respiração, por minha mente que pensa, por meus olhos que enxergam Sua luz no mundo."
+Pense em 3 coisas pequenas pelas quais você é grato hoje.
+Não precisa ser algo grandioso. Um copo d'água. Um momento de paz. Uma palavra amável.
+Hakarat HaTov — o reconhecimento do bem — é a raiz de toda a espiritualidade judaica. Sem ela, o coração fica fechado. Com ela, tudo floresce.</div>
+    </div>
+
+    <div class="category-panel" id="teshuva">
+      <div class="phrase-box">
+        <div class="label">🔥 TESHUVÁ — O Retorno</div>
+        <div class="quote">Frase do Rebbe Nachman:<br>"Nunca desespere! Nunca! Um Judeu nunca deve desesperar."</div>
+      </div>
+      <div class="guide-title">Mini-guia:</div>
+      <div class="guide-text">Teshuvá não é punição. É um abraço de HaShem te chamando de volta.
+Não há nada que você tenha feito que seja grande demais para o perdão d'Ele. O arrependimento sincero move mundos.
+Diga com o coração:
+"Ribono Shel Olam — eu errei. Eu sei que errei. Mas eu me levanto. Porque Tu és meu Pai e eu sou Teu filho. E um filho sempre pode voltar para casa."
+Reflita sobre uma atitude desta semana que você deseja transformar.
+Não para se castigar — mas para crescer.
+Teshuvá significa retorno. Você não está se afastando — você está voltando para quem você realmente é.</div>
+    </div>
+
+    <div class="category-panel" id="paz">
+      <div class="phrase-box">
+        <div class="label">🕊️ PAZ — Shalom</div>
+        <div class="quote">Frase do Rebbe Nachman:<br>"O mundo inteiro é uma ponte muito estreita — e o principal é não ter medo."</div>
+      </div>
+      <div class="guide-title">Mini-guia:</div>
+      <div class="guide-text">Neste momento, você não precisa resolver tudo.
+Você não precisa entender tudo.
+Você só precisa confiar.
+Respire. HaShem está aqui.
+"Ribono Shel Olam — que meu coração encontre o Shalom que só vem de Ti. Que eu não carregue o que não me pertence carregar. Que eu descanse em Tua presença."
+O Shalom verdadeiro não é a ausência de tempestade — é saber que HaShem está no barco com você.
+Fique em silêncio por alguns instantes.
+Deixe a Shechiná — a Presença Divina — pousar sobre você.</div>
+    </div>
+
+    <div class="category-panel" id="forca">
+      <div class="phrase-box">
+        <div class="label">💪 FORÇA — Koach</div>
+        <div class="quote">Frase do Rebbe Nachman:<br>"Se você acredita que pode estragar, acredite que pode consertar."</div>
+      </div>
+      <div class="guide-title">Mini-guia:</div>
+      <div class="guide-text">Você foi criado com um propósito único.
+Não existe ninguém no mundo com a sua neshamá, com a sua missão.
+Quando você sente que não tem mais forças, lembre: a força que você precisa não vem de você — ela vem d'Aquele que te criou.
+"Ribono Shel Olam — dá-me o koach de continuar. De me levantar mais uma vez. De cumprir minha missão neste mundo com alegria e com fé."
+Pense em um desafio que você está enfrentando agora.
+Entregue-o nas mãos de HaShem.
+E dê um passo à frente.
+Giborim — os verdadeiros guerreiros — não são os que nunca caem. São os que sempre se levantam.</div>
+    </div>
+
+    <div class="category-panel" id="ansiedade">
+      <div class="phrase-box">
+        <div class="label">🌿 ANSIEDADE — Dea'ga</div>
+        <div class="quote">Frase do Rebbe Nachman:<br>"É proibido ao homem se angustiar. O choro é muito prejudicial — exceto o choro de alegria."</div>
+      </div>
+      <div class="guide-title">Mini-guia:</div>
+      <div class="guide-text">Respire. Você está seguro.
+A ansiedade muitas vezes vem de tentar controlar o que só HaShem controla. Neste momento, pratique o maior ato de coragem judaica: confiar.
+"Ribono Shel Olam — minha mente está agitada, meu coração está pesado. Mas eu sei que Tu cuidas de mim. Assim como cuidas dos pássaros do céu e das flores do campo — Tu cuidas de mim."
+Coloque uma mão no coração.
+Repita três vezes, devagar:
+"HaShem é meu pastor — nada me faltará." (Tehilim 23)
+Você não está sozinho.
+Nunca esteve.
+E nunca estará.</div>
+    </div>
+  </div>
+
+  <div class="signature-card">
+    <p>
+      Feito com muito amor pelo Yisrael 💙
+    </p>
+    <span class="signature-mark">Ohr</span>
+  </div>
+
+  <script>
+    function showHitCategory(id, btn) {
+      document.querySelectorAll('.category-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+
+      document.querySelectorAll('.cat-btn').forEach(button => {
+        button.classList.remove('active');
+      });
+
+      const target = document.getElementById(id);
+      if (target) target.classList.add('active');
+
+      if (btn) btn.classList.add('active');
+    }
+  </script>
+
+</body>
+        </html>
