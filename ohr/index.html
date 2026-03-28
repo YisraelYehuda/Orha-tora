@@ -451,6 +451,23 @@
     .contact-box{margin-top:16px; padding:18px; border-radius:20px; background:linear-gradient(135deg,var(--gold-soft),rgba(217,174,85,.06)); border:1px solid var(--border)}
     .contact-box a{color:var(--gold); font-weight:700; text-decoration:none}
 
+
+    .menu-link.is-external{background:linear-gradient(135deg,var(--gold-soft),rgba(217,174,85,.05))}
+    .menu-link .menu-arrow{font-size:18px; color:var(--gold)}
+    .op-mark{margin:8px 0 0; color:var(--gold); font-size:11px; letter-spacing:.28em; text-transform:uppercase; opacity:.92}
+    .library-intro{margin-bottom:14px; padding:18px; border-radius:22px; background:linear-gradient(135deg,var(--gold-soft),rgba(217,174,85,.05)); border:1px solid var(--border); box-shadow:var(--shadow)}
+    .library-intro p{margin:0; color:var(--text-soft); line-height:1.8; font-size:14px}
+    .book-card.featured{background:linear-gradient(135deg,rgba(217,174,85,.11),rgba(255,255,255,.03)); border-color:rgba(217,174,85,.22)}
+    .book-kicker{display:inline-flex; align-items:center; gap:8px; margin-bottom:10px; padding:8px 12px; border-radius:999px; background:var(--gold-soft); color:var(--gold); font-size:11px; letter-spacing:.16em; text-transform:uppercase; font-weight:700}
+    .book-summary{margin-top:12px; padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--text-soft); line-height:1.75; font-size:13px}
+    .saved-letter-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+    .saved-letter-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .saved-letter-btn{border:none; cursor:pointer; border-radius:12px; padding:10px 12px; font-weight:700; background:var(--surface-strong); color:var(--text); border:1px solid var(--border)}
+    .saved-letter-btn.delete{background:rgba(139,16,16,.10); color:#8b1010; border-color:rgba(139,16,16,.16)}
+    .calendar-card{margin-top:12px; padding:16px 18px; border-radius:18px; background:linear-gradient(135deg,rgba(217,174,85,.12),rgba(13,24,38,.08)); border:1px solid var(--border); box-shadow:var(--shadow)}
+    .calendar-card h4{margin:0 0 8px; color:var(--gold); font-size:16px}
+    .calendar-card p{margin:0 0 12px; color:var(--text-soft); line-height:1.8; font-size:14px}
+
     @media (max-width: 380px){
       .book-top{grid-template-columns:1fr}
       .book-cover{height:180px}
@@ -484,6 +501,7 @@
         <button class="menu-link" data-drawer-go="home"><span>🏠 <strong>Início</strong><small>Voltar para o lobby do Ohr.</small></span><span>›</span></button>
         <button class="menu-link" data-drawer-go="carta"><span>✍️ <strong>Fale com HaShem</strong><small>Escreva uma carta íntima e reverente.</small></span><span>›</span></button>
         <button class="menu-link" data-drawer-go="livros"><span>📚 <strong>Livros de Yisrael Yehuda</strong><small>Conheça suas obras disponíveis no Google Play Livros.</small></span><span>›</span></button>
+        <a class="menu-link is-external" href="https://www.chabad.org/calendar/view/month.htm" target="_blank" rel="noopener"><span>🗓️ <strong>Calendário judaico</strong><small>Data judaica em tempo real no Chabad.org, com aparência integrada ao Ohr.</small></span><span class="menu-arrow">↗</span></a>
         <button class="menu-link" data-drawer-go="contato"><span>📩 <strong>Contato e perguntas frequentes</strong><small>Envie mensagem, sugestões e correções.</small></span><span>›</span></button>
         <button class="menu-link" data-drawer-go="sobre"><span>ℹ️ <strong>Sobre o Ohr</strong><small>Versão, propósito e informações do aplicativo.</small></span><span>›</span></button>
       </div>
@@ -503,6 +521,7 @@
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
+        <p class="op-mark">Op Leão em Ascensão 1.2.1</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -718,13 +737,23 @@
         <div class="screen-head">
 <div class="screen-copy">
             <h2>Livros de Yisrael Yehuda</h2>
-            <p>Uma vitrine elegante das obras disponíveis no Google Play Livros para ler, estudar e aprofundar a alma.</p>
+            <p>Uma vitrine elegante das obras disponíveis no Google Play Livros para ler, estudar, aprofundar a alma e encontrar novas camadas de entendimento.</p>
           </div>
         </div>
       </div>
 
+      <div class="library-intro">
+        <p><strong style="color:var(--gold)">Uma biblioteca autoral com identidade própria.</strong><br>Cada obra foi organizada com personalidade distinta: começo, profundidade e provocação. Toque em <em>Ler amostra</em> para sentir o tom do livro e, se desejar, abra a página oficial no Google Play Livros.</p>
+        <div class="calendar-card" style="margin-top:14px">
+          <h4>🗓️ Calendário judaico em tempo real</h4>
+          <p>Abra a data judaica atualizada no Chabad.org e acompanhe o calendário hebraico como uma extensão natural do Ohr.</p>
+          <a class="book-btn primary" href="https://www.chabad.org/calendar/view/month.htm" target="_blank" rel="noopener">Abrir calendário judaico</a>
+        </div>
+      </div>
+
       <div class="books-grid">
-        <div class="book-card">
+        <div class="book-card featured">
+          <div class="book-kicker">📗 Começo claro e fiel</div>
           <div class="book-top">
             <div class="book-cover cover-bnei">
               <strong style="font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1.02">Guia para<br>Bnei Noach</strong>
@@ -735,16 +764,18 @@
               <h3 class="book-title">📗 Guia para Bnei Noach</h3>
               <div class="book-meta">17 páginas · R$ 9,99</div>
               <p class="book-hook">"Você não precisa nascer judeu para viver com propósito divino."</p>
+              <div class="book-summary">Um começo sério, claro e fiel para quem deseja entender a missão dos Bnei Noach à luz da tradição de Israel, com linguagem acessível, identidade, propósito e orientação espiritual.</div>
               <div class="book-actions">
                 <a class="book-btn primary" href="https://play.google.com/store/books/details/Yisrael_Yehuda_Guia_para_Bnei_Noach?id=rRHFEQAAQBAJ" target="_blank" rel="noopener">Ler amostra</a>
                 <a class="book-btn secondary" href="https://play.google.com/store/books/details/Yisrael_Yehuda_Guia_para_Bnei_Noach?id=rRHFEQAAQBAJ" target="_blank" rel="noopener">Ver no Google Play Livros</a>
               </div>
             </div>
           </div>
-          <div class="book-foot">Um começo sério, claro e fiel para quem deseja entender a missão dos Bnei Noach à luz da tradição de Israel.</div>
+          <div class="book-foot">Para quem busca moralidade, espiritualidade, noachismo e uma introdução honesta, organizada e responsável.</div>
         </div>
 
-        <div class="book-card">
+        <div class="book-card featured">
+          <div class="book-kicker">📙 Mistério e providência</div>
           <div class="book-top">
             <div class="book-cover cover-purim">
               <strong style="font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.02">Purim<br>O Milagre<br>Oculto</strong>
@@ -755,16 +786,18 @@
               <h3 class="book-title">📙 Purim: O Milagre Oculto</h3>
               <div class="book-meta">47 páginas · R$ 12,99</div>
               <p class="book-hook">"Quando HaShem se cala, não significa que abandonou. Significa que está trabalhando."</p>
+              <div class="book-summary">Quando o Nome não aparece, a Providência se revela. Um mergulho no mistério espiritual de Purim, com história, Tanach, comentários e a beleza do milagre escondido.</div>
               <div class="book-actions">
                 <a class="book-btn primary" href="https://play.google.com/store/books/details?id=qE3GEQAAQBAJ" target="_blank" rel="noopener">Ler amostra</a>
                 <a class="book-btn secondary" href="https://play.google.com/store/books/details?id=qE3GEQAAQBAJ" target="_blank" rel="noopener">Ver no Google Play Livros</a>
               </div>
             </div>
           </div>
-          <div class="book-foot">Quando o Nome não aparece, a Providência se revela. Um mergulho no mistério espiritual de Purim, com história, Tanach e comentários.</div>
+          <div class="book-foot">Uma leitura para quem quer atravessar a superfície da história e enxergar a mão de HaShem atuando por trás do véu.</div>
         </div>
 
-        <div class="book-card">
+        <div class="book-card featured">
+          <div class="book-kicker">📘 Provocação e sabedoria</div>
           <div class="book-top">
             <div class="book-cover cover-prospera">
               <strong style="font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.04; text-align:center">Como os<br>Judeus<br>Prosperam</strong>
@@ -775,13 +808,14 @@
               <h3 class="book-title">📘 Como os Judeus Prosperam</h3>
               <div class="book-meta">24 páginas · R$ 29,99</div>
               <p class="book-hook">"Enquanto o mundo busca atalhos, os sábios de Israel guardam o mapa."</p>
+              <div class="book-summary">Uma leitura direta e provocadora sobre disciplina, valores, mitzvot, mentalidade e estrutura. Enquanto o mundo corre atrás de atalhos, a sabedoria guarda profundidade.</div>
               <div class="book-actions">
                 <a class="book-btn primary" href="https://play.google.com/store/books/details?id=U8vGEQAAQBAJ" target="_blank" rel="noopener">Ler amostra</a>
                 <a class="book-btn secondary" href="https://play.google.com/store/books/details?id=U8vGEQAAQBAJ" target="_blank" rel="noopener">Ver no Google Play Livros</a>
               </div>
             </div>
           </div>
-          <div class="book-foot">Uma leitura direta e provocadora sobre disciplina, valores e mentalidade. Enquanto o mundo corre atrás de atalhos, a sabedoria guarda profundidade.</div>
+          <div class="book-foot">Para quem quer aprender, estudar e pensar com mais seriedade, sem romantização vazia e sem atalhos intelectuais.</div>
         </div>
       </div>
     </main>
@@ -1068,6 +1102,30 @@
       return JSON.parse(localStorage.getItem('ohrLetters') || '[]');
     }
 
+    function deleteLetter(index) {
+      const letters = getLetters();
+      if (index < 0 || index >= letters.length) return;
+      letters.splice(index, 1);
+      localStorage.setItem('ohrLetters', JSON.stringify(letters));
+      renderSavedLetters();
+      if (letterToast) {
+        letterToast.textContent = 'A carta salva foi apagada deste aparelho.';
+        letterToast.classList.add('show');
+        setTimeout(() => letterToast.classList.remove('show'), 3200);
+      }
+    }
+
+    function deleteAllLetters() {
+      localStorage.removeItem('ohrLetters');
+      renderSavedLetters();
+      if (letterToast) {
+        letterToast.textContent = 'Todas as cartas salvas foram apagadas deste aparelho.';
+        letterToast.classList.add('show');
+        setTimeout(() => letterToast.classList.remove('show'), 3200);
+      }
+    }
+
+
     function renderSavedLetters() {
       const wrap = document.getElementById('savedLetters');
       if (!wrap) return;
@@ -1076,13 +1134,20 @@
         wrap.innerHTML = '<div class="saved-letter"><h4>Nenhuma carta salva ainda</h4><p>Quando você guardar sua primeira carta, ela ficará registrada neste aparelho com recolhimento e discrição.</p></div>';
         return;
       }
-      wrap.innerHTML = letters.slice(0,5).map(letter => `
+      wrap.innerHTML = letters.slice(0,5).map((letter, index) => `
         <div class="saved-letter">
-          <time>${formatLetterDate(letter.createdAt)}</time>
-          <h4>${letter.subject || 'Carta sem assunto'}</h4>
+          <div class="saved-letter-head">
+            <div>
+              <time>${formatLetterDate(letter.createdAt)}</time>
+              <h4>${letter.subject || 'Carta sem assunto'}</h4>
+            </div>
+          </div>
           <p>${(letter.body || '').replace(/</g,'&lt;').slice(0, 220)}${letter.body && letter.body.length > 220 ? '…' : ''}</p>
+          <div class="saved-letter-actions">
+            <button class="saved-letter-btn delete" onclick="deleteLetter(${index})">Apagar</button>
+          </div>
         </div>
-      `).join('');
+      `).join('') + (letters.length ? `<div class="saved-letter"><div class="saved-letter-actions"><button class="saved-letter-btn delete" onclick="deleteAllLetters()">Apagar todas as cartas salvas</button></div></div>` : '');
     }
 
     function updateApp() {
@@ -1425,7 +1490,7 @@
       if (letterBody) letterBody.value = '';
       persistLetterDraft();
       if (letterToast) {
-        letterToast.textContent = 'A carta em edição foi limpa. As cartas já guardadas permanecem salvas neste aparelho.';
+        letterToast.textContent = 'A carta em edição foi limpa. Se desejar, você também pode apagar cartas já guardadas logo abaixo.';
         letterToast.classList.add('show');
         setTimeout(() => letterToast.classList.remove('show'), 3800);
       }
