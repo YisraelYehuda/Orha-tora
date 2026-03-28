@@ -210,6 +210,149 @@
       50% { transform: scale(1.02); }
       100% { transform: scale(1); }
     }
+  
+    .backdrop{animation:backdropShift 18s ease-in-out infinite alternate}
+    .glow::before{animation:floatGlow 10s ease-in-out infinite}
+    .glow::after{animation:floatGlow 13s ease-in-out infinite reverse}
+    @keyframes backdropShift{
+      0%{filter:hue-rotate(0deg) saturate(1)}
+      100%{filter:hue-rotate(8deg) saturate(1.08)}
+    }
+    @keyframes floatGlow{
+      0%,100%{transform:translate3d(0,0,0) scale(1)}
+      50%{transform:translate3d(10px, -8px, 0) scale(1.05)}
+    }
+
+    .quote{position:relative; overflow:hidden}
+    .quote::after{
+      content:'';
+      position:absolute; inset:auto -30% -50% auto;
+      width:180px; height:180px; border-radius:999px;
+      background:radial-gradient(circle, rgba(217,174,85,.12), transparent 65%);
+      pointer-events:none;
+    }
+
+    .search-card{
+      padding:12px;
+      margin-bottom:14px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+    .search-wrap{
+      display:flex; align-items:center; gap:10px;
+      background:var(--surface-strong);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    .search-wrap input{
+      flex:1; border:none; outline:none; background:transparent;
+      color:var(--text); font-size:14px;
+    }
+    .search-wrap input::placeholder{color:var(--text-soft)}
+    .search-note{font-size:11px; color:var(--text-soft); margin-top:8px; text-align:center}
+    .search-empty{
+      display:none; text-align:center; color:var(--text-soft);
+      padding:18px 12px;
+    }
+
+    .shabbat-guide{display:none}
+    .shabbat-guide.show{display:block; animation:fadeIn .35s ease}
+    .shabbat-grid{display:grid; gap:10px; margin-top:14px}
+    .shabbat-box{
+      background:var(--bg-soft);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+    }
+    .shabbat-box h4{margin:0 0 8px; color:var(--gold); font-size:14px}
+    .shabbat-box p{margin:0; color:var(--text-soft); line-height:1.65; font-size:13px}
+    .shabbat-badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:999px;
+      background:var(--gold-soft); color:var(--gold); font-size:11px; font-weight:700;
+      border:1px solid var(--border); margin-top:10px;
+    }
+
+    .med-link{
+      display:inline-block;
+      padding:12px 20px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--gold),#efc870);
+      color:#0a0a1a;
+      font-weight:800;
+      text-decoration:none;
+      font-size:14px;
+      box-shadow:0 10px 25px rgba(184,138,43,.22);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .med-link:hover,.med-link:active{transform:translateY(-1px) scale(.99)}
+
+    .ambient-card{
+      margin-top:16px;
+      padding:16px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+    }
+    .ambient-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .ambient-title{font-size:12px; color:var(--gold); font-weight:700; letter-spacing:.4px}
+    .ambient-buttons{display:flex; gap:8px; flex-wrap:wrap}
+    .ambient-btn{
+      border:none; border-radius:12px; padding:10px 12px;
+      background:var(--gold-soft); color:var(--gold);
+      font-weight:700; cursor:pointer;
+    }
+    .ambient-btn.active{background:var(--gold); color:#0a0a1a}
+    .volume-wrap{margin-top:12px}
+    .volume-wrap label{display:block; font-size:11px; color:var(--text-soft); margin-bottom:8px}
+    .volume-wrap input[type=range]{width:100%}
+    .candle-box{
+      margin-top:16px; padding:18px 16px; border-radius:18px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(217,174,85,.08), rgba(13,24,38,.08));
+      text-align:center;
+    }
+    .candle-wrap{position:relative; width:72px; height:110px; margin:10px auto 14px}
+    .candle{
+      position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      width:28px; height:62px; border-radius:8px 8px 10px 10px;
+      background:linear-gradient(180deg,#fff8eb,#f1dbc0);
+      box-shadow:0 0 0 1px rgba(255,255,255,.14) inset;
+    }
+    .wick{
+      position:absolute; bottom:58px; left:50%; transform:translateX(-50%);
+      width:3px; height:12px; background:#3d3226; border-radius:999px;
+    }
+    .flame{
+      position:absolute; bottom:66px; left:50%; transform:translateX(-50%);
+      width:22px; height:34px; border-radius:50% 50% 50% 50% / 58% 58% 42% 42%;
+      background:radial-gradient(circle at 50% 30%, #fff7cc 0 24%, #ffd56b 35%, #ff9f2f 60%, rgba(255,159,47,.25) 75%, transparent 78%);
+      filter:drop-shadow(0 0 10px rgba(255,191,73,.75));
+      animation:flicker 1.8s ease-in-out infinite;
+      transform-origin:center bottom;
+    }
+    .flame::after{
+      content:'';
+      position:absolute; inset:7px 6px 8px;
+      border-radius:50%;
+      background:radial-gradient(circle at 50% 35%, #fffef5 0 28%, #fff0a8 55%, transparent 68%);
+      opacity:.85;
+    }
+    @keyframes flicker{
+      0%,100%{transform:translateX(-50%) rotate(-2deg) scale(1)}
+      25%{transform:translateX(-50%) rotate(2deg) scale(1.03)}
+      50%{transform:translateX(-50%) rotate(-1deg) scale(.96)}
+      75%{transform:translateX(-50%) rotate(1.5deg) scale(1.04)}
+    }
+    .candle-note{font-size:12px; color:var(--text-soft); line-height:1.7}
+
   </style>
 </head>
 <body>
@@ -268,6 +411,31 @@
           <span id="quoteTag">Chassidut</span>
         </div>
       </div>
+
+      <div class="card shabbat-guide" id="shabbatGuideCard">
+        <p class="section-label">Guia para o Shabat</p>
+        <p class="hero-desc" style="margin-top:6px">O Shabat chegou. Desacelere, organize o coração e entre na santidade com paz, honra e presença.</p>
+        <div class="shabbat-badge">🕯️ Disponível somente durante o Shabat</div>
+        <div class="shabbat-grid">
+          <div class="shabbat-box">
+            <h4>Para judeus</h4>
+            <p>Prepare a mesa, acenda as velas físicas no tempo adequado, vista-se com dignidade, faça Kidush, tenha refeições com honra, estude Torá, cante zemirot e descanse da melachá.</p>
+          </div>
+          <div class="shabbat-box">
+            <h4>Para Bnei Noach</h4>
+            <p>Separe o dia para paz, tefilá, gratidão, Tehilim, estudo apropriado e fortalecimento da fé. Honre HaShem com pureza de intenção, sem assumir obrigações que não lhe foram dadas.</p>
+          </div>
+          <div class="shabbat-box">
+            <h4>Para simpatizantes do judaísmo</h4>
+            <p>Use este tempo para desacelerar, aprender, refletir, evitar excessos, ler algo sagrado, fazer uma refeição mais consciente e contemplar a beleza do descanso que vem de HaShem.</p>
+          </div>
+          <div class="shabbat-box">
+            <h4>Sugestão simples</h4>
+            <p>Coma com calma, beba algo que marque a santidade do momento, leia Tehilim, estude uma porção de Torá apropriada ao seu caminho, desligue distrações e deixe a casa mais serena.</p>
+          </div>
+        </div>
+      </div>
+
     </main>
 
     <main class="screen" id="oracoes">
@@ -275,6 +443,14 @@
         <h2>Orações</h2>
         <p>Conexão sagrada através das palavras dos nossos sábios.</p>
       </div>
+      <div class="search-card">
+        <div class="search-wrap">
+          <span>🔎</span>
+          <input id="prayerSearch" type="text" placeholder="Buscar oração, brachá ou tema..." />
+        </div>
+        <div class="search-note">Digite Shemá, Modeh, mãos, saúde, arroz, vinho, paz...</div>
+      </div>
+      <div class="search-empty" id="prayerSearchEmpty">Nenhuma oração encontrada. Tente outro termo.</div>
       <div class="list" id="prayerList"></div>
     </main>
 
@@ -314,12 +490,31 @@
           <button id="pauseBtn">Pausar</button>
           <button id="resetBtn">Resetar</button>
         </div>
-        <div style="margin-top:20px;text-align:center">
-          <label style="font-size:12px;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
-            <input type="checkbox" id="audioToggle" style="cursor:pointer">
-            Som Ambiente - Chuva e Vento
-          </label>
+
+        <div class="ambient-card">
+          <div class="ambient-top">
+            <div class="ambient-title">🔊 Som Ambiente — chuva e vento</div>
+            <div class="ambient-buttons">
+              <button class="ambient-btn" id="rainBtn">🌧️ Chuva</button>
+              <button class="ambient-btn" id="windBtn">🍃 Vento</button>
+            </div>
+          </div>
+          <div class="volume-wrap">
+            <label for="ambientVolume">Volume do ambiente</label>
+            <input id="ambientVolume" type="range" min="0" max="100" value="88" />
+          </div>
         </div>
+
+        <div class="candle-box">
+          <p class="section-label" style="margin-bottom:6px">Luz simbólica</p>
+          <div class="candle-wrap" aria-hidden="true">
+            <div class="flame"></div>
+            <div class="wick"></div>
+            <div class="candle"></div>
+          </div>
+          <p class="candle-note">Esta chama virtual não substitui a vela física. Que ela te lembre de preparar uma luz real com honra quando chegar o tempo apropriado.</p>
+        </div>
+
         <div class="med-step">
           <strong>🕯️ Prepare seu Espaço</strong>
           <p>Encontre um lugar tranquilo. Sente-se confortavelmente. Feche os olhos.</p>
@@ -395,9 +590,36 @@
 
   <script>
     const quotes = [
-      { text: "Seu pensamento é onde você está. Procure estar sempre em um lugar sagrado.", source: "Baal Shem Tov", tag: "Chassidut" },
-      { text: "É proibido ser velho. Nunca se desespere. Comece de novo a cada momento.", source: "Rebbe Nachman", tag: "Breslev" },
-      { text: "Um pouco de luz dissipa muita escuridão. Sua boa ação pode mudar o mundo.", source: "Rebbe de Lubavitch", tag: "Chabad" }
+      { text: "É uma grande mitzvá estar sempre alegre. A alegria não é apenas um sentimento — é um caminho para HaShem.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "O mundo inteiro é uma ponte muito estreita, e o principal é não ter medo de atravessá-la.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "Nunca desespere. Um judeu nunca deve desesperar — jamais.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "Se você acredita que pode destruir, acredite que também pode reconstruir.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "Cada pessoa tem seu ponto de luz. Encontre-o. Cultive-o. Ele é sua conexão com o Eterno.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "Fale com HaShem como você falaria com seu melhor amigo. Ele ouve cada palavra, cada silêncio, cada lágrima.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "O começo de toda sabedoria é saber que você não sabe nada — e ainda assim confiar n'Aquele que tudo sabe.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "Quando você não consegue rezar com palavras, seu coração já está rezando. HaShem lê o que os lábios não conseguem dizer.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "A Teshuvá não é um fardo. É uma porta sempre aberta. É HaShem dizendo: volte, eu estava esperando.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "Procure sempre o bem em cada pessoa, em cada situação. Isso é o segredo da paz interior.", source: "— Rebbe Nachman de Breslov", tag: "Tzadikim" },
+      { text: "Pense bem — e as coisas serão boas.", source: "— Baal Shem Tov", tag: "Tzadikim" },
+      { text: "Onde está o pensamento de um homem, lá está todo o seu ser.", source: "— Baal Shem Tov", tag: "Tzadikim" },
+      { text: "HaShem está em todo lugar. Até na escuridão mais profunda, há uma centelha Sua esperando para ser liberada.", source: "— Baal Shem Tov", tag: "Tzadikim" },
+      { text: "Não existe coisa pequena feita com amor. Aos olhos de HaShem, um ato de bondade simples vale mais do que mil palavras vazias.", source: "— Baal Shem Tov", tag: "Tzadikim" },
+      { text: "A alma de um judeu arde com fogo divino. Esse fogo não se apaga — apenas espera ser avivado.", source: "— Baal Shem Tov", tag: "Tzadikim" },
+      { text: "O mundo foi criado para minha sake — isso não é arrogância, é responsabilidade.", source: "— Rebe Menachem Mendel Schneerson", tag: "Tzadikim" },
+      { text: "Você foi colocado exatamente onde está, exatamente agora, porque só você pode realizar o que precisa ser feito aqui.", source: "— Lubavitcher Rebbe", tag: "Tzadikim" },
+      { text: "Uma pequena luz expulsa muita escuridão. Imagine o que sua neshamá pode fazer neste mundo.", source: "— Lubavitcher Rebbe", tag: "Tzadikim" },
+      { text: "Não fique apenas satisfeito em ser bom. O mundo precisa que você seja extraordinário.", source: "— Lubavitcher Rebbe", tag: "Tzadikim" },
+      { text: "Cada momento é uma nova criação. Você nunca é prisioneiro de quem foi ontem.", source: "— Lubavitcher Rebbe", tag: "Tzadikim" },
+      { text: "Não vim ao mundo para ser comum. Vim para ser luz onde há escuridão, e voz onde há silêncio.", source: "— Yisrael Aryeh Yehuda", tag: "Yisrael" },
+      { text: "Minha neshamá conhece o caminho de volta para casa — mesmo quando minha mente está perdida.", source: "— Yisrael Aryeh Yehuda", tag: "Yisrael" },
+      { text: "Carreguei dúvidas, carreguei medos — mas a fé sempre foi mais pesada do que tudo isso junto.", source: "— Yisrael Aryeh Yehuda", tag: "Yisrael" },
+      { text: "Cada amanhecer é HaShem me dizendo: eu ainda acredito em você. Então eu também acredito.", source: "— Yisrael Aryeh Yehuda", tag: "Yisrael" },
+      { text: "Não preciso entender todos os caminhos de HaShem. Preciso apenas confiar n'Aquele que os traçou.", source: "— Yisrael Aryeh Yehuda", tag: "Yisrael" },
+      { text: "HaShem é minha luz e minha salvação — a quem temerei?", source: "— Tehilim 27:1", tag: "Tehilim" },
+      { text: "Lança sobre HaShem o teu fardo, e Ele te sustentará.", source: "— Tehilim 55:23", tag: "Tehilim" },
+      { text: "Até nas trevas mais profundas, Tu és minha luz. Tua mão jamais me abandona.", source: "— Tehilim 139:11-12", tag: "Tehilim" },
+      { text: "Este é o dia que HaShem fez — alegremo-nos e regozijemo-nos nele.", source: "— Tehilim 118:24", tag: "Tehilim" },
+      { text: "Guarda tua língua do mal e teus lábios de falar falsidade. Afasta-te do mal e faze o bem — busca a paz e persegue-a.", source: "— Tehilim 34:14-15", tag: "Tehilim" }
     ];
 
     const prayers = {
@@ -447,6 +669,39 @@
       }
     ];
 
+
+    function getRandomQuoteForWindow() {
+      const windowMs = 8 * 60 * 60 * 1000;
+      const currentWindow = Math.floor(Date.now() / windowMs);
+      const stored = JSON.parse(localStorage.getItem('ohrQuoteState') || '{}');
+
+      if (stored.window !== currentWindow || typeof stored.index !== 'number') {
+        let nextIndex = Math.floor(Math.random() * quotes.length);
+        if (typeof stored.index === 'number' && quotes.length > 1) {
+          while (nextIndex === stored.index) {
+            nextIndex = Math.floor(Math.random() * quotes.length);
+          }
+        }
+        const nextState = { window: currentWindow, index: nextIndex };
+        localStorage.setItem('ohrQuoteState', JSON.stringify(nextState));
+        return quotes[nextIndex];
+      }
+
+      return quotes[stored.index] || quotes[0];
+    }
+
+    function shouldShowShabbatGuide(now) {
+      const day = now.getDay();
+      const hour = now.getHours();
+      return (day === 5 && hour >= 18) || (day === 6 && hour < 18);
+    }
+
+    function updateShabbatGuide(now) {
+      const card = document.getElementById('shabbatGuideCard');
+      if (!card) return;
+      card.classList.toggle('show', shouldShowShabbatGuide(now));
+    }
+
     function updateApp() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -463,6 +718,7 @@
       document.getElementById('psalmNumber').textContent = `Dia ${day}`;
       document.getElementById('psalmHint').textContent = `Capítulos ${tehilimCycle[day-1]}`;
       updateShabbat(now);
+      updateShabbatGuide(now);
     }
 
     function updateShabbat(now) {
@@ -502,7 +758,7 @@
 
       const list = document.getElementById('prayerList');
       list.innerHTML = prayerListContent.map(p => `
-        <details class="item">
+        <details class="item prayer-entry" data-search="${(p.title + ' ' + p.badge + ' ' + p.desc + ' ' + p.translation).toLowerCase()}">
           <summary>
             <div class="item-top">
               <div>
@@ -522,6 +778,26 @@
           </div>
         </details>
       `).join('');
+
+      const searchInput = document.getElementById('prayerSearch');
+      const searchEmpty = document.getElementById('prayerSearchEmpty');
+
+      function filterPrayers() {
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        let visible = 0;
+        document.querySelectorAll('.prayer-entry').forEach(entry => {
+          const haystack = entry.getAttribute('data-search') || '';
+          const match = !query || haystack.includes(query);
+          entry.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+        if (searchEmpty) searchEmpty.style.display = visible ? 'none' : 'block';
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', filterPrayers);
+        filterPrayers();
+      }
 
       const psalmDiv = document.getElementById('psalmContent');
       psalmDiv.innerHTML = `
@@ -562,18 +838,150 @@
       }
     }
 
+
     let timer = null, timeLeft = 600;
+    let ambientCtx = null, rainNodes = null, windNodes = null;
+    let ambientVolume = 0.88;
+
+    function ensureAmbientContext() {
+      if (!ambientCtx) {
+        ambientCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (ambientCtx.state === 'suspended') ambientCtx.resume();
+      return ambientCtx;
+    }
+
+    function createNoiseNode(ctx) {
+      const bufferSize = 2 * ctx.sampleRate;
+      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+      const whiteNoise = ctx.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+      whiteNoise.loop = true;
+      return whiteNoise;
+    }
+
+    function stopNodes(nodes) {
+      if (!nodes) return;
+      try { nodes.source?.stop(); } catch(e) {}
+      try { nodes.source2?.stop(); } catch(e) {}
+    }
+
+    function setupRain() {
+      const ctx = ensureAmbientContext();
+      stopNodes(rainNodes);
+      const source = createNoiseNode(ctx);
+      const bandpass = ctx.createBiquadFilter();
+      bandpass.type = 'bandpass';
+      bandpass.frequency.value = 3800;
+      bandpass.Q.value = 0.7;
+
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = 'lowpass';
+      lowpass.frequency.value = 7000;
+
+      const gain = ctx.createGain();
+      gain.gain.value = 0.42 * ambientVolume;
+
+      source.connect(bandpass);
+      bandpass.connect(lowpass);
+      lowpass.connect(gain);
+      gain.connect(ctx.destination);
+      source.start();
+
+      rainNodes = { source, gain };
+      document.getElementById('rainBtn')?.classList.add('active');
+    }
+
+    function stopRain() {
+      stopNodes(rainNodes);
+      rainNodes = null;
+      document.getElementById('rainBtn')?.classList.remove('active');
+    }
+
+    function setupWind() {
+      const ctx = ensureAmbientContext();
+      stopNodes(windNodes);
+
+      const source = createNoiseNode(ctx);
+      const source2 = createNoiseNode(ctx);
+
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = 'lowpass';
+      lowpass.frequency.value = 650;
+
+      const lowpass2 = ctx.createBiquadFilter();
+      lowpass2.type = 'lowpass';
+      lowpass2.frequency.value = 980;
+
+      const gain = ctx.createGain();
+      gain.gain.value = 0.5 * ambientVolume;
+
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      lfo.frequency.value = 0.08;
+      lfoGain.gain.value = 0.18 * ambientVolume;
+      lfo.connect(lfoGain);
+      lfoGain.connect(gain.gain);
+
+      source.connect(lowpass);
+      source2.connect(lowpass2);
+      lowpass.connect(gain);
+      lowpass2.connect(gain);
+      gain.connect(ctx.destination);
+
+      source.start();
+      source2.start();
+      lfo.start();
+
+      windNodes = { source, source2, gain, lfo };
+      document.getElementById('windBtn')?.classList.add('active');
+    }
+
+    function stopWind() {
+      if (windNodes?.lfo) {
+        try { windNodes.lfo.stop(); } catch(e) {}
+      }
+      stopNodes(windNodes);
+      windNodes = null;
+      document.getElementById('windBtn')?.classList.remove('active');
+    }
+
+    function updateAmbientVolume(value) {
+      ambientVolume = Math.max(0, Math.min(1, value / 100));
+      if (rainNodes?.gain) rainNodes.gain.gain.value = 0.42 * ambientVolume;
+      if (windNodes?.gain) windNodes.gain.gain.value = 0.5 * ambientVolume;
+    }
+
     document.getElementById('startBtn').onclick = () => {
       if (timer) return;
       timer = setInterval(() => {
         timeLeft--;
         const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
         document.getElementById('timerDisplay').textContent = `${m}:${s.toString().padStart(2,'0')}`;
-        if (timeLeft <= 0) clearInterval(timer);
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          timer = null;
+        }
       }, 1000);
     };
     document.getElementById('pauseBtn').onclick = () => { clearInterval(timer); timer = null; };
     document.getElementById('resetBtn').onclick = () => { clearInterval(timer); timer = null; timeLeft = 600; document.getElementById('timerDisplay').textContent = "10:00"; };
+
+    document.getElementById('rainBtn').onclick = () => {
+      if (rainNodes) stopRain();
+      else setupRain();
+    };
+
+    document.getElementById('windBtn').onclick = () => {
+      if (windNodes) stopWind();
+      else setupWind();
+    };
+
+    document.getElementById('ambientVolume').addEventListener('input', (e) => {
+      updateAmbientVolume(Number(e.target.value));
+    });
 
     init();
   </script>
