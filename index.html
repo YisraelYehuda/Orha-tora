@@ -999,6 +999,236 @@
   }
 
 
+
+  .caminho-card {
+    cursor: pointer;
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .caminho-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-forte);
+    border-color: var(--azul-celeste);
+  }
+  .caminho-card:active {
+    transform: translateY(-2px) scale(.995);
+  }
+  .caminho-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 1rem;
+    background: rgba(37,99,168,0.09);
+    color: var(--azul-royal);
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+
+  .rotas-estudo {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .rota-estudo {
+    scroll-margin-top: 84px;
+    background: var(--branco-puro);
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+    border: 1px solid var(--cinza-suave);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .rota-estudo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, rgba(219,234,254,0.5), transparent 38%);
+    pointer-events: none;
+  }
+  .rota-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+  }
+  .rota-kicker {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--azul-claro);
+    font-weight: 700;
+    margin-bottom: .3rem;
+  }
+  .rota-titulo {
+    font-family: 'Playfair Display', serif;
+    color: var(--azul-profundo);
+    font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+    margin-bottom: .3rem;
+  }
+  .rota-sub {
+    color: var(--texto-suave);
+    line-height: 1.75;
+    max-width: 760px;
+  }
+  .rota-hebraico {
+    font-family: 'Frank Ruhl Libre', serif;
+    color: var(--dourado);
+    font-size: 1.1rem;
+    white-space: nowrap;
+  }
+  .rota-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .rota-box {
+    background: linear-gradient(180deg, var(--branco-puro), #f4f8ff);
+    border: 1px solid var(--cinza-suave);
+    border-radius: var(--radius-sm);
+    padding: 1.15rem;
+    box-shadow: 0 8px 24px rgba(10,22,40,0.05);
+  }
+  .rota-box h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--azul-profundo);
+    font-size: 1.08rem;
+    margin-bottom: 0.55rem;
+  }
+  .rota-box p {
+    color: var(--texto-suave);
+    font-size: .96rem;
+    line-height: 1.72;
+  }
+  .rota-lista {
+    margin-top: .85rem;
+    display: grid;
+    gap: .55rem;
+  }
+  .rota-lista li {
+    list-style: none;
+    color: var(--texto-medio);
+    line-height: 1.6;
+    padding-left: 1.15rem;
+    position: relative;
+    font-size: .95rem;
+  }
+  .rota-lista li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--dourado);
+    font-weight: 700;
+  }
+  .rota-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+  .btn-soft {
+    background: var(--azul-suave);
+    color: var(--azul-royal);
+    border: 1px solid rgba(37,99,168,0.12);
+    padding: .7rem 1.1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'Crimson Pro', serif;
+    font-weight: 700;
+    transition: var(--transition);
+  }
+  .btn-soft:hover {
+    background: var(--azul-claro);
+    color: var(--branco-puro);
+    transform: translateY(-2px);
+  }
+
+  .atalhos-fixos {
+    position: sticky;
+    top: 74px;
+    z-index: 30;
+    display: flex;
+    gap: .65rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: .85rem 0 1.2rem;
+    background: linear-gradient(180deg, rgba(248,250,255,.97), rgba(248,250,255,.75), transparent);
+    backdrop-filter: blur(10px);
+  }
+  .atalho-chip {
+    border: 1px solid rgba(37,99,168,0.12);
+    background: rgba(255,255,255,.88);
+    color: var(--azul-royal);
+    border-radius: 999px;
+    padding: .58rem .95rem;
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 6px 18px rgba(10,22,40,.06);
+  }
+  .atalho-chip:hover {
+    transform: translateY(-2px);
+    background: var(--azul-claro);
+    color: var(--branco-puro);
+  }
+
+  .talmud-destaques {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.35rem 0 0;
+  }
+  .talmud-destaque-card {
+    background: linear-gradient(180deg, #fdfefe, #eef5ff);
+    border: 1px solid var(--cinza-suave);
+    border-radius: var(--radius-sm);
+    padding: 1.15rem;
+  }
+  .talmud-destaque-card h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--azul-profundo);
+    margin-bottom: .45rem;
+    font-size: 1.05rem;
+  }
+  .talmud-destaque-card p {
+    color: var(--texto-suave);
+    line-height: 1.7;
+    font-size: .95rem;
+  }
+
+  .secao-botao-linha {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .85rem;
+    margin-top: 1.6rem;
+  }
+
+  @media (max-width: 768px) {
+    .rota-estudo { padding: 1.35rem; }
+    .atalhos-fixos {
+      top: 64px;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+    }
+    .atalhos-fixos::-webkit-scrollbar { display: none; }
+  }
+
+
   /* ── FRASE DIARIA ── */
   .frase-diaria {
     background: linear-gradient(135deg, var(--azul-royal), var(--azul-claro));
@@ -1202,30 +1432,184 @@
     <div class="divisor"></div>
     <p class="secao-sub reveal">A Torá é a base de tudo. Aqui você encontra os cinco livros, comentários e ensinamentos organizados para todos os níveis.</p>
     <div class="caminhos-estudo reveal">
-      <div class="caminho-card">
+      <div class="caminho-card" role="button" tabindex="0" onclick="abrirRota('trilha-iniciante')" onkeypress="teclaAtalho(event,'trilha-iniciante')">
         <span class="mini-label">Entrada guiada</span>
         <span class="caminho-icone">🕯️</span>
         <h3>Para quem está começando</h3>
         <p>Comece pelos fundamentos: Torá, Tehilim, 7 Leis de Noé e noções básicas de Emunah. O objetivo aqui não é correr, mas construir base com seriedade e clareza.</p>
+        <span class="caminho-cta">Abrir trilha inicial →</span>
       </div>
-      <div class="caminho-card">
+      <div class="caminho-card" role="button" tabindex="0" onclick="abrirRota('trilha-intermediaria')" onkeypress="teclaAtalho(event,'trilha-intermediaria')">
         <span class="mini-label">Avanço sólido</span>
         <span class="caminho-icone">📚</span>
         <h3>Para quem já estuda</h3>
         <p>Entre nos comentários clássicos, nas parashot, em Pirkei Avot e nos ensinamentos do Talmud. A profundidade vem quando o texto deixa de ser apenas lido e passa a ser mastigado.</p>
+        <span class="caminho-cta">Abrir trilha intermediária →</span>
       </div>
-      <div class="caminho-card">
+      <div class="caminho-card" role="button" tabindex="0" onclick="abrirRota('trilha-avancada')" onkeypress="teclaAtalho(event,'trilha-avancada')">
         <span class="mini-label">Estudo elevado</span>
         <span class="caminho-icone">✡️</span>
         <h3>Para estudiosos avançados</h3>
         <p>Use este portal como ponto de organização: textos-base, linhas de leitura, comentários dos grandes sábios e trilhas de aprofundamento que preservam a reverência pela tradição.</p>
+        <span class="caminho-cta">Abrir trilha avançada →</span>
       </div>
-      <div class="caminho-card">
+      <div class="caminho-card" role="button" tabindex="0" onclick="abrirRota('trilha-pratica')" onkeypress="teclaAtalho(event,'trilha-pratica')">
         <span class="mini-label">Aplicação prática</span>
         <span class="caminho-icone">🧭</span>
         <h3>Estudar para viver</h3>
         <p>No judaísmo, conhecimento sem transformação fica incompleto. Estude para refinar o caráter, alinhar a vida e fortalecer a ligação com HaShem no cotidiano.</p>
+        <span class="caminho-cta">Abrir aplicação prática →</span>
       </div>
+    </div>
+
+    <div class="atalhos-fixos reveal">
+      <button class="atalho-chip" onclick="abrirRota('trilha-iniciante')">Início guiado</button>
+      <button class="atalho-chip" onclick="abrirRota('trilha-intermediaria')">Crescimento sólido</button>
+      <button class="atalho-chip" onclick="abrirRota('trilha-avancada')">Aprofundamento</button>
+      <button class="atalho-chip" onclick="abrirRota('trilha-pratica')">Vida prática</button>
+      <button class="atalho-chip" onclick="abrirRota('talmud-estudo-interno')">Talmud no site</button>
+    </div>
+
+    <div class="rotas-estudo reveal">
+      <article class="rota-estudo" id="trilha-iniciante">
+        <div class="rota-topo">
+          <div>
+            <div class="rota-kicker">Trilha essencial</div>
+            <h3 class="rota-titulo">Fundamentos para começar com base limpa</h3>
+            <p class="rota-sub">Esta entrada foi pensada para quem quer estudar com reverência, mas sem atropelo. Primeiro a base, depois a amplitude. O caminho judaico floresce melhor quando a estrutura está firme.</p>
+          </div>
+          <div class="rota-hebraico">יְסוֹדוֹת</div>
+        </div>
+        <div class="rota-grid">
+          <div class="rota-box">
+            <h4>1. Torá antes de complexidade</h4>
+            <p>Comece pelos cinco livros, entendendo o fluxo geral: criação, patriarcas, saída do Egito, santidade, deserto e discurso final de Moshê.</p>
+            <ul class="rota-lista">
+              <li>Leia a visão geral de Bereshit e Shemot primeiro.</li>
+              <li>Depois avance para Vayicrá com mais calma.</li>
+              <li>Volte às parashot semanais para criar ritmo.</li>
+            </ul>
+          </div>
+          <div class="rota-box">
+            <h4>2. Tehilim como linguagem da alma</h4>
+            <p>Use Tehilim como escola de interioridade. O estudante que aprende a orar também aprende a estudar melhor, porque o coração deixa de ser um estranho.</p>
+            <ul class="rota-lista">
+              <li>Comece pelos salmos 1, 23, 27, 91, 121 e 145.</li>
+              <li>Leia devagar, com atenção às imagens e à confiança.</li>
+              <li>Faça do texto uma resposta pessoal diante de HaShem.</li>
+            </ul>
+          </div>
+          <div class="rota-box">
+            <h4>3. Emunah e 7 Leis de Noé</h4>
+            <p>Para Bnei Noach e simpatizantes, a clareza sobre Emunah e sobre a aliança universal é indispensável. O básico bem compreendido vale mais que o avançado decorado.</p>
+            <ul class="rota-lista">
+              <li>Revise idolatria, justiça, vida, dignidade e reverência.</li>
+              <li>Entenda que moralidade judaica não é improviso.</li>
+              <li>Construa disciplina antes de buscar profundidades mais raras.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rota-acoes">
+          <button class="btn-soft" onclick="mudarTab('tora','cinco-livros', document.querySelector('#tora .tabs .tab:nth-child(1)')); rolarPara('#tora-cinco-livros');">Abrir Torá básica</button>
+          <button class="btn-soft" onclick="rolarPara('#tehilim')">Ir para Tehilim</button>
+          <button class="btn-soft" onclick="mudarTab('tora','7-leis', document.querySelector('#tora .tabs .tab:nth-child(3)')); rolarPara('#tora-7-leis');">Ver 7 Leis de Noé</button>
+        </div>
+      </article>
+
+      <article class="rota-estudo" id="trilha-intermediaria">
+        <div class="rota-topo">
+          <div>
+            <div class="rota-kicker">Trilha de consolidação</div>
+            <h3 class="rota-titulo">Quando o estudo deixa de ser visita e passa a ser casa</h3>
+            <p class="rota-sub">Aqui o estudante já não quer apenas conhecer temas. Ele quer estabelecer eixo, comparando texto, comentário e aplicação. A meta é ganhar densidade sem perder ordem.</p>
+          </div>
+          <div class="rota-hebraico">עִיּוּן</div>
+        </div>
+        <div class="rota-grid">
+          <div class="rota-box">
+            <h4>Comentários clássicos</h4>
+            <p>Rashi oferece entrada, Ramban expande horizontes, Rambam sistematiza e Sforno ilumina o sentido espiritual. Ler comentário é aprender a não ficar sozinho diante do texto.</p>
+          </div>
+          <div class="rota-box">
+            <h4>Parashah como coluna semanal</h4>
+            <p>A parashah organiza o ano, a mente e a comunidade. Quem aprende a acompanhar a parashah começa a entrar no ritmo vivo de Israel, e não apenas em estudos soltos.</p>
+          </div>
+          <div class="rota-box">
+            <h4>Talmud e ética em conjunto</h4>
+            <p>Pirkei Avot e os ensinamentos do Talmud refinam a inteligência espiritual: humildade, disciplina de estudo, amizade correta, ação prática e temor reverente.</p>
+          </div>
+        </div>
+        <div class="rota-acoes">
+          <button class="btn-soft" onclick="mudarTab('tora','comentarios', document.querySelector('#tora .tabs .tab:nth-child(2)')); rolarPara('#tora-comentarios');">Abrir comentários</button>
+          <button class="btn-soft" onclick="rolarPara('#parasha')">Ir para a Parashah</button>
+          <button class="btn-soft" onclick="mudarTab('talmud','pirkei', document.querySelector('#talmud .tabs .tab:nth-child(3)')); rolarPara('#talmud-pirkei');">Abrir Pirkei Avot</button>
+        </div>
+      </article>
+
+      <article class="rota-estudo" id="trilha-avancada">
+        <div class="rota-topo">
+          <div>
+            <div class="rota-kicker">Trilha de aprofundamento</div>
+            <h3 class="rota-titulo">Estudo elevado sem perder reverência, ordem e eixo</h3>
+            <p class="rota-sub">O avanço não está em colecionar termos difíceis, mas em sustentar linhas de estudo consistentes. O estudioso avançado precisa de organização interna, repertório e temor limpo diante da tradição.</p>
+          </div>
+          <div class="rota-hebraico">חָכְמָה</div>
+        </div>
+        <div class="rota-grid">
+          <div class="rota-box">
+            <h4>Leitura em camadas</h4>
+            <p>Texto-base, comentário clássico, anotação temática e revisão. O objetivo é não deixar que a leitura fique rasa, nem que a profundidade vire desordem.</p>
+            <ul class="rota-lista">
+              <li>Leia a passagem principal.</li>
+              <li>Compare dois comentaristas com critérios claros.</li>
+              <li>Registre o ponto central em poucas linhas.</li>
+            </ul>
+          </div>
+          <div class="rota-box">
+            <h4>Temas de alta densidade</h4>
+            <p>Providência, livre-arbítrio, santidade, povo de Israel, exílio, redenção, caráter e estrutura da halachá. Não estude esses temas sem base; mas, com base, aprofunde-os com coragem.</p>
+          </div>
+          <div class="rota-box">
+            <h4>Ordem antes de expansão</h4>
+            <p>O estudante elevado não precisa abrir tudo ao mesmo tempo. Precisa manter cadernos mentais nítidos: o que é Tanach, o que é Mishná, o que é Talmud, o que é comentário, o que é filosofia.</p>
+          </div>
+        </div>
+        <div class="rota-acoes">
+          <button class="btn-soft" onclick="rolarPara('#talmud-estudo-interno')">Abrir Talmud no site</button>
+          <button class="btn-soft" onclick="rolarPara('#filosofia')">Ir para Filosofia Judaica</button>
+          <button class="btn-soft" onclick="rolarPara('#quiz')">Testar conhecimento</button>
+        </div>
+      </article>
+
+      <article class="rota-estudo" id="trilha-pratica">
+        <div class="rota-topo">
+          <div>
+            <div class="rota-kicker">Trilha de aplicação</div>
+            <h3 class="rota-titulo">Estudar para viver, refinar e responder diante de HaShem</h3>
+            <p class="rota-sub">O estudo judaico não existe para ornamentar o intelecto. Ele existe para transformar o ser humano, ordenar a fala, purificar intenções e tornar a vida mais responsável.</p>
+          </div>
+          <div class="rota-hebraico">מַעֲשֶׂה</div>
+        </div>
+        <div class="rota-grid">
+          <div class="rota-box">
+            <h4>Disciplina diária</h4>
+            <p>Pequenas constâncias vencem grandes entusiasmos passageiros. Melhor vinte minutos diários com integridade do que impulsos longos que logo se apagam.</p>
+          </div>
+          <div class="rota-box">
+            <h4>Mussar como espelho</h4>
+            <p>Revise fala, ira, humildade, honestidade, pureza de intenção e responsabilidade. O estudo mais bonito perde brilho se a vida prática não acompanha.</p>
+          </div>
+          <div class="rota-box">
+            <h4>Vida com direção</h4>
+            <p>Leve o que estuda para a mesa, para o trabalho, para a palavra dada, para o cuidado com o outro e para o modo como você se apresenta diante do sagrado.</p>
+          </div>
+        </div>
+        <div class="rota-acoes">
+          <button class="btn-soft" onclick="rolarPara('#filosofia')">Ir para Mussar e Emunah</button>
+          <button class="btn-soft" onclick="rolarPara('#fraseDiaria')">Voltar à frase diária</button>
+          <button class="btn-soft" onclick="rolarPara('#contato')">Enviar correção ou sugestão</button>
+        </div>
+      </article>
     </div>
 
 
@@ -1484,6 +1868,7 @@
       <button class="tab" onclick="mudarTab('talmud', 'mishnah', this)">Mishná</button>
       <button class="tab" onclick="mudarTab('talmud', 'pirkei', this)">Pirkei Avot</button>
       <button class="tab" onclick="mudarTab('talmud', 'leitura', this)">Leitura Livre</button>
+      <button class="tab" onclick="mudarTab('talmud', 'interno', this)">Talmud no site</button>
     </div>
 
     <div id="talmud-ensinamentos" class="tab-content ativo">
@@ -1604,6 +1989,61 @@
           <a href="https://www.sefaria.org/Avodah_Zarah" target="_blank" class="card-btn" style="text-align:center;">Avodah Zarah</a>
         </div>
         <a href="https://www.sefaria.org/texts/Talmud" target="_blank" class="btn-primary" style="display:inline-block;margin-top:.5rem;">Ver Todos os Tratados →</a>
+      </div>
+    </div>
+
+    <div id="talmud-interno" class="tab-content">
+      <div class="parasha-box reveal" id="talmud-estudo-interno">
+        <div class="parasha-label">Seleção comentada dentro do próprio portal</div>
+        <div class="parasha-semana">לִימּוּד תַּלְמוּד בְּתוֹךְ הָאֲתָר</div>
+        <p class="parasha-resumo">Aqui o estudo não depende apenas de link externo. Abaixo está uma seleção de eixos talmúdicos organizada para leitura, reflexão e revisão. O foco não é substituir o mar inteiro do Talmud, mas oferecer conteúdo vivo, concentrado e útil para o crescimento real.</p>
+        <div class="talmud-destaques">
+          <div class="talmud-destaque-card">
+            <h4>Berakhot 6a — Shechinah entre os que estudam</h4>
+            <p>Quando dois se sentam para estudar Torá, a Presença Divina está entre eles. O ensinamento corrige a ideia de que estudo é apenas atividade mental. No judaísmo, estudo verdadeiro também é encontro, aliança e santificação do espaço.</p>
+          </div>
+          <div class="talmud-destaque-card">
+            <h4>Taanit 7a — A Torá se fixa em quem é humilde</h4>
+            <p>Os sábios comparam a Torá à água: ela desce do alto para o lugar mais baixo. A lição é direta e severa. A mente orgulhosa até pode colecionar frases; a mente humilde é a que retém sabedoria.</p>
+          </div>
+          <div class="talmud-destaque-card">
+            <h4>Kiddushin 40b — O estudo é grande porque conduz à ação</h4>
+            <p>Os sábios discutiram se é maior estudar ou agir. A conclusão não despreza a prática, mas a protege: estudo é grande porque gera ação correta. Quando o estudo não gera vida, ele está incompleto.</p>
+          </div>
+          <div class="talmud-destaque-card">
+            <h4>Berakhot 63b — A Torá exige entrega inteira</h4>
+            <p>O Talmud ensina que as palavras da Torá não se estabelecem em quem as trata com frouxidão. O sentido não é violência literal, mas dedicação plena: disciplina, revisão, constância e disposição para sacrificar superficialidades.</p>
+          </div>
+        </div>
+        <div class="secao-botao-linha">
+          <button class="btn-soft" onclick="abrirModal('talmud-estudo')">Abrir estudo guiado</button>
+          <button class="btn-soft" onclick="abrirModal('talmud-humildade')">Humildade no estudo</button>
+          <button class="btn-soft" onclick="abrirModal('talmud-acao')">Estudo e ação</button>
+        </div>
+      </div>
+
+      <div style="height:1.5rem;"></div>
+
+      <div class="grid-2">
+        <div class="filosofia-artigo reveal">
+          <span class="filosofia-tag">Método</span>
+          <div class="filosofia-titulo">Como mastigar uma sugyah sem superficialidade</div>
+          <div class="filosofia-texto">Primeiro leia o eixo central da passagem. Depois pergunte: qual problema os sábios estão enfrentando? Em seguida: qual princípio emerge? Só então tente aplicar. O estudante que pula etapas costuma sair impressionado, mas não transformado. O estudante que ordena o processo fica mais lento no início e muito mais firme no longo prazo.</div>
+          <div class="filosofia-citacao">No estudo sério, velocidade não é sinal de profundidade. Muitas vezes é apenas ausência de digestão.</div>
+        </div>
+
+        <div class="filosofia-artigo reveal">
+          <span class="filosofia-tag">Disciplina</span>
+          <div class="filosofia-titulo">Quatro perguntas para qualquer trecho do Talmud</div>
+          <div class="filosofia-texto">
+            <ul class="rota-lista">
+              <li>O que exatamente os sábios estão afirmando?</li>
+              <li>Qual dificuldade motivou essa discussão?</li>
+              <li>Que traço de caráter o texto exige de mim?</li>
+              <li>Isso altera minha vida prática, minha fala ou minha relação com HaShem?</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2050,6 +2490,27 @@ const modalConteudo = {
     topicos: ['Memória e revisão da jornada', 'Shema Israel e amor a HaShem', 'Responsabilidade na terra', 'Liderança, justiça e guerra', 'Bênção, maldição e escolha da vida'],
     link: 'https://www.sefaria.org/Deuteronomy'
   },
+  'talmud-estudo': {
+    titulo: 'Talmud — estudo guiado',
+    subtitulo: 'Berakhot 6a · Taanit 7a · Kiddushin 40b',
+    corpo: 'O Talmud não é um bloco uniforme de frases bonitas. Ele é construção paciente, debate, tensão e refinamento. Ainda assim, alguns eixos servem como portas de entrada muito sólidas. Quando os sábios ensinam que a Shechinah repousa entre dois que estudam, que a Torá se fixa em quem é humilde e que o estudo é grande porque conduz à ação, eles estão desenhando uma pedagogia completa: estudar com presença, humildade e responsabilidade.\n\nO estudante que entra por esses três eixos começa a compreender algo precioso: no judaísmo, aprender não é acumular dados; é ordenar a alma para que a verdade possa habitar dentro dela.',
+    topicos: ['Presença divina no estudo compartilhado', 'Humildade como recipiente da sabedoria', 'Primazia do estudo que gera ação', 'Constância antes de exibicionismo intelectual'],
+    link: 'https://www.sefaria.org/texts/Talmud'
+  },
+  'talmud-humildade': {
+    titulo: 'Talmud — humildade no estudo',
+    subtitulo: 'Taanit 7a',
+    corpo: 'Os sábios comparam a Torá à água. A imagem é simples e severa: a água deixa o alto e corre para o lugar mais baixo. Assim também a Torá se fixa naquele cuja רוח, cujo espírito, não está inflado. O problema do orgulho não é apenas moral. Ele é intelectual. O orgulhoso não aprende porque já entra no texto decidido a vencer; o humilde entra decidido a ouvir.\n\nPor isso o estudo judaico genuíno exige submissão ao texto, aos sábios e à verdade, e não ao próprio impulso de parecer brilhante.',
+    topicos: ['Humildade não é fraqueza', 'O perigo da leitura arrogante', 'Ouvir antes de concluir', 'Firmeza com reverência'],
+    link: 'https://www.sefaria.org/Taanit.7a'
+  },
+  'talmud-acao': {
+    titulo: 'Talmud — estudo e ação',
+    subtitulo: 'Kiddushin 40b',
+    corpo: 'Os sábios discutiram se o estudo ou a ação é maior. A conclusão preserva ambos, mas estabelece o critério: o estudo é grande porque conduz à ação. Isso significa que o estudo é raiz, e a ação é fruto. Sem raiz, o fruto murcha. Sem fruto, a raiz denuncia esterilidade.\n\nToda vez que a pessoa estuda e continua igual em honestidade, disciplina, fala e temor, alguma coisa está faltando no processo. O Talmud não exalta conhecimento ornamental. Ele exige conhecimento fecundo.',
+    topicos: ['Estudo como raiz da prática', 'Conhecimento sem fruto é incompleto', 'Ação correta requer direção', 'Torá como formação de caráter'],
+    link: 'https://www.sefaria.org/Kiddushin.40b'
+  },
 };
 
 function abrirModal(id) {
@@ -2075,10 +2536,38 @@ function fecharModalBtn() {
   document.getElementById('modalOverlay').classList.remove('ativo');
 }
 
+function rolarPara(seletorOuId) {
+  const alvo = seletorOuId.startsWith('#')
+    ? document.querySelector(seletorOuId)
+    : document.getElementById(seletorOuId);
+  if (!alvo) return;
+  alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function abrirRota(id) {
+  rolarPara(id);
+  const alvo = document.getElementById(id);
+  if (!alvo) return;
+  alvo.animate(
+    [
+      { boxShadow: '0 0 0 rgba(37,99,168,0)', transform: 'translateY(0)' },
+      { boxShadow: '0 0 0 6px rgba(37,99,168,0.10)', transform: 'translateY(-2px)' },
+      { boxShadow: '0 0 0 rgba(37,99,168,0)', transform: 'translateY(0)' }
+    ],
+    { duration: 850, easing: 'ease' }
+  );
+}
+
+function teclaAtalho(event, id) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    abrirRota(id);
+  }
+}
+
 function iniciarEstudo(event) {
   if (event) event.preventDefault();
-  document.getElementById('tora')?.scrollIntoView({ behavior: 'smooth' });
-  setTimeout(() => abrirModal('bereshit'), 550);
+  rolarPara('trilha-iniciante');
 }
 
 function abrirCalendarioAtual() {
@@ -2097,9 +2586,14 @@ function abrirTehilim(de, ate) {
 // ── PESQUISA ──
 const indice = [
   { titulo: 'Torá — Os Cinco Livros', desc: 'Bereshit, Shemot, Vayicrá, Bamidbar, Devarim', ancora: '#tora' },
+  { titulo: 'Trilha inicial', desc: 'Fundamentos para quem está começando', ancora: '#trilha-iniciante' },
+  { titulo: 'Trilha intermediária', desc: 'Comentários, parashah e crescimento sólido', ancora: '#trilha-intermediaria' },
+  { titulo: 'Trilha avançada', desc: 'Aprofundamento organizado e reverente', ancora: '#trilha-avancada' },
+  { titulo: 'Aplicação prática', desc: 'Estudar para viver e refinar a alma', ancora: '#trilha-pratica' },
   { titulo: 'Parashat HaShavuá', desc: 'Porção semanal da Torá', ancora: '#parasha' },
   { titulo: 'Calendário Judaico', desc: 'Data judaica em tempo real e consulta viva', ancora: '#calendario' },
   { titulo: 'Talmud — Ensinamentos', desc: 'Bavli, Mishná, Pirkei Avot', ancora: '#talmud' },
+  { titulo: 'Talmud no site', desc: 'Seleção comentada dentro do portal', ancora: '#talmud-estudo-interno' },
   { titulo: 'Bitachon', desc: 'Confiança em HaShem sem passividade', ancora: '#filosofia' },
   { titulo: 'Tehilim — Salmos', desc: 'Os 150 salmos do Rei David', ancora: '#tehilim' },
   { titulo: 'Filosofia — Emunah', desc: 'A fé judaica e seus fundamentos', ancora: '#filosofia' },
