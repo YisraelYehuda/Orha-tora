@@ -353,6 +353,111 @@
     }
     .candle-note{font-size:12px; color:var(--text-soft); line-height:1.7}
 
+  
+    .backdrop{animation:driftBg 26s ease-in-out infinite alternate; will-change:transform}
+    .glow{animation:driftGlow 20s ease-in-out infinite alternate; will-change:transform}
+    @keyframes driftBg{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(0,-10px,0) scale(1.03)}}
+    @keyframes driftGlow{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(8px,-12px,0)}}
+
+    .topbar{position:relative; padding-left:64px; padding-right:20px}
+    .menu-fab,.global-back,.drawer-close,.letter-action,.ghost-btn,.book-btn,.menu-link,.top-icon-btn{
+      -webkit-tap-highlight-color: transparent;
+    }
+    .menu-fab,.global-back,.top-icon-btn{
+      position:absolute; top:14px; width:40px; height:40px; border-radius:999px; border:1px solid var(--border);
+      background:var(--surface-strong); color:var(--text); display:grid; place-items:center; backdrop-filter: blur(14px);
+      box-shadow: var(--shadow); cursor:pointer; z-index:6; transition:transform .22s ease, background .22s ease, opacity .22s ease;
+    }
+    .menu-fab{left:12px}
+    .global-back{left:12px; opacity:0; pointer-events:none}
+    .global-back.show{opacity:1; pointer-events:auto}
+    .menu-fab:active,.global-back:active,.drawer-close:active,.ghost-btn:active,.book-btn:active,.letter-action:active,.menu-link:active,.top-icon-btn:active{transform:scale(.97)}
+
+    .drawer-overlay{position:fixed; inset:0; background:rgba(3,8,18,.48); opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:12}
+    .drawer-overlay.show{opacity:1; pointer-events:auto}
+    .drawer{position:fixed; inset:0 auto 0 0; width:min(88vw,360px); background:linear-gradient(180deg,var(--bg-soft),var(--bg)); border-right:1px solid var(--border); transform:translateX(-102%); transition:transform .28s ease; z-index:13; box-shadow:var(--shadow); padding:20px 16px 26px; overflow:auto}
+    .drawer.show{transform:translateX(0)}
+    .drawer-head{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px}
+    .drawer-brand h3{margin:0; font-size:28px; font-family:'Cormorant Garamond',serif; color:var(--gold)}
+    .drawer-brand p{margin:4px 0 0; color:var(--text-soft); font-size:13px; line-height:1.65}
+    .drawer-close{border:1px solid var(--border); background:var(--surface); color:var(--text); width:40px; height:40px; border-radius:999px; cursor:pointer}
+    .menu-section{margin-top:18px}
+    .menu-caption{font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--text-soft); margin-bottom:10px}
+    .menu-link{display:flex; align-items:center; justify-content:space-between; width:100%; gap:12px; border:none; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:14px 14px; border-radius:18px; margin-bottom:10px; text-align:left; cursor:pointer; box-shadow:var(--shadow)}
+    .menu-link small{display:block; color:var(--text-soft); margin-top:4px; font-size:12px}
+    .menu-version{margin-top:18px; padding:14px; border-radius:18px; background:var(--gold-soft); border:1px solid var(--border); color:var(--text-soft); font-size:13px; line-height:1.7}
+
+    .screen{padding-bottom:100px}
+    .screen-title{padding-top:14px}
+    .screen-head{display:flex; align-items:flex-start; gap:12px}
+    .screen-head .screen-copy{flex:1}
+    .back-inline{border:none; background:var(--surface); color:var(--text); width:38px; height:38px; border-radius:999px; display:grid; place-items:center; cursor:pointer; box-shadow:var(--shadow); border:1px solid var(--border); flex-shrink:0}
+    .back-inline.hide{visibility:hidden}
+
+    .top-actions{display:flex; gap:8px; margin-top:18px; flex-wrap:wrap}
+    .top-icon-btn{position:static; width:auto; height:auto; padding:12px 14px; border-radius:16px; display:inline-flex; gap:8px; align-items:center; text-decoration:none; font-weight:700}
+
+    .letter-hero{background:linear-gradient(135deg, rgba(217,174,85,.16), rgba(13,24,38,.18));}
+    .letter-note{font-size:13px; line-height:1.8; color:var(--text-soft)}
+    .letter-paper{position:relative; margin-top:18px; padding:22px 18px 18px; border-radius:24px; background:linear-gradient(180deg,#f8f0de,#efe1c3 42%,#ead8b1 100%); color:#221a12; border:1px solid rgba(110,82,26,.18); box-shadow:0 18px 40px rgba(0,0,0,.18); overflow:hidden}
+    .letter-paper::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at top left, rgba(255,255,255,.48), transparent 28%), repeating-linear-gradient(0deg, rgba(125,82,34,.03), rgba(125,82,34,.03) 2px, transparent 2px, transparent 6px); opacity:.55; pointer-events:none}
+    .letter-paper::after{content:''; position:absolute; inset:auto 16px 14px auto; width:84px; height:84px; border-radius:999px; background:radial-gradient(circle, rgba(139,16,16,.18), rgba(139,16,16,0) 70%); filter:blur(10px); pointer-events:none}
+    .letter-inner{position:relative; z-index:1}
+    .letter-bsd{font-family:'Cormorant Garamond',serif; font-size:26px; color:#6d5422; text-align:center; margin-bottom:10px}
+    .letter-title{font-family:'Cormorant Garamond',serif; font-size:34px; line-height:1.05; text-align:center; color:#3c2d17; margin:4px 0 8px}
+    .letter-sub{font-size:13px; text-align:center; color:#6d5632; margin-bottom:16px; line-height:1.7}
+    .letter-ruler{height:1px; background:linear-gradient(90deg, transparent, rgba(109,84,34,.55), transparent); margin:12px 0 18px}
+    .letter-input,.letter-area{width:100%; border:none; outline:none; background:rgba(255,255,255,.28); border:1px solid rgba(109,84,34,.15); color:#241a10; border-radius:16px; padding:14px 15px; font:inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,.55)}
+    .letter-input{margin-bottom:12px; font-weight:600}
+    .letter-area{min-height:230px; line-height:1.95; resize:vertical; background-image:linear-gradient(transparent 31px, rgba(109,84,34,.10) 32px); background-size:100% 32px; font-family:'Cormorant Garamond',serif; font-size:24px; padding-top:18px}
+    .letter-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+    .letter-action,.ghost-btn,.book-btn{border:none; cursor:pointer; border-radius:16px; padding:13px 16px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px}
+    .letter-action{background:#7b5c27; color:#fff7e4; box-shadow:0 14px 32px rgba(87,57,17,.24)}
+    .ghost-btn{background:rgba(255,255,255,.35); color:#473419; border:1px solid rgba(109,84,34,.18)}
+    .letter-toast{display:none; margin-top:16px; padding:14px 16px; border-radius:16px; background:rgba(38,78,41,.14); border:1px solid rgba(38,78,41,.18); color:var(--text); line-height:1.8}
+    .letter-toast.show{display:block}
+    .saved-letters{margin-top:18px; display:grid; gap:12px}
+    .saved-letter{padding:14px 14px 12px; border-radius:18px; background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow)}
+    .saved-letter h4{margin:0 0 6px; color:var(--gold); font-size:15px}
+    .saved-letter p{margin:0; color:var(--text-soft); font-size:13px; line-height:1.75}
+    .saved-letter time{display:block; margin-bottom:8px; color:var(--text-soft); font-size:11px; letter-spacing:.08em; text-transform:uppercase}
+
+    .books-grid{display:grid; gap:16px}
+    .book-card{padding:16px; border-radius:24px; background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow)}
+    .book-top{display:grid; grid-template-columns:110px 1fr; gap:14px; align-items:start}
+    .book-cover{height:160px; border-radius:18px; padding:12px; color:#f8efdc; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 14px 30px rgba(0,0,0,.24); position:relative; overflow:hidden}
+    .book-cover::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at top center, rgba(255,255,255,.14), transparent 38%), linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.12)); pointer-events:none}
+    .book-cover strong,.book-cover span{position:relative; z-index:1}
+    .cover-bnei{background:linear-gradient(160deg,#091730,#0a2348 52%,#12386f)}
+    .cover-bnei .arc{height:52px; border-radius:100px 100px 0 0; background:linear-gradient(90deg,#f3be3a,#ffc95e,#56c5ff,#8a64ff,#f3be3a); filter:blur(.2px); margin:8px 0 6px}
+    .cover-purim{background:linear-gradient(160deg,#22140d,#8e5215 38%,#d4a13b)}
+    .cover-prospera{background:linear-gradient(160deg,#07172e,#0a2349 52%,#183d70)}
+    .tree{position:relative; width:72px; height:72px; margin:4px auto 8px}
+    .tree::before{content:''; position:absolute; left:34px; bottom:0; width:5px; height:28px; background:#d8b25b; border-radius:999px}
+    .tree::after{content:''; position:absolute; inset:0; background:radial-gradient(circle at 14px 18px,#d8b25b 0 6px,transparent 7px),radial-gradient(circle at 28px 10px,#d8b25b 0 7px,transparent 8px),radial-gradient(circle at 44px 16px,#d8b25b 0 6px,transparent 7px),radial-gradient(circle at 56px 24px,#d8b25b 0 6px,transparent 7px),radial-gradient(circle at 20px 34px,#d8b25b 0 7px,transparent 8px),radial-gradient(circle at 38px 30px,#d8b25b 0 8px,transparent 9px),radial-gradient(circle at 50px 42px,#d8b25b 0 7px,transparent 8px)}
+    .book-title{margin:0; font-size:22px; line-height:1.25; color:var(--text); font-family:'Cormorant Garamond',serif}
+    .book-meta{margin:8px 0 10px; color:var(--text-soft); font-size:13px}
+    .book-hook{margin:0; color:var(--text); line-height:1.8; font-size:14px}
+    .book-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .book-btn.primary{background:linear-gradient(135deg,var(--gold),#efc870); color:#162235}
+    .book-btn.secondary{background:var(--surface-strong); border:1px solid var(--border); color:var(--text)}
+    .book-foot{margin-top:12px; color:var(--text-soft); font-size:12px; line-height:1.7}
+
+    .faq-list{display:grid; gap:12px}
+    .faq-item{background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); overflow:hidden}
+    .faq-item summary{list-style:none; cursor:pointer; padding:16px 16px; font-weight:700; color:var(--text)}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .faq-item p{margin:0; padding:0 16px 16px; color:var(--text-soft); line-height:1.8; font-size:14px}
+    .contact-box{margin-top:16px; padding:18px; border-radius:20px; background:linear-gradient(135deg,var(--gold-soft),rgba(217,174,85,.06)); border:1px solid var(--border)}
+    .contact-box a{color:var(--gold); font-weight:700; text-decoration:none}
+
+    @media (max-width: 380px){
+      .book-top{grid-template-columns:1fr}
+      .book-cover{height:180px}
+      .letter-title{font-size:30px}
+      .letter-area{font-size:22px}
+    }
+
   </style>
 </head>
 <body>
@@ -361,6 +466,34 @@
   <div class="stars" id="stars"></div>
 
   <div class="app">
+    <button class="menu-fab" id="menuOpenBtn" aria-label="Abrir menu">☰</button>
+    <button class="global-back" id="globalBackBtn" aria-label="Voltar">←</button>
+
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="drawer" id="appDrawer" aria-hidden="true">
+      <div class="drawer-head">
+        <div class="drawer-brand">
+          <h3>Ohr</h3>
+          <p>Configurações, cartas diante de HaShem, livros e contato.</p>
+        </div>
+        <button class="drawer-close" id="drawerCloseBtn" aria-label="Fechar menu">✕</button>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-caption">Acesso rápido</div>
+        <button class="menu-link" data-drawer-go="home"><span>🏠 <strong>Início</strong><small>Voltar para o lobby do Ohr.</small></span><span>›</span></button>
+        <button class="menu-link" data-drawer-go="carta"><span>✍️ <strong>Fale com HaShem</strong><small>Escreva uma carta íntima e reverente.</small></span><span>›</span></button>
+        <button class="menu-link" data-drawer-go="livros"><span>📚 <strong>Livros de Yisrael Yehuda</strong><small>Conheça suas obras disponíveis no Google Play Livros.</small></span><span>›</span></button>
+        <button class="menu-link" data-drawer-go="contato"><span>📩 <strong>Contato e perguntas frequentes</strong><small>Envie mensagem, sugestões e correções.</small></span><span>›</span></button>
+        <button class="menu-link" data-drawer-go="sobre"><span>ℹ️ <strong>Sobre o Ohr</strong><small>Versão, propósito e informações do aplicativo.</small></span><span>›</span></button>
+      </div>
+
+      <div class="menu-version">
+        <strong>Versão 1.2.1</strong><br>
+        Atualização grande, bonita e inovadora: frases vivas, guia de Shabat, busca moderna, som ambiente e novas áreas de profundidade espiritual.
+      </div>
+    </aside>
+
     <div class="topbar">
       <div class="clock" id="clock">--:--</div>
       <div class="pill" id="shabbatPill">Shabat em --</div>
@@ -440,8 +573,13 @@
 
     <main class="screen" id="oracoes">
       <div class="screen-title">
-        <h2>Orações</h2>
-        <p>Conexão sagrada através das palavras dos nossos sábios.</p>
+        <div class="screen-head">
+          <button class="back-inline" onclick="goBackScreen()" aria-label="Voltar">←</button>
+          <div class="screen-copy">
+            <h2>Orações</h2>
+            <p>Conexão sagrada através das palavras dos nossos sábios.</p>
+          </div>
+        </div>
       </div>
       <div class="search-card">
         <div class="search-wrap">
@@ -456,16 +594,26 @@
 
     <main class="screen" id="estudos">
       <div class="screen-title">
-        <h2>Salmos (Tehilim)</h2>
-        <p>O Sefer Tehilim é dividido para ser completado uma vez por mês. Cada dia possui salmos específicos.</p>
+        <div class="screen-head">
+          <button class="back-inline" onclick="goBackScreen()" aria-label="Voltar">←</button>
+          <div class="screen-copy">
+            <h2>Salmos (Tehilim)</h2>
+            <p>O Sefer Tehilim é dividido para ser completado uma vez por mês. Cada dia possui salmos específicos.</p>
+          </div>
+        </div>
       </div>
       <div id="psalmContent"></div>
     </main>
 
     <main class="screen" id="meditar">
       <div class="screen-title">
-        <h2>Hitbodedut</h2>
-        <p>O isolamento produtivo e a conversa sincera com o Criador.</p>
+        <div class="screen-head">
+          <button class="back-inline" onclick="goBackScreen()" aria-label="Voltar">←</button>
+          <div class="screen-copy">
+            <h2>Hitbodedut</h2>
+            <p>O isolamento produtivo e a conversa sincera com o Criador.</p>
+          </div>
+        </div>
 
         <div style="margin:20px 0; text-align:center;">
           <a href="hitbodedut.html" style="
@@ -530,17 +678,170 @@
       </div>
     </main>
 
+    
+    <main class="screen" id="carta">
+      <div class="screen-title">
+        <div class="screen-head">
+          <button class="back-inline" onclick="goBackScreen()" aria-label="Voltar">←</button>
+          <div class="screen-copy">
+            <h2>Fale com HaShem</h2>
+            <p>Uma carta reservada, reverente e guardada neste aparelho entre o seu coração e o Rei do Universo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card letter-hero">
+        <p class="section-label">Carta diante de HaShem</p>
+        <p class="letter-note">Escreva com sinceridade. Este espaço não é um bloco comum. É uma carta íntima, com temor, amor e verdade diante d'Aquele que criou tudo e sustenta tudo.</p>
+      </div>
+
+      <div class="letter-paper">
+        <div class="letter-inner">
+          <div class="letter-bsd">בס״ד</div>
+          <h3 class="letter-title">Carta ao Rei do Universo</h3>
+          <p class="letter-sub">Derrame aqui seus pedidos, sua teshuvá, sua gratidão, suas lágrimas, sua esperança e tudo o que o coração não consegue mais carregar sozinho.</p>
+          <div class="letter-ruler"></div>
+          <input class="letter-input" id="letterSubject" type="text" placeholder="Assunto da carta: gratidão, teshuvá, pedido, paz..." />
+          <textarea class="letter-area" id="letterBody" placeholder="Ribbono Shel Olam... hoje eu venho diante de Ti com sinceridade."></textarea>
+          <div class="letter-actions">
+            <button class="letter-action" id="saveLetterBtn">✍️ Guardar carta</button>
+            <button class="ghost-btn" id="clearLetterBtn">Limpar carta</button>
+          </div>
+          <div class="letter-toast" id="letterToast">Sua carta foi registrada em oração diante de HaShem.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <p class="section-label">Cartas guardadas neste aparelho</p>
+        <div class="saved-letters" id="savedLetters"></div>
+      </div>
+    </main>
+
+    <main class="screen" id="livros">
+      <div class="screen-title">
+        <div class="screen-head">
+          <button class="back-inline" onclick="goBackScreen()" aria-label="Voltar">←</button>
+          <div class="screen-copy">
+            <h2>Livros de Yisrael Yehuda</h2>
+            <p>Uma vitrine elegante das obras disponíveis no Google Play Livros para ler, estudar e aprofundar a alma.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="books-grid">
+        <div class="book-card">
+          <div class="book-top">
+            <div class="book-cover cover-bnei">
+              <strong style="font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1.02">Guia para<br>Bnei Noach</strong>
+              <div class="arc"></div>
+              <span style="text-align:center;font-size:14px;letter-spacing:.08em">Yisrael Yehuda</span>
+            </div>
+            <div>
+              <h3 class="book-title">📗 Guia para Bnei Noach</h3>
+              <div class="book-meta">17 páginas · R$ 9,99</div>
+              <p class="book-hook">"Você não precisa nascer judeu para viver com propósito divino."</p>
+              <div class="book-actions">
+                <a class="book-btn primary" href="https://play.google.com/store/books/details/Yisrael_Yehuda_Guia_para_Bnei_Noach?id=rRHFEQAAQBAJ" target="_blank" rel="noopener">Ler amostra</a>
+                <a class="book-btn secondary" href="https://play.google.com/store/books/details/Yisrael_Yehuda_Guia_para_Bnei_Noach?id=rRHFEQAAQBAJ" target="_blank" rel="noopener">Ver no Google Play Livros</a>
+              </div>
+            </div>
+          </div>
+          <div class="book-foot">Um começo sério, claro e fiel para quem deseja entender a missão dos Bnei Noach à luz da tradição de Israel.</div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-top">
+            <div class="book-cover cover-purim">
+              <strong style="font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.02">Purim<br>O Milagre<br>Oculto</strong>
+              <span style="font-size:52px; text-align:center; line-height:1">🎭</span>
+              <span style="text-align:center;font-size:14px;letter-spacing:.08em">Yisrael Yehuda</span>
+            </div>
+            <div>
+              <h3 class="book-title">📙 Purim: O Milagre Oculto</h3>
+              <div class="book-meta">47 páginas · R$ 12,99</div>
+              <p class="book-hook">"Quando HaShem se cala, não significa que abandonou. Significa que está trabalhando."</p>
+              <div class="book-actions">
+                <a class="book-btn primary" href="https://play.google.com/store/books/details?id=qE3GEQAAQBAJ" target="_blank" rel="noopener">Ler amostra</a>
+                <a class="book-btn secondary" href="https://play.google.com/store/books/details?id=qE3GEQAAQBAJ" target="_blank" rel="noopener">Ver no Google Play Livros</a>
+              </div>
+            </div>
+          </div>
+          <div class="book-foot">Quando o Nome não aparece, a Providência se revela. Um mergulho no mistério espiritual de Purim, com história, Tanach e comentários.</div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-top">
+            <div class="book-cover cover-prospera">
+              <strong style="font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.04; text-align:center">Como os<br>Judeus<br>Prosperam</strong>
+              <div class="tree"></div>
+              <span style="text-align:center;font-size:14px;letter-spacing:.08em">Yisrael Yehuda</span>
+            </div>
+            <div>
+              <h3 class="book-title">📘 Como os Judeus Prosperam</h3>
+              <div class="book-meta">24 páginas · R$ 29,99</div>
+              <p class="book-hook">"Enquanto o mundo busca atalhos, os sábios de Israel guardam o mapa."</p>
+              <div class="book-actions">
+                <a class="book-btn primary" href="https://play.google.com/store/books/details?id=U8vGEQAAQBAJ" target="_blank" rel="noopener">Ler amostra</a>
+                <a class="book-btn secondary" href="https://play.google.com/store/books/details?id=U8vGEQAAQBAJ" target="_blank" rel="noopener">Ver no Google Play Livros</a>
+              </div>
+            </div>
+          </div>
+          <div class="book-foot">Uma leitura direta e provocadora sobre disciplina, valores e mentalidade. Enquanto o mundo corre atrás de atalhos, a sabedoria guarda profundidade.</div>
+        </div>
+      </div>
+    </main>
+
+    <main class="screen" id="contato">
+      <div class="screen-title">
+        <div class="screen-head">
+          <button class="back-inline" onclick="goBackScreen()" aria-label="Voltar">←</button>
+          <div class="screen-copy">
+            <h2>Contato e perguntas frequentes</h2>
+            <p>Um espaço profissional para ajuda, correções, sugestões e contato direto com Yisrael Yehuda.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Como entro em contato com o desenvolvedor?</summary>
+          <p>Use o botão de e-mail abaixo. Ele abre sua caixa de mensagem para falar diretamente com Yisrael Yehuda a respeito do Ohr, sugestões, correções e perguntas.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Onde encontro os livros mencionados no app?</summary>
+          <p>Abra a seção <strong>Livros de Yisrael Yehuda</strong> no menu. Ali você verá cada obra em cards elegantes, com preço, páginas, amostra e acesso direto ao Google Play Livros.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Minhas cartas para HaShem ficam onde?</summary>
+          <p>Elas ficam guardadas localmente neste aparelho, para preservar privacidade e recolhimento. O conteúdo não é enviado para fora do seu dispositivo.</p>
+        </details>
+      </div>
+
+      <div class="contact-box">
+        <p style="margin:0 0 12px; color:var(--text); line-height:1.8"><strong>📩 E-mail oficial</strong><br><a href="mailto:orhatorabrasil@gmail.com?subject=Contato%20pelo%20app%20Ohr">orhatorabrasil@gmail.com</a></p>
+        <div class="top-actions" style="margin-top:0">
+          <a class="top-icon-btn" href="mailto:orhatorabrasil@gmail.com?subject=Contato%20pelo%20app%20Ohr">📨 Enviar mensagem</a>
+          <button class="top-icon-btn" onclick="goToScreen('livros')">📚 Ver meus livros</button>
+        </div>
+      </div>
+    </main>
+
     <main class="screen" id="sobre">
       <div class="screen-title">
-        <h2>Sobre Ohr</h2>
-        <p>Conheça esta ferramenta de oração e paz espiritual.</p>
+        <div class="screen-head">
+          <button class="back-inline" onclick="goBackScreen()" aria-label="Voltar">←</button>
+          <div class="screen-copy">
+            <h2>Sobre Ohr</h2>
+            <p>Conheça esta ferramenta de oração, paz espiritual e profundidade diária.</p>
+          </div>
+        </div>
       </div>
       <div class="card hero">
         <p class="section-label">Ohr — Luz Espiritual</p>
         <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)">Criado por Yisrael Yehuda</h3>
         <p class="small-note" style="margin-top:16px">
           Este aplicativo foi desenvolvido com o propósito de criar um espaço sagrado de conexão com Adonai. 
-          Cada detalhe foi pensado para oferecer uma experiêcia de oração profunda, autêntica e transformadora.
+          Cada detalhe foi pensado para oferecer uma experiência de oração profunda, autêntica e transformadora.
         </p>
         
         <!-- Botão de Atualização -->
@@ -552,13 +853,19 @@
         <button id="installBtn" class="btn" style="width:100%;margin-top:20px;background:linear-gradient(135deg,var(--gold),#efc870);display:none;">
           ⬇️ Baixar Aplicativo (Um Clique)
         </button>
+        <div class="top-actions">
+          <button class="top-icon-btn" onclick="goToScreen('carta')">✍️ Fale com HaShem</button>
+          <button class="top-icon-btn" onclick="goToScreen('livros')">📚 Ver livros</button>
+          <button class="top-icon-btn" onclick="goToScreen('contato')">📩 Contato</button>
+        </div>
         <div style="margin-top:20px;padding:16px;background:var(--gold-soft);border-radius:16px;border:1px solid var(--border)">
           <p style="margin:0;font-size:13px;line-height:1.8;color:var(--text)">
             <strong>📧 Contato:</strong><br>
             <a href="mailto:orhatorabrasil@gmail.com" style="color:var(--gold);text-decoration:none;font-weight:700">orhatorabrasil@gmail.com</a><br><br>
             <strong>✨ Propósito:</strong><br>
             Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
-            oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.
+            oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.<br><br>
+            <strong>🛠️ Versão atual:</strong> 1.2.1
           </p>
         </div>
       </div>
@@ -702,6 +1009,89 @@
       card.classList.toggle('show', shouldShowShabbatGuide(now));
     }
 
+
+    let currentScreen = 'home';
+    let screenHistory = ['home'];
+
+    function syncNav(target) {
+      document.querySelectorAll('.nav button').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-go') === target);
+      });
+    }
+
+    function updateBackVisibility() {
+      const backBtn = document.getElementById('globalBackBtn');
+      if (!backBtn) return;
+      const show = currentScreen !== 'home';
+      backBtn.classList.toggle('show', show);
+      const menuBtn = document.getElementById('menuOpenBtn');
+      if (menuBtn) menuBtn.style.opacity = show ? '.0' : '1';
+      if (menuBtn) menuBtn.style.pointerEvents = show ? 'none' : 'auto';
+    }
+
+    function goToScreen(target, pushHistory = true) {
+      if (!document.getElementById(target) || target === currentScreen) {
+        closeDrawer();
+        return;
+      }
+      if (pushHistory && currentScreen) screenHistory.push(currentScreen);
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(target).classList.add('active');
+      currentScreen = target;
+      syncNav(target);
+      updateBackVisibility();
+      closeDrawer();
+      if (target === 'carta') renderSavedLetters();
+      window.scrollTo({top:0, behavior:'instant'});
+    }
+
+    function goBackScreen() {
+      if (screenHistory.length) {
+        const prev = screenHistory.pop();
+        if (prev && document.getElementById(prev)) {
+          goToScreen(prev, false);
+          return;
+        }
+      }
+      goToScreen('home', false);
+    }
+
+    function openDrawer() {
+      document.getElementById('appDrawer')?.classList.add('show');
+      document.getElementById('drawerOverlay')?.classList.add('show');
+    }
+
+    function closeDrawer() {
+      document.getElementById('appDrawer')?.classList.remove('show');
+      document.getElementById('drawerOverlay')?.classList.remove('show');
+    }
+
+    function formatLetterDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    }
+
+    function getLetters() {
+      return JSON.parse(localStorage.getItem('ohrLetters') || '[]');
+    }
+
+    function renderSavedLetters() {
+      const wrap = document.getElementById('savedLetters');
+      if (!wrap) return;
+      const letters = getLetters();
+      if (!letters.length) {
+        wrap.innerHTML = '<div class="saved-letter"><h4>Nenhuma carta salva ainda</h4><p>Quando você guardar sua primeira carta, ela ficará registrada neste aparelho com recolhimento e discrição.</p></div>';
+        return;
+      }
+      wrap.innerHTML = letters.slice(0,5).map(letter => `
+        <div class="saved-letter">
+          <time>${formatLetterDate(letter.createdAt)}</time>
+          <h4>${letter.subject || 'Carta sem assunto'}</h4>
+          <p>${(letter.body || '').replace(/</g,'&lt;').slice(0, 220)}${letter.body && letter.body.length > 220 ? '…' : ''}</p>
+        </div>
+      `).join('');
+    }
+
     function updateApp() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
@@ -818,11 +1208,15 @@
       document.querySelectorAll('.nav button').forEach(btn => {
         btn.onclick = () => {
           const target = btn.getAttribute('data-go');
-          document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-          document.getElementById(target).classList.add('active');
-          document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+          goToScreen(target);
         };
+      });
+
+      document.querySelectorAll('[data-drawer-go]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          closeDrawer();
+          goToScreen(btn.getAttribute('data-drawer-go'));
+        });
       });
 
       updateApp();
@@ -982,6 +1376,69 @@
     document.getElementById('ambientVolume').addEventListener('input', (e) => {
       updateAmbientVolume(Number(e.target.value));
     });
+
+
+    document.getElementById('menuOpenBtn')?.addEventListener('click', openDrawer);
+    document.getElementById('drawerCloseBtn')?.addEventListener('click', closeDrawer);
+    document.getElementById('drawerOverlay')?.addEventListener('click', closeDrawer);
+    document.getElementById('globalBackBtn')?.addEventListener('click', goBackScreen);
+
+    const letterSubject = document.getElementById('letterSubject');
+    const letterBody = document.getElementById('letterBody');
+    const letterToast = document.getElementById('letterToast');
+
+    function persistLetterDraft() {
+      localStorage.setItem('ohrLetterDraft', JSON.stringify({
+        subject: letterSubject?.value || '',
+        body: letterBody?.value || ''
+      }));
+    }
+
+    function restoreLetterDraft() {
+      const draft = JSON.parse(localStorage.getItem('ohrLetterDraft') || '{}');
+      if (letterSubject) letterSubject.value = draft.subject || '';
+      if (letterBody) letterBody.value = draft.body || '';
+    }
+
+    letterSubject?.addEventListener('input', persistLetterDraft);
+    letterBody?.addEventListener('input', persistLetterDraft);
+    restoreLetterDraft();
+    renderSavedLetters();
+
+    document.getElementById('saveLetterBtn')?.addEventListener('click', () => {
+      const subject = (letterSubject?.value || '').trim();
+      const body = (letterBody?.value || '').trim();
+      if (!body) {
+        if (letterToast) {
+          letterToast.textContent = 'Escreva sua carta com sinceridade antes de guardar.';
+          letterToast.classList.add('show');
+        }
+        return;
+      }
+      const letters = getLetters();
+      letters.unshift({ subject, body, createdAt: new Date().toISOString() });
+      localStorage.setItem('ohrLetters', JSON.stringify(letters.slice(0, 12)));
+      persistLetterDraft();
+      renderSavedLetters();
+      if (letterToast) {
+        letterToast.textContent = 'Sua carta foi registrada em oração diante de HaShem.';
+        letterToast.classList.add('show');
+        setTimeout(() => letterToast.classList.remove('show'), 4200);
+      }
+    });
+
+    document.getElementById('clearLetterBtn')?.addEventListener('click', () => {
+      if (letterSubject) letterSubject.value = '';
+      if (letterBody) letterBody.value = '';
+      persistLetterDraft();
+      if (letterToast) {
+        letterToast.textContent = 'A carta em edição foi limpa. As cartas já guardadas permanecem salvas neste aparelho.';
+        letterToast.classList.add('show');
+        setTimeout(() => letterToast.classList.remove('show'), 3800);
+      }
+    });
+
+    updateBackVisibility();
 
     init();
   </script>
