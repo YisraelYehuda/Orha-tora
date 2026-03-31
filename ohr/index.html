@@ -181,12 +181,32 @@
     .timer-controls button:active{background:var(--gold-soft)}
 
     .nav{
-      flex-shrink:0;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:12px 12px 16px;
-      background:var(--nav);backdrop-filter:blur(18px);border-top:1px solid var(--border)
+      position:sticky; bottom:0; z-index:11;
+      flex-shrink:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;
+      padding:12px 12px calc(16px + env(safe-area-inset-bottom, 0px));
+      background:var(--nav);backdrop-filter:blur(18px);border-top:1px solid var(--border);
+      overscroll-behavior-x:none; touch-action:pan-y;
     }
-    .nav button{appearance:none;border:1px solid transparent;background:transparent;color:var(--text-soft);padding:10px 6px;border-radius:18px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
-    .nav button.active{color:var(--gold);background:var(--gold-soft);border-color:var(--border)}
+    .nav button{
+      appearance:none;border:1px solid transparent;background:transparent;color:var(--text-soft);
+      min-width:0;padding:10px 4px;border-radius:18px;font-size:10px;font-weight:700;
+      letter-spacing:.08em;text-transform:uppercase;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:all .18s ease;
+    }
+    .nav button.active{color:var(--gold);background:var(--gold-soft);border-color:var(--border);transform:translateY(-1px)}
     .nav .icon{font-size:18px;line-height:1}
+    .screen{padding-bottom:110px; animation:screenFade .28s ease}
+    @keyframes screenFade{from{opacity:.0; transform:translateY(6px)}to{opacity:1; transform:translateY(0)}}
+    .card,.mini,.search-card,.assistant-shell,.menu-link,.btn,.ambient-card{transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+    .card:active,.mini:active,.assistant-shell:active,.menu-link:active,.btn:active{transform:scale(.988)}
+    .ambient-pill{
+      position:fixed; right:16px; bottom:96px; z-index:14; display:none; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:999px; border:1px solid var(--border); background:rgba(255,248,230,.96);
+      box-shadow:var(--shadow); color:var(--text); font-weight:700; font-size:12px; backdrop-filter:blur(10px)
+    }
+    .ambient-pill.show{display:inline-flex}
+    .ambient-pill small{display:block; font-size:10px; color:var(--text-soft); font-weight:600}
+    .helper-note{margin-top:10px; font-size:12px; color:var(--text-soft); line-height:1.65}
 
     .small-note{font-size:12px;color:var(--text-soft);line-height:1.6;margin-top:8px}
     .day-cell{padding:10px; background:var(--gold-soft); border-radius:12px; text-align:center; border:1px solid var(--border); cursor:pointer; transition:all .2s}
@@ -504,7 +524,7 @@
     .oa-premium-badge.visible{display:inline-flex}
     .oa-chip-wrap{display:flex; flex-wrap:wrap; gap:8px}
     .oa-chip{border:none; cursor:pointer; border-radius:999px; padding:8px 12px; background:rgba(217,174,85,.09); color:var(--gold); border:1px solid var(--border); font-size:12px; font-style:italic}
-    .oa-chat{display:flex; flex-direction:column; gap:14px; min-height:unset; margin-top:8px}
+    .oa-chat{display:flex; flex-direction:column; gap:14px; min-height:240px; margin-top:8px}
     .oa-welcome{padding:18px; border-radius:20px; background:linear-gradient(135deg, rgba(217,174,85,.08), rgba(255,255,255,.02)); border:1px solid var(--border); text-align:center; color:var(--text-soft); line-height:1.85; font-size:14px}
     .oa-msg{display:flex; gap:10px}
     .oa-msg.user{flex-direction:row-reverse}
@@ -519,7 +539,7 @@
     .oa-typing-box span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:oaBounce 1.2s ease-in-out infinite}
     .oa-typing-box span:nth-child(2){animation-delay:.2s}.oa-typing-box span:nth-child(3){animation-delay:.4s}
     @keyframes oaBounce{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-5px);opacity:1}}
-    .oa-input-wrap{position:static; margin-top:2px; padding-top:4px; background:transparent}
+    .oa-input-wrap{position:relative; bottom:auto; margin-top:14px; padding-top:0; background:transparent; z-index:1}
     .oa-input-inner{display:flex; gap:10px; padding:12px; border-radius:20px; background:var(--surface-strong); border:1px solid var(--border); box-shadow:var(--shadow)}
     .oa-input-inner.blocked{opacity:.45; pointer-events:none}
     #oaInput{flex:1; border:none; outline:none; resize:none; background:transparent; color:var(--text); min-height:26px; max-height:110px; font:inherit; line-height:1.6}
@@ -580,8 +600,8 @@
       </div>
 
       <div class="menu-version">
-        <strong>Versão 2.1.1.1</strong><br>
-        Nova fase do Ohr: Assistente Ohr Premium integrado ao app, pronto para backend com Cloudflare + Anthropic Claude, acesso premium por chave e entrada rápida na tela inicial.
+        <strong>Versão 3.0.1.1</strong><br>
+        Base refinada do Ohr: navegação mais limpa, experiência mais estável, assistente integrado com mais conforto e estrutura preparada para as próximas camadas do app.
       </div>
     </aside>
 
@@ -589,12 +609,16 @@
       <div class="clock" id="clock">--:--</div>
       <div class="pill" id="shabbatPill">Shabat em --</div>
     </div>
+    <button class="ambient-pill" id="ambientPill" type="button" aria-label="Som ambiente ativo">
+      <span id="ambientPillIcon">🔊</span>
+      <span><span id="ambientPillText">Som espiritual ativo</span><br><small>toque para silenciar</small></span>
+    </button>
 
     <main class="screen active" id="home">
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
-        <p class="op-mark">Op Leão em Ascensão 2.1.1.1</p>
+        <p class="op-mark">Op Leão em Ascensão 3.0.1.1</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -767,6 +791,7 @@
             <label for="ambientVolume">Volume do ambiente</label>
             <input id="ambientVolume" type="range" min="0" max="100" value="88" />
           </div>
+          <p class="helper-note">Quando você ativar o som aqui, ele continua disponível nas outras áreas do Ohr até você silenciar.</p>
         </div>
 
         <div class="candle-box">
@@ -1100,10 +1125,6 @@
         <span class="icon">🤖</span>
         <span>Assist.</span>
       </button>
-      <button data-go="sobre">
-        <span class="icon">ℹ️</span>
-        <span>Sobre</span>
-      </button>
     </nav>
   </div>
 
@@ -1254,7 +1275,7 @@
       updateBackVisibility();
       closeDrawer();
       if (target === 'carta') renderSavedLetters();
-      window.scrollTo({top:0, behavior:'instant'});
+      window.scrollTo({top:0, behavior:'auto'});
     }
 
     function goBackScreen() {
@@ -1581,7 +1602,30 @@
 
     let timer = null, timeLeft = 600;
     let ambientCtx = null, rainNodes = null, windNodes = null;
-    let ambientVolume = 0.88;
+    let ambientVolume = Number(localStorage.getItem('ohrAmbientVolume') || '0.88');
+    let ambientMode = localStorage.getItem('ohrAmbientMode') || 'none';
+
+    function persistAmbientState() {
+      localStorage.setItem('ohrAmbientVolume', String(ambientVolume));
+      localStorage.setItem('ohrAmbientMode', ambientMode);
+    }
+
+    function updateAmbientPill() {
+      const pill = document.getElementById('ambientPill');
+      const icon = document.getElementById('ambientPillIcon');
+      const text = document.getElementById('ambientPillText');
+      if (!pill || !icon || !text) return;
+      const isActive = ambientMode === 'rain' || ambientMode === 'wind';
+      pill.classList.toggle('show', isActive);
+      if (!isActive) return;
+      if (ambientMode === 'rain') {
+        icon.textContent = '🌧️';
+        text.textContent = 'Chuva sagrada ativa';
+      } else {
+        icon.textContent = '🍃';
+        text.textContent = 'Vento sereno ativo';
+      }
+    }
 
     function ensureAmbientContext() {
       if (!ambientCtx) {
@@ -1631,12 +1675,18 @@
       source.start();
 
       rainNodes = { source, gain };
+      ambientMode = 'rain';
+      persistAmbientState();
+      updateAmbientPill();
       document.getElementById('rainBtn')?.classList.add('active');
     }
 
     function stopRain() {
       stopNodes(rainNodes);
       rainNodes = null;
+      if (ambientMode === 'rain') ambientMode = 'none';
+      persistAmbientState();
+      updateAmbientPill();
       document.getElementById('rainBtn')?.classList.remove('active');
     }
 
@@ -1676,6 +1726,9 @@
       lfo.start();
 
       windNodes = { source, source2, gain, lfo };
+      ambientMode = 'wind';
+      persistAmbientState();
+      updateAmbientPill();
       document.getElementById('windBtn')?.classList.add('active');
     }
 
@@ -1685,14 +1738,21 @@
       }
       stopNodes(windNodes);
       windNodes = null;
+      if (ambientMode === 'wind') ambientMode = 'none';
+      persistAmbientState();
+      updateAmbientPill();
       document.getElementById('windBtn')?.classList.remove('active');
     }
 
     function updateAmbientVolume(value) {
       ambientVolume = Math.max(0, Math.min(1, value / 100));
+      persistAmbientState();
       if (rainNodes?.gain) rainNodes.gain.gain.value = 0.42 * ambientVolume;
       if (windNodes?.gain) windNodes.gain.gain.value = 0.5 * ambientVolume;
     }
+
+    document.getElementById('ambientVolume').value = Math.round(ambientVolume * 100);
+    updateAmbientPill();
 
     document.getElementById('startBtn').onclick = () => {
       if (timer) return;
@@ -1710,19 +1770,47 @@
     document.getElementById('resetBtn').onclick = () => { clearInterval(timer); timer = null; timeLeft = 600; document.getElementById('timerDisplay').textContent = "10:00"; };
 
     document.getElementById('rainBtn').onclick = () => {
-      if (rainNodes) stopRain();
-      else setupRain();
+      if (rainNodes) {
+        stopRain();
+      } else {
+        stopWind();
+        setupRain();
+      }
     };
 
     document.getElementById('windBtn').onclick = () => {
-      if (windNodes) stopWind();
-      else setupWind();
+      if (windNodes) {
+        stopWind();
+      } else {
+        stopRain();
+        setupWind();
+      }
     };
 
     document.getElementById('ambientVolume').addEventListener('input', (e) => {
       updateAmbientVolume(Number(e.target.value));
     });
 
+    document.getElementById('ambientPill')?.addEventListener('click', () => {
+      stopRain();
+      stopWind();
+      ambientMode = 'none';
+      persistAmbientState();
+      updateAmbientPill();
+    });
+
+    async function restoreAmbientAfterGesture() {
+      if (ambientMode === 'none') return;
+      try {
+        ensureAmbientContext();
+        if (ambientMode === 'rain') setupRain();
+        if (ambientMode === 'wind') setupWind();
+      } catch (e) {}
+    }
+
+    ['click','touchstart','keydown'].forEach(evt => {
+      window.addEventListener(evt, restoreAmbientAfterGesture, { once: true, passive: true });
+    });
 
     document.getElementById('menuOpenBtn')?.addEventListener('click', openDrawer);
     document.getElementById('drawerCloseBtn')?.addEventListener('click', closeDrawer);
