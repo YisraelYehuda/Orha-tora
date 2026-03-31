@@ -181,7 +181,7 @@
     .timer-controls button:active{background:var(--gold-soft)}
 
     .nav{
-      flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:12px 12px 16px;
+      flex-shrink:0;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:12px 12px 16px;
       background:var(--nav);backdrop-filter:blur(18px);border-top:1px solid var(--border)
     }
     .nav button{appearance:none;border:1px solid transparent;background:transparent;color:var(--text-soft);padding:10px 6px;border-radius:18px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
@@ -481,6 +481,72 @@
       .letter-area{font-size:22px}
     }
 
+  
+    .assistant-cta{
+      display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;
+      padding:18px; border-radius:24px; background:linear-gradient(135deg, rgba(217,174,85,.16), rgba(35,48,72,.18));
+      border:1px solid rgba(217,174,85,.22); box-shadow:var(--shadow); margin-bottom:14px; cursor:pointer;
+    }
+    .assistant-cta strong{display:block; font-family:'Cormorant Garamond',serif; font-size:30px; line-height:1; margin-bottom:6px}
+    .assistant-cta p{margin:0; color:var(--text-soft); font-size:13px; line-height:1.7}
+    .assistant-cta-badge{display:inline-flex; gap:8px; align-items:center; margin-top:10px; padding:8px 12px; border-radius:999px; background:var(--gold-soft); color:var(--gold); border:1px solid var(--border); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase}
+    .assistant-cta-icon{font-size:34px; filter:drop-shadow(0 0 12px rgba(217,174,85,.34))}
+    .assistant-screen{padding-bottom:120px}
+    .oa-shell{display:flex; flex-direction:column; gap:14px}
+    .oa-counter{display:flex; align-items:center; gap:12px; background:linear-gradient(135deg, rgba(217,174,85,.10), rgba(255,255,255,.02)); border:1px solid var(--border); border-radius:20px; padding:14px; box-shadow:var(--shadow)}
+    .oa-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#efc870);color:#132033;font-size:19px;box-shadow:0 0 14px rgba(217,174,85,.25)}
+    .oa-counter h3{margin:0 0 6px; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold)}
+    .oa-counter-text{font-size:12px; color:var(--text-soft)}
+    .oa-dots{display:flex; gap:6px; margin-bottom:6px}
+    .oa-dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(217,174,85,.35);background:rgba(217,174,85,.08)}
+    .oa-dot.used{background:var(--gold); border-color:var(--gold); box-shadow:0 0 8px rgba(217,174,85,.35)}
+    .oa-premium-badge{display:none; padding:6px 12px; border-radius:999px; background:var(--gold-soft); color:var(--gold); border:1px solid var(--border); font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase}
+    .oa-premium-badge.visible{display:inline-flex}
+    .oa-chip-wrap{display:flex; flex-wrap:wrap; gap:8px}
+    .oa-chip{border:none; cursor:pointer; border-radius:999px; padding:8px 12px; background:rgba(217,174,85,.09); color:var(--gold); border:1px solid var(--border); font-size:12px; font-style:italic}
+    .oa-chat{display:flex; flex-direction:column; gap:14px; min-height:240px; margin-top:8px}
+    .oa-welcome{padding:18px; border-radius:20px; background:linear-gradient(135deg, rgba(217,174,85,.08), rgba(255,255,255,.02)); border:1px solid var(--border); text-align:center; color:var(--text-soft); line-height:1.85; font-size:14px}
+    .oa-msg{display:flex; gap:10px}
+    .oa-msg.user{flex-direction:row-reverse}
+    .oa-msg-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+    .oa-msg.assistant .oa-msg-avatar{background:linear-gradient(135deg,var(--gold),#efc870); color:#132033}
+    .oa-msg.user .oa-msg-avatar{background:var(--surface-strong); border:1px solid var(--border)}
+    .oa-bubble{max-width:82%; padding:14px 16px; border-radius:18px; line-height:1.75; font-size:14px; white-space:pre-wrap}
+    .oa-msg.assistant .oa-bubble{background:linear-gradient(135deg, rgba(217,174,85,.11), rgba(255,255,255,.03)); border:1px solid var(--border)}
+    .oa-msg.user .oa-bubble{background:rgba(217,174,85,.13); border:1px solid rgba(217,174,85,.22)}
+    .oa-typing{display:flex; align-items:center; gap:10px}
+    .oa-typing-box{padding:14px 18px; border-radius:18px; background:linear-gradient(135deg, rgba(217,174,85,.11), rgba(255,255,255,.03)); border:1px solid var(--border); display:flex; gap:6px}
+    .oa-typing-box span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:oaBounce 1.2s ease-in-out infinite}
+    .oa-typing-box span:nth-child(2){animation-delay:.2s}.oa-typing-box span:nth-child(3){animation-delay:.4s}
+    @keyframes oaBounce{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-5px);opacity:1}}
+    .oa-input-wrap{position:sticky; bottom:94px; padding-top:10px; background:linear-gradient(180deg, transparent, var(--bg) 25%, var(--bg) 100%)}
+    .oa-input-inner{display:flex; gap:10px; padding:12px; border-radius:20px; background:var(--surface-strong); border:1px solid var(--border); box-shadow:var(--shadow)}
+    .oa-input-inner.blocked{opacity:.45; pointer-events:none}
+    #oaInput{flex:1; border:none; outline:none; resize:none; background:transparent; color:var(--text); min-height:26px; max-height:110px; font:inherit; line-height:1.6}
+    #oaInput::placeholder{color:var(--text-soft); font-style:italic}
+    .oa-send{border:none; border-radius:14px; width:42px; height:42px; align-self:flex-end; cursor:pointer; background:linear-gradient(135deg,var(--gold),#efc870); color:#132033; font-size:17px; font-weight:700}
+    .oa-helper{margin-top:8px; text-align:center; font-size:11px; color:var(--text-soft); line-height:1.6}
+    .oa-paywall{display:none; position:fixed; inset:0; z-index:40; background:rgba(4,9,17,.76); backdrop-filter:blur(8px); align-items:flex-end; justify-content:center}
+    .oa-paywall.active{display:flex}
+    .oa-paywall-card{width:min(100%,460px); border-radius:28px 28px 0 0; background:linear-gradient(160deg,#0e1827,#09111d); border:1px solid rgba(217,174,85,.24); border-bottom:none; padding:28px 20px 32px; box-shadow:0 -14px 40px rgba(0,0,0,.35)}
+    .oa-paywall-card h3{margin:8px 0 8px; text-align:center; font-family:'Cormorant Garamond',serif; font-size:34px; color:#f7f2e8}
+    .oa-paywall-card p{margin:0; text-align:center; color:#c8d0dc; line-height:1.8; font-size:14px}
+    .oa-price{margin:22px 0 18px; text-align:center}
+    .oa-price strong{display:block; font-size:38px; color:var(--gold); font-family:'Cormorant Garamond',serif}
+    .oa-paywall-list{display:grid; gap:10px; margin:18px 0}
+    .oa-paywall-item{padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.03); border:1px solid rgba(217,174,85,.16); color:#dfe6f2; font-size:13px; line-height:1.7}
+    .oa-paywall-actions{display:grid; gap:10px}
+    .oa-primary,.oa-secondary,.oa-key-btn{border:none; border-radius:16px; cursor:pointer}
+    .oa-primary{padding:14px 16px; background:linear-gradient(135deg,var(--gold),#efc870); color:#132033; font-weight:800; letter-spacing:.08em; text-transform:uppercase}
+    .oa-secondary{padding:13px 16px; background:transparent; border:1px solid rgba(217,174,85,.24); color:#dfe6f2}
+    .oa-key-area{display:none; margin-top:14px; padding:14px; border-radius:18px; background:rgba(255,255,255,.03); border:1px solid rgba(217,174,85,.16)}
+    .oa-key-area.visible{display:block}
+    .oa-key-row{display:flex; gap:8px}
+    .oa-key-row input{flex:1; border:none; outline:none; border-radius:12px; padding:12px 14px; background:rgba(255,255,255,.05); border:1px solid rgba(217,174,85,.18); color:#f7f2e8}
+    .oa-key-btn{padding:12px 14px; background:rgba(217,174,85,.18); color:#f7f2e8; border:1px solid rgba(217,174,85,.18)}
+    .oa-key-error{display:none; margin-top:8px; text-align:center; font-size:12px; color:#ff8b7b}
+    .oa-key-error.visible{display:block}
+
   </style>
 </head>
 <body>
@@ -505,6 +571,7 @@
       <div class="menu-section">
         <div class="menu-caption">Acesso rápido</div>
         <button class="menu-link" data-drawer-go="home"><span>🏠 <strong>Início</strong><small>Voltar para o lobby do Ohr.</small></span><span>›</span></button>
+        <button class="menu-link" data-drawer-go="assistente"><span>🤖 <strong>Assistente Ohr</strong><small>Orientação espiritual integrada ao app com acesso premium.</small></span><span>›</span></button>
         <button class="menu-link" data-drawer-go="carta"><span>✍️ <strong>Fale com HaShem</strong><small>Escreva uma carta íntima e reverente.</small></span><span>›</span></button>
         <button class="menu-link" data-drawer-go="livros"><span>📚 <strong>Livros de Yisrael Yehuda</strong><small>Conheça suas obras disponíveis no Google Play Livros.</small></span><span>›</span></button>
         <a class="menu-link is-external" href="https://www.chabad.org/calendar/view/month.htm" target="_blank" rel="noopener"><span>🗓️ <strong>Calendário judaico</strong><small>Data judaica em tempo real no Chabad.org, com aparência integrada ao Ohr.</small></span><span class="menu-arrow">↗</span></a>
@@ -513,8 +580,8 @@
       </div>
 
       <div class="menu-version">
-        <strong>Versão 1.3.0</strong><br>
-        Nova fase do Ohr: botão de instalação inteligente para a versão web e Parashat da semana atualizada automaticamente em tempo real.
+        <strong>Versão 2.1.1.1</strong><br>
+        Nova fase do Ohr: Assistente Ohr Premium integrado ao app, pronto para backend com Cloudflare + Anthropic Claude, acesso premium por chave e entrada rápida na tela inicial.
       </div>
     </aside>
 
@@ -527,7 +594,7 @@
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
-        <p class="op-mark">Op Leão em Ascensão 1.3.0</p>
+        <p class="op-mark">Op Leão em Ascensão 2.1.1.1</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -609,6 +676,16 @@
             <p>Coma com calma, beba algo que marque a santidade do momento, leia Tehilim, estude uma porção de Torá apropriada ao seu caminho, desligue distrações e deixe a casa mais serena.</p>
           </div>
         </div>
+      </div>
+
+      <div class="assistant-cta" onclick="goToScreen('assistente')">
+        <div>
+          <p class="section-label">Novo recurso central</p>
+          <strong>Assistente Ohr</strong>
+          <p>Orientação espiritual no coração do app, com acesso rápido, visual premium e caminho direto para o Ohr Premium.</p>
+          <div class="assistant-cta-badge"><span>🤖</span><span>Abrir assistente</span></div>
+        </div>
+        <div class="assistant-cta-icon">🕯️</div>
       </div>
 
     </main>
@@ -877,6 +954,86 @@
       </div>
     </main>
 
+
+    <main class="screen assistant-screen" id="assistente">
+      <div class="screen-title">
+        <div class="screen-head">
+          <div class="screen-copy">
+            <h2>Assistente Ohr</h2>
+            <p>Orientação espiritual integrada ao Ohr, com essência preservada, caminho premium e acesso simples.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="oa-shell">
+        <div class="oa-counter">
+          <div class="oa-avatar">📜</div>
+          <div style="flex:1">
+            <h3>Assistente Ohr</h3>
+            <div class="oa-dots" id="oaCounterDots"></div>
+            <div class="oa-counter-text" id="oaCounterText"></div>
+          </div>
+          <div class="oa-premium-badge" id="oaPremiumBadge">Premium</div>
+        </div>
+
+        <div class="card">
+          <p class="section-label">Perguntas frequentes</p>
+          <div class="oa-chip-wrap">
+            <button class="oa-chip" onclick="ohrAssistant.useSuggestion('O que é Teshuvá?')">O que é Teshuvá?</button>
+            <button class="oa-chip" onclick="ohrAssistant.useSuggestion('Como rezar corretamente?')">Como rezar corretamente?</button>
+            <button class="oa-chip" onclick="ohrAssistant.useSuggestion('O que os Bnei Noach devem observar?')">O que os Bnei Noach devem observar?</button>
+            <button class="oa-chip" onclick="ohrAssistant.useSuggestion('Como se prepara para o Shabat?')">Como se prepara para o Shabat?</button>
+            <button class="oa-chip" onclick="ohrAssistant.useSuggestion('O que é Hitbodedut?')">O que é Hitbodedut?</button>
+          </div>
+        </div>
+
+        <div class="oa-chat" id="oaChatArea">
+          <div class="oa-welcome" id="oaWelcome">
+            <div style="font-size:17px;color:var(--gold);margin-bottom:8px">“כִּי נֵר מִצְוָה וְתוֹרָה אוֹר”</div>
+            <div>Pois o mandamento é uma lamparina e a Torá é luz. Faça sua pergunta com sinceridade. O Assistente Ohr responde com base nas raízes que você definiu para o projeto.</div>
+          </div>
+        </div>
+
+        <div class="oa-input-wrap">
+          <div class="oa-input-inner" id="oaInputInner">
+            <textarea id="oaInput" rows="1" placeholder="Escreva sua pergunta espiritual..." oninput="ohrAssistant.autoResize(this)" onkeydown="ohrAssistant.handleKey(event)"></textarea>
+            <button class="oa-send" id="oaSendBtn" onclick="ohrAssistant.sendMessage()">🕊️</button>
+          </div>
+          <div class="oa-helper" id="oaInputHint">As respostas são orientações espirituais gerais e não substituem um Rav.</div>
+        </div>
+      </div>
+    </main>
+
+    <div class="oa-paywall" id="oaPaywall">
+      <div class="oa-paywall-card">
+        <div style="text-align:center;font-size:38px">🕯️</div>
+        <h3>Ohr Premium</h3>
+        <p>Continue com perguntas ilimitadas, respostas aprofundadas e o caminho premium integrado ao coração do Ohr.</p>
+        <div class="oa-paywall-list">
+          <div class="oa-paywall-item">♾️ Perguntas ilimitadas para quem ativar o premium.</div>
+          <div class="oa-paywall-item">📜 Profundidade espiritual preservando a identidade do Assistente Ohr.</div>
+          <div class="oa-paywall-item">✨ Estrutura pronta para futuras evoluções do projeto.</div>
+        </div>
+        <div class="oa-price">
+          <strong>R$ 5,99</strong>
+          <p>por mês — menos que um café</p>
+        </div>
+        <div class="oa-paywall-actions">
+          <button class="oa-primary" onclick="ohrAssistant.openCheckout()">Assinar Ohr Premium</button>
+          <button class="oa-secondary" onclick="ohrAssistant.toggleKeyArea(true)">Já sou assinante — inserir chave</button>
+          <button class="oa-secondary" onclick="ohrAssistant.closePaywall()">Continuar com 5 perguntas por dia</button>
+        </div>
+        <div class="oa-key-area" id="oaKeyArea">
+          <p style="margin-bottom:10px">Insira sua chave de acesso para ativar o premium neste aparelho.</p>
+          <div class="oa-key-row">
+            <input type="text" id="oaKeyInput" placeholder="Chave Premium Ohr..." />
+            <button class="oa-key-btn" onclick="ohrAssistant.activateKey()">Ativar</button>
+          </div>
+          <div class="oa-key-error" id="oaKeyError">Chave inválida ou expirada. Verifique e tente novamente.</div>
+        </div>
+      </div>
+    </div>
+
     <main class="screen" id="sobre">
       <div class="screen-title">
         <div class="screen-head">
@@ -916,7 +1073,7 @@
             <strong>✨ Propósito:</strong><br>
             Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
             oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.<br><br>
-            <strong>🛠️ Versão atual:</strong> 1.3.0
+            <strong>🛠️ Versão atual:</strong> 2.1.1.1
           </p>
         </div>
       </div>
@@ -938,6 +1095,10 @@
       <button data-go="meditar">
         <span class="icon">🧘</span>
         <span>Meditar</span>
+      </button>
+      <button data-go="assistente">
+        <span class="icon">🤖</span>
+        <span>Assist.</span>
       </button>
       <button data-go="sobre">
         <span class="icon">ℹ️</span>
@@ -1625,6 +1786,272 @@
 
     updateBackVisibility();
 
+
+    const OHR_ASSISTANT_CONFIG = {
+      maxFree: 5,
+      storageKeyPrefix: 'ohr_assistant_count_',
+      premiumStorageKey: 'ohr_assistant_premium',
+      conversationKey: 'ohr_assistant_history',
+      backendUrl: 'https://dark-dew-5ecb.orhatorabrasil.workers.dev',
+      checkoutUrl: 'https://pay.hotmart.com/K105159896J',
+      creatorKey: 'YISRAEL-OHR-HSHM-A9K7X2LQ-77M'
+    };
+
+    const ohrAssistant = {
+      history: [],
+      isLoading: false,
+      getTodayKey() {
+        return OHR_ASSISTANT_CONFIG.storageKeyPrefix + new Date().toISOString().slice(0,10);
+      },
+      getUsedCount() {
+        return parseInt(localStorage.getItem(this.getTodayKey()) || '0', 10);
+      },
+      incrementCount() {
+        const next = this.getUsedCount() + 1;
+        localStorage.setItem(this.getTodayKey(), String(next));
+        return next;
+      },
+      getPremiumData() {
+        try {
+          return JSON.parse(localStorage.getItem(OHR_ASSISTANT_CONFIG.premiumStorageKey) || 'null');
+        } catch (e) {
+          return null;
+        }
+      },
+      hasActivePremium() {
+        const data = this.getPremiumData();
+        if (!data) return false;
+        if (data.type === 'creator') return true;
+        if (!data.expiresAt) return false;
+        return new Date(data.expiresAt).getTime() > Date.now();
+      },
+      savePremiumData(data) {
+        localStorage.setItem(OHR_ASSISTANT_CONFIG.premiumStorageKey, JSON.stringify(data));
+      },
+      clearPremiumData() {
+        localStorage.removeItem(OHR_ASSISTANT_CONFIG.premiumStorageKey);
+      },
+      updateCounterUI() {
+        const dots = document.getElementById('oaCounterDots');
+        const text = document.getElementById('oaCounterText');
+        const badge = document.getElementById('oaPremiumBadge');
+        const inputInner = document.getElementById('oaInputInner');
+        const inputHint = document.getElementById('oaInputHint');
+        if (!dots || !text || !badge || !inputInner || !inputHint) return;
+
+        if (this.hasActivePremium()) {
+          const data = this.getPremiumData();
+          dots.innerHTML = '<span style="color:var(--gold);font-size:18px">♾️</span>';
+          badge.classList.add('visible');
+          text.textContent = data?.type === 'creator' ? 'Modo criador ativo — acesso ilimitado' : 'Ohr Premium ativo neste aparelho';
+          inputInner.classList.remove('blocked');
+          inputHint.textContent = 'Ohr Premium ativo — perguntas ilimitadas.';
+          return;
+        }
+
+        badge.classList.remove('visible');
+        dots.innerHTML = '';
+        const used = this.getUsedCount();
+        const remaining = Math.max(0, OHR_ASSISTANT_CONFIG.maxFree - used);
+        for (let i = 0; i < OHR_ASSISTANT_CONFIG.maxFree; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'oa-dot' + (i < used ? ' used' : '');
+          dots.appendChild(dot);
+        }
+        if (remaining === 0) {
+          text.textContent = 'Limite diário atingido';
+          inputInner.classList.add('blocked');
+          inputHint.textContent = 'Assine o Ohr Premium ou ative sua chave de acesso.';
+        } else {
+          text.textContent = `${remaining} pergunta${remaining !== 1 ? 's' : ''} restante${remaining !== 1 ? 's' : ''} hoje`;
+          inputInner.classList.remove('blocked');
+          inputHint.textContent = 'As respostas são orientações espirituais gerais e não substituem um Rav.';
+        }
+      },
+      autoResize(el) {
+        el.style.height = 'auto';
+        el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+      },
+      handleKey(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          this.sendMessage();
+        }
+      },
+      useSuggestion(text) {
+        if (!this.hasActivePremium() && this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
+          this.showPaywall();
+          return;
+        }
+        const input = document.getElementById('oaInput');
+        if (!input) return;
+        input.value = text;
+        this.autoResize(input);
+        this.sendMessage();
+      },
+      appendMessage(role, text) {
+        const area = document.getElementById('oaChatArea');
+        if (!area) return;
+        document.getElementById('oaWelcome')?.remove();
+        const wrapper = document.createElement('div');
+        wrapper.className = `oa-msg ${role}`;
+        const avatar = document.createElement('div');
+        avatar.className = 'oa-msg-avatar';
+        avatar.textContent = role === 'assistant' ? '📜' : '🙏';
+        const bubble = document.createElement('div');
+        bubble.className = 'oa-bubble';
+        bubble.textContent = text;
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(bubble);
+        area.appendChild(wrapper);
+        area.scrollTop = area.scrollHeight;
+      },
+      showTyping() {
+        const area = document.getElementById('oaChatArea');
+        if (!area) return;
+        const el = document.createElement('div');
+        el.id = 'oaTyping';
+        el.className = 'oa-typing';
+        el.innerHTML = '<div class="oa-msg-avatar" style="background:linear-gradient(135deg,var(--gold),#efc870);color:#132033">📜</div><div class="oa-typing-box"><span></span><span></span><span></span></div>';
+        area.appendChild(el);
+        area.scrollTop = area.scrollHeight;
+      },
+      removeTyping() {
+        document.getElementById('oaTyping')?.remove();
+      },
+      async sendMessage() {
+        if (this.isLoading) return;
+        if (!this.hasActivePremium() && this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
+          this.showPaywall();
+          return;
+        }
+        const input = document.getElementById('oaInput');
+        const sendBtn = document.getElementById('oaSendBtn');
+        const text = (input?.value || '').trim();
+        if (!text) return;
+
+        this.isLoading = true;
+        if (sendBtn) sendBtn.disabled = true;
+        this.appendMessage('user', text);
+        this.history.push({ role: 'user', content: text });
+        if (input) {
+          input.value = '';
+          input.style.height = 'auto';
+        }
+
+        if (!this.hasActivePremium()) {
+          this.incrementCount();
+          this.updateCounterUI();
+        }
+
+        this.showTyping();
+        try {
+          const premium = this.getPremiumData();
+          const payload = {
+            message: text,
+            history: this.history.slice(-8),
+            accessKey: premium?.key || null,
+            userMode: premium?.type || 'free'
+          };
+          const res = await fetch(`${OHR_ASSISTANT_CONFIG.backendUrl}/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          this.removeTyping();
+          if (!res.ok) {
+            const errText = data?.error || 'Houve uma falha ao consultar o backend do Ohr.';
+            this.appendMessage('assistant', `Que HaShem nos ajude — ${errText}`);
+          } else {
+            const reply = data.reply || 'HaShem me perdoe, não consegui responder agora. Tente novamente.';
+            this.appendMessage('assistant', reply);
+            this.history.push({ role: 'assistant', content: reply });
+            localStorage.setItem(OHR_ASSISTANT_CONFIG.conversationKey, JSON.stringify(this.history.slice(-20)));
+            if (!this.hasActivePremium() && this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
+              setTimeout(() => this.showPaywall(), 1200);
+            }
+          }
+        } catch (error) {
+          this.removeTyping();
+          this.appendMessage('assistant', 'Que HaShem nos ajude — houve um erro de conexão com o backend do Ohr. Tente novamente em instantes.');
+        }
+        this.isLoading = false;
+        if (sendBtn) sendBtn.disabled = false;
+      },
+      showPaywall() {
+        document.getElementById('oaPaywall')?.classList.add('active');
+      },
+      closePaywall() {
+        document.getElementById('oaPaywall')?.classList.remove('active');
+      },
+      toggleKeyArea(force = false) {
+        const area = document.getElementById('oaKeyArea');
+        if (!area) return;
+        if (force === true) area.classList.add('visible');
+        else area.classList.toggle('visible');
+      },
+      openCheckout() {
+        window.open(OHR_ASSISTANT_CONFIG.checkoutUrl, '_blank', 'noopener');
+        this.toggleKeyArea(true);
+      },
+      async activateKey() {
+        const input = document.getElementById('oaKeyInput');
+        const errorEl = document.getElementById('oaKeyError');
+        const raw = (input?.value || '').trim();
+        if (!raw) return;
+        if (errorEl) errorEl.classList.remove('visible');
+
+        if (raw.toUpperCase() === OHR_ASSISTANT_CONFIG.creatorKey) {
+          this.savePremiumData({ key: raw.toUpperCase(), type: 'creator', expiresAt: null, activatedAt: new Date().toISOString() });
+          this.closePaywall();
+          this.updateCounterUI();
+          this.appendMessage('assistant', 'Baruch HaShem! Modo criador ativado com sucesso. O acesso ilimitado do Ohr foi liberado neste aparelho.');
+          return;
+        }
+
+        try {
+          const res = await fetch(`${OHR_ASSISTANT_CONFIG.backendUrl}/validate-key`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accessKey: raw })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.valid) {
+            if (errorEl) errorEl.classList.add('visible');
+            return;
+          }
+          this.savePremiumData({
+            key: raw,
+            type: data.type || 'premium',
+            expiresAt: data.expiresAt || null,
+            activatedAt: new Date().toISOString()
+          });
+          this.closePaywall();
+          this.updateCounterUI();
+          this.appendMessage('assistant', 'Baruch HaShem! Seu acesso ao Ohr Premium foi ativado com sucesso neste aparelho. Você agora pode perguntar sem limites enquanto sua chave estiver válida.');
+        } catch (e) {
+          if (errorEl) {
+            errorEl.textContent = 'Não foi possível validar a chave agora. Tente novamente.';
+            errorEl.classList.add('visible');
+          }
+        }
+      },
+      loadHistory() {
+        try {
+          this.history = JSON.parse(localStorage.getItem(OHR_ASSISTANT_CONFIG.conversationKey) || '[]');
+        } catch (e) {
+          this.history = [];
+        }
+      },
+      init() {
+        this.loadHistory();
+        this.updateCounterUI();
+      }
+    };
+
+
+    ohrAssistant.init();
     init();
   </script>
 </body>
