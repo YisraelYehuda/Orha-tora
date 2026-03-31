@@ -504,7 +504,7 @@
     .oa-premium-badge.visible{display:inline-flex}
     .oa-chip-wrap{display:flex; flex-wrap:wrap; gap:8px}
     .oa-chip{border:none; cursor:pointer; border-radius:999px; padding:8px 12px; background:rgba(217,174,85,.09); color:var(--gold); border:1px solid var(--border); font-size:12px; font-style:italic}
-    .oa-chat{display:flex; flex-direction:column; gap:14px; min-height:240px; margin-top:8px}
+    .oa-chat{display:flex; flex-direction:column; gap:14px; min-height:unset; margin-top:8px}
     .oa-welcome{padding:18px; border-radius:20px; background:linear-gradient(135deg, rgba(217,174,85,.08), rgba(255,255,255,.02)); border:1px solid var(--border); text-align:center; color:var(--text-soft); line-height:1.85; font-size:14px}
     .oa-msg{display:flex; gap:10px}
     .oa-msg.user{flex-direction:row-reverse}
@@ -519,7 +519,7 @@
     .oa-typing-box span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:oaBounce 1.2s ease-in-out infinite}
     .oa-typing-box span:nth-child(2){animation-delay:.2s}.oa-typing-box span:nth-child(3){animation-delay:.4s}
     @keyframes oaBounce{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-5px);opacity:1}}
-    .oa-input-wrap{position:sticky; bottom:94px; padding-top:10px; background:linear-gradient(180deg, transparent, var(--bg) 25%, var(--bg) 100%)}
+    .oa-input-wrap{position:static; margin-top:2px; padding-top:4px; background:transparent}
     .oa-input-inner{display:flex; gap:10px; padding:12px; border-radius:20px; background:var(--surface-strong); border:1px solid var(--border); box-shadow:var(--shadow)}
     .oa-input-inner.blocked{opacity:.45; pointer-events:none}
     #oaInput{flex:1; border:none; outline:none; resize:none; background:transparent; color:var(--text); min-height:26px; max-height:110px; font:inherit; line-height:1.6}
