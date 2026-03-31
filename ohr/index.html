@@ -208,6 +208,49 @@
     .ambient-pill small{display:block; font-size:10px; color:var(--text-soft); font-weight:600}
     .helper-note{margin-top:10px; font-size:12px; color:var(--text-soft); line-height:1.65}
 
+    .quote-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .quote-btn,.notify-chip{
+      appearance:none;border:none;background:var(--surface-strong);color:var(--text);border:1px solid var(--border);
+      border-radius:999px;padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+      box-shadow:var(--shadow)
+    }
+    .quote-btn.primary,.notify-chip.active{background:linear-gradient(135deg,var(--gold),#efc870);color:#172334}
+    .pulse-gold{animation:pulseGold 2.8s ease-in-out infinite}
+    @keyframes pulseGold{0%,100%{box-shadow:0 0 0 0 rgba(184,138,43,.14)}50%{box-shadow:0 0 0 8px rgba(184,138,43,0)}}
+    .lift-in{animation:liftIn .45s ease both}
+    @keyframes liftIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .settings-grid{display:grid;gap:12px}
+    .settings-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .field{display:flex;flex-direction:column;gap:7px}
+    .field label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:700}
+    .field input,.field select{
+      width:100%;padding:13px 14px;border-radius:16px;border:1px solid var(--border);
+      background:var(--surface-strong);color:var(--text);font:inherit;outline:none
+    }
+    .switch-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .switch-item{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:16px;background:var(--surface-strong);border:1px solid var(--border)}
+    .switch-copy strong{display:block;font-size:13px}
+    .switch-copy small{display:block;color:var(--text-soft);margin-top:4px;line-height:1.45}
+    .switch{position:relative;width:52px;height:30px;flex-shrink:0}
+    .switch input{display:none}
+    .slider{position:absolute;inset:0;border-radius:999px;background:rgba(88,97,113,.24);border:1px solid var(--border);transition:.25s}
+    .slider:before{content:'';position:absolute;width:22px;height:22px;left:3px;top:3px;border-radius:50%;background:#fff;transition:.25s;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .switch input:checked + .slider{background:rgba(184,138,43,.3)}
+    .switch input:checked + .slider:before{transform:translateX(22px);background:linear-gradient(135deg,var(--gold),#efc870)}
+    .notice-box{padding:14px 15px;border-radius:18px;background:linear-gradient(135deg,var(--gold-soft),rgba(255,255,255,.35));border:1px solid var(--border);line-height:1.65;color:var(--text-soft);font-size:13px}
+    .status-line{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding:11px 14px;border-radius:14px;background:var(--surface-strong);border:1px dashed var(--border);font-size:12px;color:var(--text-soft)}
+    .notif-toast{position:fixed;left:50%;transform:translateX(-50%);bottom:106px;z-index:16;display:none;padding:11px 15px;border-radius:999px;background:rgba(16,24,38,.92);color:#fff;font-size:12px;box-shadow:var(--shadow)}
+    .notif-toast.show{display:block;animation:fade .25s ease}
+    .quote{position:relative; overflow:hidden}
+    .quote::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.18) 18%,transparent 36%);transform:translateX(-130%);animation:shine 10s linear infinite;pointer-events:none}
+    @keyframes shine{0%{transform:translateX(-130%)}15%{transform:translateX(130%)}100%{transform:translateX(130%)}}
+    @media (max-width:420px){
+      .settings-row{grid-template-columns:1fr}
+      .quote-actions{flex-direction:column}
+      .quote-btn{width:100%}
+    }
+
+
     .small-note{font-size:12px;color:var(--text-soft);line-height:1.6;margin-top:8px}
     .day-cell{padding:10px; background:var(--gold-soft); border-radius:12px; text-align:center; border:1px solid var(--border); cursor:pointer; transition:all .2s}
     .day-cell:hover{border-color:var(--gold); background:rgba(184,138,43,.1)}
@@ -596,12 +639,13 @@
         <button class="menu-link" data-drawer-go="livros"><span>📚 <strong>Livros de Yisrael Yehuda</strong><small>Conheça suas obras disponíveis no Google Play Livros.</small></span><span>›</span></button>
         <a class="menu-link is-external" href="https://www.chabad.org/calendar/view/month.htm" target="_blank" rel="noopener"><span>🗓️ <strong>Calendário judaico</strong><small>Data judaica em tempo real no Chabad.org, com aparência integrada ao Ohr.</small></span><span class="menu-arrow">↗</span></a>
         <button class="menu-link" data-drawer-go="contato"><span>📩 <strong>Contato e perguntas frequentes</strong><small>Envie mensagem, sugestões e correções.</small></span><span>›</span></button>
+        <button class="menu-link" data-drawer-go="ritmo"><span>🔔 <strong>Meu ritmo sagrado</strong><small>Defina horários, frases e avisos que acompanham sua rotina.</small></span><span>›</span></button>
         <button class="menu-link" data-drawer-go="sobre"><span>ℹ️ <strong>Sobre o Ohr</strong><small>Versão, propósito e informações do aplicativo.</small></span><span>›</span></button>
       </div>
 
       <div class="menu-version">
-        <strong>Versão 3.0.1.1</strong><br>
-        Base refinada do Ohr: navegação mais limpa, experiência mais estável, assistente integrado com mais conforto e estrutura preparada para as próximas camadas do app.
+        <strong>Versão 3.0.1.2</strong><br>
+        Base viva do Ohr: navegação refinada, ritmo espiritual personalizado, frases compartilháveis, som contínuo e estrutura preparada para notificações sagradas ao longo do dia.
       </div>
     </aside>
 
@@ -618,7 +662,7 @@
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
-        <p class="op-mark">Op Leão em Ascensão 3.0.1.1</p>
+        <p class="op-mark">Op Leão em Ascensão 3.0.1.2</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -658,6 +702,10 @@
         <div class="quote-tag">
           <span>✨</span>
           <span id="quoteTag">Chassidut</span>
+        </div>
+        <div class="quote-actions">
+          <button class="quote-btn primary pulse-gold" id="shareQuoteBtn" type="button">Compartilhar luz</button>
+          <button class="quote-btn" id="nextQuoteBtn" type="button">Nova frase</button>
         </div>
       </div>
 
@@ -1059,7 +1107,67 @@
       </div>
     </div>
 
-    <main class="screen" id="sobre">
+    
+    <main class="screen" id="ritmo">
+      <div class="screen-title">
+        <div class="screen-head">
+          <div class="screen-copy">
+            <h2>Meu ritmo sagrado</h2>
+            <p>Personalize o Ohr para falar com você no ritmo do seu dia, com suavidade, reverência e constância.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card lift-in">
+        <p class="section-label">Rotina do usuário</p>
+        <div class="settings-grid">
+          <div class="settings-row">
+            <div class="field">
+              <label for="wakeTime">Costumo acordar às</label>
+              <input type="time" id="wakeTime" value="07:00">
+            </div>
+            <div class="field">
+              <label for="sleepTime">Costumo dormir às</label>
+              <input type="time" id="sleepTime" value="23:00">
+            </div>
+          </div>
+          <div class="notice-box">
+            O Ohr usa esses horários para preparar mensagens de bom dia, boa noite e lembretes de Shemá mais coerentes com a sua rotina. Tudo fica salvo somente neste aparelho.
+          </div>
+          <div class="switch-list">
+            <div class="switch-item">
+              <div class="switch-copy"><strong>Bom dia com alma</strong><small>Uma mensagem inspiradora para começar o dia com presença.</small></div>
+              <label class="switch"><input type="checkbox" id="toggleMorning"><span class="slider"></span></label>
+            </div>
+            <div class="switch-item">
+              <div class="switch-copy"><strong>Boa noite judaica</strong><small>Uma despedida serena, com toque de fé e gratidão.</small></div>
+              <label class="switch"><input type="checkbox" id="toggleNight"><span class="slider"></span></label>
+            </div>
+            <div class="switch-item">
+              <div class="switch-copy"><strong>Shemá 3x ao dia</strong><small>Manhã, tarde e noite, com linguagem acessível e respeitosa.</small></div>
+              <label class="switch"><input type="checkbox" id="toggleShema"><span class="slider"></span></label>
+            </div>
+            <div class="switch-item">
+              <div class="switch-copy"><strong>Frases dos Rebbes</strong><small>Pequenas centelhas ao longo da semana para reter e reacender.</small></div>
+              <label class="switch"><input type="checkbox" id="toggleRebbe"><span class="slider"></span></label>
+            </div>
+            <div class="switch-item">
+              <div class="switch-copy"><strong>Erev Shabat e Parashá</strong><small>Lembretes suaves para a chegada do Shabat e a porção da semana.</small></div>
+              <label class="switch"><input type="checkbox" id="toggleShabbat"><span class="slider"></span></label>
+            </div>
+          </div>
+          <div class="top-actions" style="margin-top:12px">
+            <button class="top-icon-btn" id="enableNotificationsBtn" type="button">🔔 Ativar notificações</button>
+            <button class="top-icon-btn" id="saveRhythmBtn" type="button">💾 Salvar ritmo</button>
+          </div>
+          <div class="status-line">
+            <span id="notificationStatusText">Notificações ainda não ativadas.</span>
+            <span id="lastPingPreview">Aguardando configuração</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+<main class="screen" id="sobre">
       <div class="screen-title">
         <div class="screen-head">
 <div class="screen-copy">
@@ -1098,7 +1206,7 @@
             <strong>✨ Propósito:</strong><br>
             Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
             oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.<br><br>
-            <strong>🛠️ Versão atual:</strong> 2.1.1.1
+            <strong>🛠️ Versão atual:</strong> 3.0.1.2
           </p>
         </div>
       </div>
@@ -1127,6 +1235,7 @@
       </button>
     </nav>
   </div>
+  <div class="notif-toast" id="notifToast"></div>
 
   <script>
     const quotes = [
@@ -1209,6 +1318,186 @@
       }
     ];
 
+
+
+    function showToast(message) {
+      const toast = document.getElementById('notifToast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
+    function renderQuote(forceNext = false) {
+      const quote = forceNext ? (() => {
+        const stored = JSON.parse(localStorage.getItem('ohrQuoteState') || '{}');
+        const nextState = { window: stored.window || 0, index: Math.floor(Math.random() * quotes.length) };
+        if (quotes.length > 1 && typeof stored.index === 'number') {
+          while (nextState.index === stored.index) nextState.index = Math.floor(Math.random() * quotes.length);
+        }
+        localStorage.setItem('ohrQuoteState', JSON.stringify(nextState));
+        return quotes[nextState.index];
+      })() : getRandomQuoteForWindow();
+      document.getElementById('quoteText').textContent = `“${quote.text.replace(/^["“]|["”]$/g,'')}”`;
+      document.getElementById('quoteSource').textContent = quote.source;
+      document.getElementById('quoteTag').textContent = quote.tag;
+      return quote;
+    }
+
+    async function shareCurrentQuote() {
+      const quote = {
+        text: document.getElementById('quoteText')?.textContent || '',
+        source: document.getElementById('quoteSource')?.textContent || '',
+      };
+      const message = `${quote.text}\n${quote.source}\n\nLuz diária no Ohr`;
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: 'Luz dos Rebbes — Ohr', text: message });
+        } else {
+          await navigator.clipboard.writeText(message);
+          showToast('Frase copiada para compartilhar.');
+        }
+      } catch (err) {}
+    }
+
+    const rhythmDefaults = {
+      wakeTime: '07:00',
+      sleepTime: '23:00',
+      notificationsEnabled: false,
+      morning: true,
+      night: true,
+      shema: true,
+      rebbe: true,
+      shabbat: true
+    };
+
+    function getRhythmPrefs() {
+      return { ...rhythmDefaults, ...JSON.parse(localStorage.getItem('ohrRhythmPrefs') || '{}') };
+    }
+
+    function saveRhythmPrefs(prefs) {
+      localStorage.setItem('ohrRhythmPrefs', JSON.stringify(prefs));
+    }
+
+    function applyRhythmPrefsToUI() {
+      const prefs = getRhythmPrefs();
+      const map = {
+        wakeTime: prefs.wakeTime, sleepTime: prefs.sleepTime,
+        toggleMorning: prefs.morning, toggleNight: prefs.night, toggleShema: prefs.shema,
+        toggleRebbe: prefs.rebbe, toggleShabbat: prefs.shabbat
+      };
+      Object.entries(map).forEach(([id,val]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') el.checked = !!val;
+        else el.value = val;
+      });
+      updateNotificationStatus();
+    }
+
+    async function requestNotificationPermission() {
+      if (!('Notification' in window)) {
+        showToast('Seu navegador não suporta notificações.');
+        return false;
+      }
+      const permission = await Notification.requestPermission();
+      const prefs = getRhythmPrefs();
+      prefs.notificationsEnabled = permission === 'granted';
+      saveRhythmPrefs(prefs);
+      updateNotificationStatus();
+      showToast(permission === 'granted' ? 'Notificações ativadas no Ohr.' : 'Permissão de notificação não concedida.');
+      return permission === 'granted';
+    }
+
+    function updateNotificationStatus() {
+      const prefs = getRhythmPrefs();
+      const enabled = prefs.notificationsEnabled && Notification.permission === 'granted';
+      const status = document.getElementById('notificationStatusText');
+      const preview = document.getElementById('lastPingPreview');
+      if (status) status.textContent = enabled ? 'Notificações locais ativas neste aparelho.' : 'Notificações ainda não ativadas.';
+      if (preview) preview.textContent = `Despertar ${prefs.wakeTime} · Dormir ${prefs.sleepTime}`;
+    }
+
+    function saveRhythmFromUI() {
+      const prefs = getRhythmPrefs();
+      prefs.wakeTime = document.getElementById('wakeTime')?.value || prefs.wakeTime;
+      prefs.sleepTime = document.getElementById('sleepTime')?.value || prefs.sleepTime;
+      prefs.morning = !!document.getElementById('toggleMorning')?.checked;
+      prefs.night = !!document.getElementById('toggleNight')?.checked;
+      prefs.shema = !!document.getElementById('toggleShema')?.checked;
+      prefs.rebbe = !!document.getElementById('toggleRebbe')?.checked;
+      prefs.shabbat = !!document.getElementById('toggleShabbat')?.checked;
+      saveRhythmPrefs(prefs);
+      updateNotificationStatus();
+      showToast('Seu ritmo sagrado foi salvo.');
+    }
+
+    function minutesFromTimeString(timeStr) {
+      const [h,m] = String(timeStr || '00:00').split(':').map(Number);
+      return ((h||0) * 60) + (m||0);
+    }
+
+    function shouldFireNotification(key, minute) {
+      const dateKey = new Date().toISOString().slice(0,10);
+      const storeKey = `ohr_notify_${dateKey}_${key}`;
+      const seen = localStorage.getItem(storeKey);
+      if (seen === String(minute)) return false;
+      localStorage.setItem(storeKey, String(minute));
+      return true;
+    }
+
+    function sendLocalNotification(title, body, tag) {
+      if (!(Notification.permission === 'granted')) return;
+      const regPromise = navigator.serviceWorker?.ready;
+      if (regPromise) {
+        regPromise.then(reg => reg.showNotification(title, {
+          body, tag, icon: './icon-192.png', badge: './icon-192.png',
+          data: { url: './index.html' }
+        })).catch(() => new Notification(title, { body, tag }));
+      } else {
+        new Notification(title, { body, tag });
+      }
+    }
+
+    function runNotificationScheduler() {
+      if (!('Notification' in window)) return;
+      const prefs = getRhythmPrefs();
+      if (!(prefs.notificationsEnabled && Notification.permission === 'granted')) return;
+
+      const now = new Date();
+      const minute = now.getHours() * 60 + now.getMinutes();
+      const wake = minutesFromTimeString(prefs.wakeTime);
+      const sleep = minutesFromTimeString(prefs.sleepTime);
+      const shemaMorning = Math.min(wake + 15, 11*60 + 45);
+      const shemaAfternoon = 15 * 60 + 30;
+      const shemaNight = Math.max(sleep - 15, 19 * 60);
+
+      if (prefs.morning && minute === wake && shouldFireNotification('morning', minute)) {
+        sendLocalNotification('Boker tov 🌅', 'Que seu dia comece com presença, gratidão e luz diante de HaShem.', 'ohr-morning');
+      }
+      if (prefs.night && minute === sleep && shouldFireNotification('night', minute)) {
+        sendLocalNotification('Laila tov 🌙', 'Descanse com o coração em paz. HaShem esteve com você hoje e continua guardando sua alma.', 'ohr-night');
+      }
+      if (prefs.shema) {
+        if (minute === shemaMorning && shouldFireNotification('shema-morning', minute)) sendLocalNotification('Shemá da manhã', 'Reserve um instante para declarar a unidade de HaShem com calma e reverência.', 'ohr-shema-morning');
+        if (minute === shemaAfternoon && shouldFireNotification('shema-afternoon', minute)) sendLocalNotification('Shemá da tarde', 'No meio do dia, volte o pensamento ao Eterno e recentre o coração.', 'ohr-shema-afternoon');
+        if (minute === shemaNight && shouldFireNotification('shema-night', minute)) sendLocalNotification('Shemá da noite', 'Ao cair da noite, una o coração e confie sua alma a HaShem.', 'ohr-shema-night');
+      }
+      if (prefs.rebbe && minute === 11*60 + 30 && shouldFireNotification('rebbe', minute)) {
+        const q = getRandomQuoteForWindow();
+        sendLocalNotification('Luz dos Rebbes ✨', `${q.text} ${q.source}`, 'ohr-rebbe');
+      }
+      if (prefs.shabbat && now.getDay() === 5) {
+        if (minute === 10*60 + 30 && shouldFireNotification('parasha', minute)) {
+          const title = document.getElementById('parashaTitle')?.textContent || 'Parashat da Semana';
+          sendLocalNotification('Parashá da semana 📜', `Hoje é um bom momento para abrir: ${title}.`, 'ohr-parasha');
+        }
+        if (minute === 16*60 && shouldFireNotification('shabbat', minute)) {
+          sendLocalNotification('Shabat se aproxima 🕯️', 'Prepare a casa, o coração e o ritmo. O Ohr relembra você da santidade que se aproxima.', 'ohr-shabbat');
+        }
+      }
+    }
 
     function getRandomQuoteForWindow() {
       const windowMs = 8 * 60 * 60 * 1000;
@@ -1371,6 +1660,7 @@
       const day = now.getDate();
       document.getElementById('psalmNumber').textContent = `Dia ${day}`;
       document.getElementById('psalmHint').textContent = `Capítulos ${tehilimCycle[day-1]}`;
+      renderQuote();
       updateShabbat(now);
       updateShabbatGuide(now);
     }
@@ -1583,11 +1873,20 @@
         });
       });
 
+      renderQuote();
+      applyRhythmPrefsToUI();
+      document.getElementById('shareQuoteBtn')?.addEventListener('click', shareCurrentQuote);
+      document.getElementById('nextQuoteBtn')?.addEventListener('click', () => { renderQuote(true); showToast('Nova frase revelada.'); });
+      document.getElementById('enableNotificationsBtn')?.addEventListener('click', requestNotificationPermission);
+      document.getElementById('saveRhythmBtn')?.addEventListener('click', saveRhythmFromUI);
+
       updateApp();
       updateParasha();
       setupInstallButton();
+      runNotificationScheduler();
       setInterval(updateApp, 60000);
       setInterval(updateParasha, 1000 * 60 * 60 * 6);
+      setInterval(runNotificationScheduler, 60000);
       const starsContainer = document.getElementById('stars');
       for(let i=0; i<40; i++) {
         const s = document.createElement('div');
