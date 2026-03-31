@@ -210,6 +210,12 @@
       50% { transform: scale(1.02); }
       100% { transform: scale(1); }
     }
+    .parasha-card{margin-top:18px}
+    .parasha-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .parasha-title{margin:10px 0 4px;font-family:'Cormorant Garamond',serif;font-size:38px;line-height:1.02;color:#f7f2e8}
+    .parasha-hebrew{margin:0;color:var(--gold);font-size:18px;letter-spacing:.04em}
+    .parasha-meta{margin-top:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--border);color:var(--text);font-size:13px;line-height:1.7}
+    .install-note{margin-top:10px;font-size:12px;line-height:1.7;color:var(--text-soft);display:none}
   
     .backdrop{animation:backdropShift 18s ease-in-out infinite alternate}
     .glow::before{animation:floatGlow 10s ease-in-out infinite}
@@ -507,8 +513,8 @@
       </div>
 
       <div class="menu-version">
-        <strong>Versão 1.2.1</strong><br>
-        Atualização grande, bonita e inovadora: frases vivas, guia de Shabat, busca moderna, som ambiente e novas áreas de profundidade espiritual.
+        <strong>Versão 1.3.0</strong><br>
+        Nova fase do Ohr: botão de instalação inteligente para a versão web e Parashat da semana atualizada automaticamente em tempo real.
       </div>
     </aside>
 
@@ -521,7 +527,7 @@
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
-        <p class="op-mark">Op Leão em Ascensão 1.2.1</p>
+        <p class="op-mark">Op Leão em Ascensão 1.3.0</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -561,6 +567,23 @@
         <div class="quote-tag">
           <span>✨</span>
           <span id="quoteTag">Chassidut</span>
+        </div>
+      </div>
+
+      <div class="card parasha-card" id="parashaCard">
+        <div class="parasha-top">
+          <p class="section-label">Parashat da Semana</p>
+          <div class="quote-tag">
+            <span>📜</span>
+            <span id="parashaStatus">Atualizando...</span>
+          </div>
+        </div>
+        <p class="parasha-title" id="parashaTitle">Carregando parashá...</p>
+        <p class="parasha-hebrew" id="parashaHebrew">פרשת השבוע</p>
+        <div class="parasha-meta" id="parashaDesc">A porção semanal da Torá aparecerá aqui automaticamente, sem atualização manual.</div>
+        <div class="top-actions" style="margin-top:14px">
+          <a class="top-icon-btn" id="parashaLink" href="https://www.hebcal.com/shabbat" target="_blank" rel="noopener">📖 Ver leitura</a>
+          <a class="top-icon-btn" href="https://www.chabad.org/parshah/default_cdo/jewish/Torah-Portion.htm" target="_blank" rel="noopener">✨ Estudar</a>
         </div>
       </div>
 
@@ -874,12 +897,13 @@
         <!-- Botão de Atualização -->
         <div id="update-btn-container" onclick="window.location.reload()">
           <strong style="color: #162235; font-size: 15px;">✨ Nova Atualização Disponível!</strong><br/>
-          <small style="color: #162235; font-weight: 600;">Clique aqui para atualizar agora</small>
+          <small style="color: #162235; font-weight: 600;">Toque aqui para atualizar agora</small>
         </div>
 
         <button id="installBtn" class="btn" style="width:100%;margin-top:20px;background:linear-gradient(135deg,var(--gold),#efc870);display:none;">
-          ⬇️ Baixar Aplicativo (Um Clique)
+          ⬇️ Instalar Ohr no celular
         </button>
+        <p id="installNote" class="install-note">Na versão web, este botão aparece automaticamente. Se o navegador não oferecer instalação em um toque, o Ohr mostrará o caminho para adicionar à tela inicial.</p>
         <div class="top-actions">
           <button class="top-icon-btn" onclick="goToScreen('carta')">✍️ Fale com HaShem</button>
           <button class="top-icon-btn" onclick="goToScreen('livros')">📚 Ver livros</button>
@@ -892,7 +916,7 @@
             <strong>✨ Propósito:</strong><br>
             Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
             oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.<br><br>
-            <strong>🛠️ Versão atual:</strong> 1.2.1
+            <strong>🛠️ Versão atual:</strong> 1.3.0
           </p>
         </div>
       </div>
@@ -1183,7 +1207,107 @@
       document.getElementById('countdownHint').textContent = `Faltam ${d} dias e ${h} horas`;
     }
 
+    let deferredInstallPrompt = null;
+
+    function isStandaloneMode() {
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true || document.referrer.startsWith('android-app://');
+    }
+
+    function getInstallInstructions() {
+      const ua = navigator.userAgent || '';
+      const isIOS = /iPad|iPhone|iPod/.test(ua);
+      const isAndroid = /Android/.test(ua);
+      if (isIOS) return 'No iPhone: toque em Compartilhar e depois em “Adicionar à Tela de Início”.';
+      if (isAndroid) return 'No Android: abra o menu do navegador e toque em “Instalar app” ou “Adicionar à tela inicial”.';
+      return 'No navegador, procure a opção “Instalar app” ou “Adicionar à tela inicial”.';
+    }
+
+    function setupInstallButton() {
+      const installBtn = document.getElementById('installBtn');
+      const installNote = document.getElementById('installNote');
+      if (!installBtn) return;
+
+      if (isStandaloneMode()) {
+        installBtn.style.display = 'none';
+        if (installNote) installNote.style.display = 'none';
+        return;
+      }
+
+      installBtn.style.display = 'block';
+      if (installNote) installNote.style.display = 'block';
+      installBtn.textContent = deferredInstallPrompt ? '⬇️ Instalar Ohr no celular' : '📲 Adicionar Ohr à tela inicial';
+      installBtn.onclick = async () => {
+        if (deferredInstallPrompt) {
+          deferredInstallPrompt.prompt();
+          try {
+            await deferredInstallPrompt.userChoice;
+          } catch (e) {}
+          deferredInstallPrompt = null;
+          setupInstallButton();
+          return;
+        }
+        alert(getInstallInstructions());
+      };
+    }
+
+    async function updateParasha() {
+      const titleEl = document.getElementById('parashaTitle');
+      const hebrewEl = document.getElementById('parashaHebrew');
+      const descEl = document.getElementById('parashaDesc');
+      const statusEl = document.getElementById('parashaStatus');
+      const linkEl = document.getElementById('parashaLink');
+      if (!titleEl || !hebrewEl || !descEl || !statusEl || !linkEl) return;
+
+      try {
+        const now = new Date();
+        const url = `https://www.hebcal.com/shabbat?cfg=json&geonameid=3448439&M=on&leyning=off&i=off&lg=s&gy=${now.getFullYear()}&gm=${now.getMonth()+1}&gd=${now.getDate()}`;
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Falha ao consultar parashá');
+        const data = await res.json();
+        let item = Array.isArray(data.items) ? data.items.find(entry => entry.category === 'parashat') : null;
+        if (!item && Array.isArray(data.items)) {
+          const memoHolder = data.items.find(entry => typeof entry.memo === 'string' && entry.memo.startsWith('Parashat '));
+          if (memoHolder) {
+            item = { title: memoHolder.memo, hebrew: 'פרשת השבוע', date: memoHolder.date, hdate: memoHolder.hdate, link: 'https://www.hebcal.com/shabbat' };
+          }
+        }
+        if (!item) throw new Error('Parashá não encontrada');
+
+        const eventDate = item.date ? new Date(item.date) : null;
+        const niceDate = eventDate && !Number.isNaN(eventDate.getTime())
+          ? new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'long' }).format(eventDate)
+          : null;
+
+        titleEl.textContent = item.title || 'Parashat da Semana';
+        hebrewEl.textContent = item.hebrew || 'פרשת השבוע';
+        descEl.textContent = [
+          item.hdate ? `Leitura desta semana • ${item.hdate}` : 'Leitura desta semana',
+          niceDate ? `Shabat de ${niceDate}` : null
+        ].filter(Boolean).join(' • ');
+        statusEl.textContent = 'Atualizada em tempo real';
+        linkEl.href = item.link || 'https://www.hebcal.com/shabbat';
+      } catch (error) {
+        titleEl.textContent = 'Parashat indisponível no momento';
+        hebrewEl.textContent = 'פרשת השבוע';
+        descEl.textContent = 'Não foi possível atualizar agora. Tente novamente em instantes.';
+        statusEl.textContent = 'Aguardando nova tentativa';
+        linkEl.href = 'https://www.hebcal.com/shabbat';
+      }
+    }
+
     function init() {
+      setupInstallButton();
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        setupInstallButton();
+      });
+      window.addEventListener('appinstalled', () => {
+        deferredInstallPrompt = null;
+        setupInstallButton();
+      });
+      window.matchMedia('(display-mode: standalone)').addEventListener?.('change', setupInstallButton);
+
       // Service Worker e Atualização
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js').then(reg => {
@@ -1278,7 +1402,10 @@
       });
 
       updateApp();
+      updateParasha();
+      setupInstallButton();
       setInterval(updateApp, 60000);
+      setInterval(updateParasha, 1000 * 60 * 60 * 6);
       const starsContainer = document.getElementById('stars');
       for(let i=0; i<40; i++) {
         const s = document.createElement('div');
