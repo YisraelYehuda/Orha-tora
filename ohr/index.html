@@ -554,10 +554,27 @@
     .assistant-cta p{margin:0; color:var(--text-soft); font-size:13px; line-height:1.7}
     .assistant-cta-badge{display:inline-flex; gap:8px; align-items:center; margin-top:10px; padding:8px 12px; border-radius:999px; background:var(--gold-soft); color:var(--gold); border:1px solid var(--border); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase}
     .assistant-cta-icon{font-size:34px; filter:drop-shadow(0 0 12px rgba(217,174,85,.34))}
-    .assistant-screen{padding-bottom:120px}
+    .assistant-screen{padding-bottom:110px}
     .oa-shell{display:flex; flex-direction:column; gap:14px}
+    .oa-input-wrap{display:none !important}
+    .oa-input-inner{backdrop-filter:blur(10px)}
+    .oa-botpress-host{position:relative; overflow:hidden}
+    .oa-botpress-host::after{
+      content:'';
+      position:absolute; inset:auto 0 0 0; height:48px;
+      background:linear-gradient(to top, rgba(10,7,5,.86), rgba(10,7,5,0));
+      pointer-events:none;
+    }
+    .bpFab, .bp-fab, #bp-web-widget-container .bpFab, #bp-web-widget-container .bp-fab{
+      display:none !important;
+      opacity:0 !important;
+      pointer-events:none !important;
+      visibility:hidden !important;
+    }
     .oa-counter{display:flex; align-items:center; gap:12px; background:linear-gradient(135deg, rgba(217,174,85,.10), rgba(255,255,255,.02)); border:1px solid var(--border); border-radius:20px; padding:14px; box-shadow:var(--shadow)}
     .oa-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#efc870);color:#132033;font-size:19px;box-shadow:0 0 14px rgba(217,174,85,.25)}
+    .oa-avatar-logo{padding:0;overflow:hidden;background:transparent;box-shadow:none}
+    .oa-avatar-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
     .oa-counter h3{margin:0 0 6px; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold)}
     .oa-counter-text{font-size:12px; color:var(--text-soft)}
     .oa-dots{display:flex; gap:6px; margin-bottom:6px}
@@ -829,7 +846,7 @@
 </style>
 
 <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/04/01/09/20260401095148-X2HNB5BV.js" defer></script>
+<script src="https://files.bpcontent.cloud/2026/04/01/09/20260401095148-X2BHS0BV.js" defer></script>
 
 </head>
 <body>
@@ -864,7 +881,7 @@
       </div>
 
       <div class="menu-version">
-        <strong>Versão 3.0.2.5</strong><br>
+        <strong>Versão 3.0.2.7</strong><br>
         Base viva do Ohr: backend de notificações conectado, ritmo espiritual sincronizado, frases compartilháveis, som contínuo e base Android-first para avisos sagrados ao longo do dia.
       </div>
     </aside>
@@ -882,7 +899,7 @@
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
-        <p class="op-mark">Op Leão em Ascensão 3.0.2.5</p>
+        <p class="op-mark">Op Leão em Ascensão 3.0.2.7</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -1251,7 +1268,7 @@
     <main class="screen assistant-screen" id="assistente">
       <div class="oa-shell">
         <div class="oa-counter">
-          <div class="oa-avatar">📜</div>
+          <div class="oa-avatar oa-avatar-logo"><img src="icon-192.png" alt="Ohr"></div>
           <div style="flex:1">
             <h3>Assistente Ohr</h3>
             <div class="oa-dots" id="oaCounterDots"></div>
@@ -1283,16 +1300,8 @@
             <div class="oa-bp-actions">
               <button class="oa-launch" id="bp-toggle-chat" onclick="ohrAssistant.openBotpress()">Abrir Assistente Ohr</button>
             </div>
-            <div class="oa-bp-note" id="oaBotpressStatus">O assistente abrirá em um painel próprio do Ohr. Você pode começar por uma pergunta frequente ou escrever a sua logo abaixo.</div>
+            <div class="oa-bp-note" id="oaBotpressStatus">O Assistente Ohr abrirá em uma janela sagrada do próprio aplicativo. Comece por uma pergunta frequente ou escreva a sua logo abaixo.</div>
           </div>
-        </div>
-
-        <div class="oa-input-wrap">
-          <div class="oa-input-inner" id="oaInputInner">
-            <textarea id="oaInput" rows="1" placeholder="Escreva sua pergunta espiritual..." oninput="ohrAssistant.autoResize(this)" onkeydown="ohrAssistant.handleKey(event)"></textarea>
-            <button class="oa-send" id="oaSendBtn" onclick="ohrAssistant.sendMessage()">🕊️</button>
-          </div>
-          <div class="oa-helper" id="oaInputHint">As respostas são orientações espirituais gerais e não substituem um Rav.</div>
         </div>
       </div>
     </main>
@@ -2569,7 +2578,7 @@
           inputInner.classList.remove('blocked');
           inputHint.textContent = 'As respostas são orientações espirituais gerais e não substituem um Rav.';
           launchBtn.disabled = false;
-          if (statusEl) statusEl.textContent = 'O assistente abrirá em um painel próprio do Ohr. Você pode começar por uma pergunta frequente ou escrever a sua logo abaixo.';
+          if (statusEl) statusEl.textContent = 'O Assistente Ohr abrirá em uma janela sagrada do próprio aplicativo. Comece por uma pergunta frequente ou escreva a sua logo abaixo.';
         }
       },
       autoResize(el) {
@@ -2582,15 +2591,39 @@
           this.sendMessage();
         }
       },
+
+      hideBotpressArtifacts() {
+        const hideSelectors = [
+          '.bpFab',
+          '.bp-fab',
+          '#bp-web-widget-container .bpFab',
+          '#bp-web-widget-container .bp-fab',
+          '[class*="bpFab"]',
+          '[class*="bp-fab"]',
+          'button[aria-label*="Botpress"]',
+          'button[title*="Botpress"]'
+        ];
+        hideSelectors.forEach(sel => {
+          document.querySelectorAll(sel).forEach(el => {
+            el.style.setProperty('display', 'none', 'important');
+            el.style.setProperty('opacity', '0', 'important');
+            el.style.setProperty('pointer-events', 'none', 'important');
+            el.style.setProperty('visibility', 'hidden', 'important');
+          });
+        });
+      },
       ensureBotpressConfigured() {
         if (!window.botpress || this.bpInitialized) return;
         this.bpInitialized = true;
+        this.hideBotpressArtifacts();
         window.botpress.on('webchat:initialized', async () => {
           try {
             window.botpress.config({
               configuration: {
                 botName: 'Assistente Ohr',
                 botDescription: 'IA espiritual do aplicativo Ohr',
+                botAvatar: 'https://yisraelyehuda.github.io/Orha-tora/ohr/icon-192.png',
+                fabImage: 'https://yisraelyehuda.github.io/Orha-tora/ohr/icon-192.png',
                 color: '#C9A84C',
                 themeMode: 'dark',
                 variant: 'soft',
@@ -2601,14 +2634,17 @@
                 storageLocation: 'localStorage'
               },
               user: {
-                name: 'Visitante do Ohr'
+                name: 'Visitante do Ohr',
+                pictureUrl: 'https://yisraelyehuda.github.io/Orha-tora/ohr/icon-192.png'
               }
             });
+            this.hideBotpressArtifacts();
             const user = await window.botpress.getUser();
             this.bpUserId = user?.id || user?.userId || null;
           } catch (e) {}
         });
         window.botpress.on('webchat:ready', async () => {
+          this.hideBotpressArtifacts();
           this.bpReady = true;
           try {
             const user = await window.botpress.getUser();
@@ -2619,6 +2655,10 @@
             this.pendingMessage = null;
             try { await window.botpress.sendMessage(queued); } catch (e) {}
           }
+        });
+        window.botpress.on('error', () => {
+          const statusEl = document.getElementById('oaBotpressStatus');
+          if (statusEl) statusEl.textContent = 'O Assistente Ohr encontrou uma instabilidade momentânea. Feche e abra novamente em alguns instantes.';
         });
         window.botpress.on('message', (message) => {
           if (this.hasActivePremium()) return;
