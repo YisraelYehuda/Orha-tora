@@ -759,6 +759,8 @@
     .oa-send:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(201,168,76,.4)}
     .oa-send:disabled{opacity:.45;cursor:not-allowed;transform:none}
     .oa-helper{text-align:center;font-size:11px;color:rgba(201,168,76,0.25);margin-top:10px;font-style:italic}
+    .oa-input-hint{display:none;text-align:center;font-size:11px;color:rgba(201,168,76,0.35);margin-top:8px;font-style:italic}
+    .oa-input-inner.blocked ~ .oa-input-hint{display:block}
     .oa-paywall{
       display:none;position:fixed;inset:0;z-index:40;background:rgba(5,3,2,0.88);backdrop-filter:blur(6px);
       align-items:flex-end;justify-content:center;
@@ -775,10 +777,10 @@
     }
     .oa-paywall-topicon{text-align:center;font-size:44px;margin-bottom:16px}
     .oa-paywall-card h3{
-      margin:0 0 8px;text-align:center;font-family:'Cinzel',serif;font-size:20px;color:#C9A84C;letter-spacing:.16em;
+      margin:0 0 12px;text-align:center;font-family:'Cinzel',serif;font-size:28px;color:#C9A84C;letter-spacing:.16em;font-weight:700;
     }
     .oa-paywall-verse{
-      text-align:center;font-style:italic;color:rgba(201,168,76,0.55);font-size:13px;margin-bottom:24px;line-height:1.6;
+      text-align:center;font-style:italic;color:rgba(201,168,76,0.60);font-size:12px;margin-bottom:26px;line-height:1.7;padding:0 8px;
     }
     .oa-paywall-list{display:grid;gap:10px;margin:18px 0 28px}
     .oa-paywall-item{
@@ -788,40 +790,51 @@
     .oa-paywall-item strong{
       display:block;color:#C9A84C;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.05em;margin-bottom:2px;
     }
-    .oa-price{text-align:center;margin-bottom:20px}
+    .oa-price{text-align:center;margin-bottom:24px}
     .oa-price strong{
-      display:block;font-family:'Cinzel',serif;font-size:46px;color:#C9A84C;line-height:1;
+      display:block;font-family:'Cinzel',serif;font-size:52px;color:#C9A84C;line-height:1;margin-bottom:4px;
     }
-    .oa-price p{margin:4px 0 0;color:rgba(201,168,76,0.45);font-style:italic;font-size:14px}
-    .oa-price small{display:block;margin-top:6px;color:rgba(201,168,76,0.30);font-size:11px}
+    .oa-price p{margin:0;color:rgba(201,168,76,0.55);font-style:italic;font-size:13px}
+    .oa-price small{display:block;margin-top:8px;color:rgba(201,168,76,0.35);font-size:11px;letter-spacing:.05em}
     .oa-paywall-actions{display:grid;gap:10px}
     .oa-primary{
-      width:100%;padding:16px;background:linear-gradient(135deg,#8B6F2E,#C9A84C);border:none;border-radius:12px;
+      width:100%;padding:16px;background:linear-gradient(135deg,#8B6F2E,#C9A84C);border:none;border-radius:14px;
       font-family:'Cinzel',serif;font-size:14px;letter-spacing:.14em;color:#0A0705;cursor:pointer;font-weight:700;
-      box-shadow:0 6px 24px rgba(201,168,76,0.22);
+      box-shadow:0 8px 28px rgba(201,168,76,0.28);transition:all .2s ease;
+    }
+    .oa-primary:hover{
+      transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,0.35);
     }
     .oa-secondary{
-      width:100%;padding:13px;background:transparent;border:1px solid rgba(201,168,76,0.25);border-radius:12px;
-      font-family:'Crimson Pro',serif;font-size:14px;color:rgba(201,168,76,0.5);cursor:pointer;font-style:italic;
+      width:100%;padding:13px;background:transparent;border:1px solid rgba(201,168,76,0.30);border-radius:12px;
+      font-family:'Crimson Pro',serif;font-size:13px;color:rgba(201,168,76,0.60);cursor:pointer;font-style:italic;transition:all .2s ease;
+    }
+    .oa-secondary:hover{
+      background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.45);
     }
     .oa-key-area{
-      display:none;margin-top:16px;padding:16px;background:rgba(201,168,76,0.05);
-      border:1px solid rgba(201,168,76,0.2);border-radius:10px;
+      display:none;margin-top:18px;padding:18px;background:rgba(201,168,76,0.06);
+      border:1px solid rgba(201,168,76,0.25);border-radius:12px;
     }
     .oa-key-area.visible{display:block}
-    .oa-key-area p{font-size:13px;color:rgba(201,168,76,0.6);font-style:italic;margin:0 0 10px;text-align:center}
+    .oa-key-area p{font-size:12px;color:rgba(201,168,76,0.65);font-style:italic;margin:0 0 12px;text-align:center;letter-spacing:.02em}
     .oa-key-row{display:flex;gap:8px}
     .oa-key-row input{
-      flex:1;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:8px;
-      padding:10px 14px;color:#F5EDD6;font-family:'Crimson Pro',serif;font-size:14px;outline:none;
+      flex:1;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.28);border-radius:10px;
+      padding:11px 14px;color:#F5EDD6;font-family:'Crimson Pro',serif;font-size:13px;outline:none;transition:all .2s ease;
     }
-    .oa-key-row input::placeholder{color:rgba(201,168,76,0.3)}
+    .oa-key-row input:focus{
+      background:rgba(201,168,76,0.12);border-color:rgba(201,168,76,0.45);
+    }
+    .oa-key-row input::placeholder{color:rgba(201,168,76,0.35)}
     .oa-key-btn{
-      padding:10px 16px;background:#8B6F2E;border:none;border-radius:8px;color:#F5EDD6;
-      font-family:'Cinzel',serif;font-size:12px;cursor:pointer;letter-spacing:.08em;
+      padding:11px 18px;background:linear-gradient(135deg,#8B6F2E,#A0844F);border:none;border-radius:10px;color:#F5EDD6;
+      font-family:'Cinzel',serif;font-size:12px;cursor:pointer;letter-spacing:.08em;font-weight:600;transition:all .2s ease;
     }
-    .oa-key-btn:hover{background:#C9A84C;color:#0A0705}
-    .oa-key-error{font-size:12px;color:#C0392B;text-align:center;margin-top:8px;display:none}
+    .oa-key-btn:hover{
+      background:linear-gradient(135deg,#C9A84C,#D4B86A);color:#0A0705;transform:translateY(-1px);
+    }
+    .oa-key-error{font-size:11px;color:#E74C3C;text-align:center;margin-top:10px;display:none;letter-spacing:.02em}
     .oa-key-error.visible{display:block}
     @media (max-width:420px){
       .oa-paywall-card{padding-inline:18px}
@@ -1289,6 +1302,14 @@
         </div>
 
         <div class="oa-ornament">✦ ✦ ✦</div>
+
+        <div class="oa-input-wrap">
+          <div class="oa-input-inner" id="oaInputInner">
+            <textarea id="oaInput" placeholder="Faça sua pergunta espiritual..." onkeydown="ohrAssistant.handleKey(event)" oninput="ohrAssistant.autoResize(this)"></textarea>
+            <button class="oa-send" id="oaSendBtn" onclick="ohrAssistant.sendMessage()">✉️</button>
+          </div>
+          <div class="oa-input-hint" id="oaInputHint">Toque em Abrir Assistente Ohr para conversar.</div>
+        </div>
 
         <div class="oa-chat" id="oaChatArea">
           <div class="oa-botpress-host">

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ohr-cache-v3-0-2-0';
+const CACHE_NAME = 'ohr-cache-v3-0-3-0';
 const CORE_ASSETS = [
   './',
   './index.html',
