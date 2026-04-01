@@ -644,7 +644,7 @@
       </div>
 
       <div class="menu-version">
-        <strong>Versão 3.0.2.2</strong><br>
+        <strong>Versão 3.0.2.1</strong><br>
         Base viva do Ohr: backend de notificações conectado, ritmo espiritual sincronizado, frases compartilháveis, som contínuo e base Android-first para avisos sagrados ao longo do dia.
       </div>
     </aside>
@@ -662,7 +662,7 @@
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
-        <p class="op-mark">Op Leão em Ascensão 3.0.2.2</p>
+        <p class="op-mark">Op Leão em Ascensão 3.0.1.2</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -1997,15 +1997,10 @@
       const icon = document.getElementById('ambientPillIcon');
       const text = document.getElementById('ambientPillText');
       if (!pill || !icon || !text) return;
-      const hasRain = !!rainNodes;
-      const hasWind = !!windNodes;
-      const isActive = hasRain || hasWind;
+      const isActive = ambientMode === 'rain' || ambientMode === 'wind';
       pill.classList.toggle('show', isActive);
       if (!isActive) return;
-      if (hasRain && hasWind) {
-        icon.textContent = '🌧️🍃';
-        text.textContent = 'Chuva e vento ativos';
-      } else if (hasRain) {
+      if (ambientMode === 'rain') {
         icon.textContent = '🌧️';
         text.textContent = 'Chuva sagrada ativa';
       } else {
@@ -2062,7 +2057,7 @@
       source.start();
 
       rainNodes = { source, gain };
-      ambientMode = (windNodes ? 'rain+wind' : 'rain');
+      ambientMode = 'rain';
       persistAmbientState();
       updateAmbientPill();
       document.getElementById('rainBtn')?.classList.add('active');
@@ -2071,7 +2066,7 @@
     function stopRain() {
       stopNodes(rainNodes);
       rainNodes = null;
-      ambientMode = windNodes ? 'wind' : 'none';
+      if (ambientMode === 'rain') ambientMode = 'none';
       persistAmbientState();
       updateAmbientPill();
       document.getElementById('rainBtn')?.classList.remove('active');
@@ -2113,7 +2108,7 @@
       lfo.start();
 
       windNodes = { source, source2, gain, lfo };
-      ambientMode = (rainNodes ? 'rain+wind' : 'wind');
+      ambientMode = 'wind';
       persistAmbientState();
       updateAmbientPill();
       document.getElementById('windBtn')?.classList.add('active');
@@ -2125,7 +2120,7 @@
       }
       stopNodes(windNodes);
       windNodes = null;
-      ambientMode = rainNodes ? 'rain' : 'none';
+      if (ambientMode === 'wind') ambientMode = 'none';
       persistAmbientState();
       updateAmbientPill();
       document.getElementById('windBtn')?.classList.remove('active');
@@ -2160,6 +2155,7 @@
       if (rainNodes) {
         stopRain();
       } else {
+        stopWind();
         setupRain();
       }
     };
@@ -2168,6 +2164,7 @@
       if (windNodes) {
         stopWind();
       } else {
+        stopRain();
         setupWind();
       }
     };
@@ -2188,8 +2185,8 @@
       if (ambientMode === 'none') return;
       try {
         ensureAmbientContext();
-        if (ambientMode === 'rain' || ambientMode === 'rain+wind') setupRain();
-        if (ambientMode === 'wind' || ambientMode === 'rain+wind') setupWind();
+        if (ambientMode === 'rain') setupRain();
+        if (ambientMode === 'wind') setupWind();
       } catch (e) {}
     }
 
