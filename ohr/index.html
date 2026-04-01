@@ -258,7 +258,7 @@
     
     /* Update Button Styles */
     #update-btn-container {
-      display: none;
+      display: block;
       margin-top: 20px;
       padding: 16px;
       background: linear-gradient(135deg, var(--gold), #efc870);
@@ -1300,7 +1300,7 @@
             <div class="oa-bp-actions">
               <button class="oa-launch" id="bp-toggle-chat" onclick="ohrAssistant.openBotpress()">Abrir Assistente Ohr</button>
             </div>
-            <div class="oa-bp-note" id="oaBotpressStatus">O Assistente Ohr abrirá em uma janela sagrada do próprio aplicativo. Comece por uma pergunta frequente ou escreva a sua logo abaixo.</div>
+            <div class="oa-bp-note" id="oaBotpressStatus">O Assistente Ohr abrirá em uma janela sagrada do próprio aplicativo. Comece por uma pergunta frequente ou toque para conversar.</div>
           </div>
         </div>
       </div>
@@ -1419,7 +1419,7 @@
         </p>
         
         <!-- Botão de Atualização -->
-        <div id="update-btn-container" onclick="window.location.reload()">
+        <div id="update-btn-container" onclick="forceOhrUpdate()">
           <strong style="color: #162235; font-size: 15px;">✨ Nova Atualização Disponível!</strong><br/>
           <small style="color: #162235; font-weight: 600;">Toque aqui para atualizar agora</small>
         </div>
@@ -1440,7 +1440,7 @@
             <strong>✨ Propósito:</strong><br>
             Ohr é um refúgio para aqueles que buscam se reconectar com a espiritualidade judaica, 
             oferecendo orações, reflexões e um espaço para o hitbodedut — a conversa sincera com Adonai.<br><br>
-            <strong>🛠️ Versão atual:</strong> 3.0.1.2
+            <strong>🛠️ Versão atual:</strong> 3.0.2.7
           </p>
         </div>
       </div>
@@ -2490,6 +2490,30 @@
 
     updateBackVisibility();
 
+    async function forceOhrUpdate() {
+      const btn = document.getElementById('update-btn-container');
+      if (btn) btn.style.opacity = '0.7';
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const reg of regs) {
+            try { await reg.unregister(); } catch (e) {}
+          }
+        }
+        if (window.caches && caches.keys) {
+          const keys = await caches.keys();
+          for (const key of keys) {
+            try { await caches.delete(key); } catch (e) {}
+          }
+        }
+        const next = new URL(window.location.href);
+        next.searchParams.set('update', Date.now().toString());
+        window.location.replace(next.toString());
+      } catch (err) {
+        window.location.reload();
+      }
+    }
+
 
     const OHR_ASSISTANT_CONFIG = {
       maxFree: 5,
@@ -2507,6 +2531,7 @@
       bpInitialized: false,
       bpUserId: null,
       seenUserMessages: new Set(),
+      seenAssistantMessages: new Set(),
       pendingMessage: null,
       getTodayKey() {
         return OHR_ASSISTANT_CONFIG.storageKeyPrefix + new Date().toISOString().slice(0,10);
@@ -2576,9 +2601,9 @@
         } else {
           text.textContent = `${remaining} pergunta${remaining !== 1 ? 's' : ''} restante${remaining !== 1 ? 's' : ''} hoje`;
           inputInner.classList.remove('blocked');
-          inputHint.textContent = 'As respostas são orientações espirituais gerais e não substituem um Rav.';
+          inputHint.textContent = 'Toque em Abrir Assistente Ohr para conversar.';
           launchBtn.disabled = false;
-          if (statusEl) statusEl.textContent = 'O Assistente Ohr abrirá em uma janela sagrada do próprio aplicativo. Comece por uma pergunta frequente ou escreva a sua logo abaixo.';
+          if (statusEl) statusEl.textContent = 'O Assistente Ohr abrirá em uma janela sagrada do próprio aplicativo. Comece por uma pergunta frequente ou toque para conversar.';
         }
       },
       autoResize(el) {
@@ -2664,18 +2689,33 @@
           if (this.hasActivePremium()) return;
           const authorId = message?.authorId || message?.userId || message?.sender?.id || null;
           const direction = message?.direction || message?.type || null;
+          const textPayload = message?.payload?.text || message?.text || message?.preview || '';
+          if (!textPayload || typeof textPayload !== 'string') return;
+
           const isUserMessage = (!!this.bpUserId && !!authorId && authorId === this.bpUserId) || direction === 'outgoing' || direction === 'user' || message?.sentByUser === true;
-          if (!isUserMessage) return;
-          const msgId = message?.id || `${authorId || 'u'}:${message?.payload?.text || message?.text || message?.preview || JSON.stringify(message).slice(0,60)}`;
-          if (this.seenUserMessages.has(msgId)) return;
-          this.seenUserMessages.add(msgId);
-          this.incrementCount();
+          if (isUserMessage) return;
+
+          const normalized = textPayload.trim();
+          if (!normalized) return;
+          const msgId = message?.id || `${authorId || 'assistant'}:${normalized.slice(0,120)}`;
+          if (this.seenAssistantMessages.has(msgId)) return;
+          this.seenAssistantMessages.add(msgId);
+
+          const lower = normalized.toLowerCase();
+          const ignorable = [
+            'olá! sou o assistente ohr',
+            'shalom! sou o assistente ohr',
+            'como posso te ajudar hoje?'
+          ];
+          if (ignorable.some(item => lower.includes(item))) return;
+
+          const used = this.incrementCount();
           this.updateCounterUI();
-          if (this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
+          if (used >= OHR_ASSISTANT_CONFIG.maxFree) {
             setTimeout(() => {
               try { window.botpress.close(); } catch (e) {}
               this.showPaywall();
-            }, 180);
+            }, 220);
           }
         });
       },
