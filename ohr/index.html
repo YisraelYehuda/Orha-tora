@@ -644,8 +644,8 @@
       </div>
 
       <div class="menu-version">
-        <strong>Versão 3.0.2.0</strong><br>
-        Base viva do Ohr: navegação refinada, ritmo espiritual personalizado, frases compartilháveis, som contínuo e notificações Android fortalecidas com estrutura push integrada ao backend.
+        <strong>Versão 3.0.2.1</strong><br>
+        Base viva do Ohr: backend de notificações conectado, ritmo espiritual sincronizado, frases compartilháveis, som contínuo e base Android-first para avisos sagrados ao longo do dia.
       </div>
     </aside>
 
@@ -1163,13 +1163,6 @@
             <span id="notificationStatusText">Notificações ainda não ativadas.</span>
             <span id="lastPingPreview">Aguardando configuração</span>
           </div>
-          <div class="notice-box" id="pushReadyBox">
-            <strong>Android:</strong> instale o Ohr na tela inicial e ative as notificações para a melhor experiência. <strong>iPhone:</strong> o Ohr tenta respeitar as permissões do sistema, mas o suporte pode variar conforme o Safari e a versão do iOS.
-          </div>
-          <div class="top-actions" style="margin-top:10px">
-            <button class="top-icon-btn" id="testNotificationBtn" type="button">🧪 Testar notificação</button>
-            <button class="top-icon-btn" id="installHintBtn" type="button">📲 Instalar Ohr</button>
-          </div>
         </div>
       </div>
     </main>
@@ -1413,6 +1406,10 @@
       prefs.notificationsEnabled = permission === 'granted';
       saveRhythmPrefs(prefs);
       updateNotificationStatus();
+      if (permission === 'granted') {
+        await syncRhythmPrefsToBackend(prefs);
+        await tryRegisterPushSubscription();
+      }
       showToast(permission === 'granted' ? 'Notificações ativadas no Ohr.' : 'Permissão de notificação não concedida.');
       return permission === 'granted';
     }
@@ -1422,11 +1419,87 @@
       const enabled = prefs.notificationsEnabled && Notification.permission === 'granted';
       const status = document.getElementById('notificationStatusText');
       const preview = document.getElementById('lastPingPreview');
-      if (status) status.textContent = enabled ? 'Notificações locais ativas neste aparelho.' : 'Notificações ainda não ativadas.';
+      if (status) status.textContent = enabled ? 'Notificações do Ohr ativas neste aparelho. Android tende a funcionar melhor.' : 'Notificações ainda não ativadas.';
       if (preview) preview.textContent = `Despertar ${prefs.wakeTime} · Dormir ${prefs.sleepTime}`;
     }
 
-    function saveRhythmFromUI() {
+
+    async function postToNotificationBackend(path, payload) {
+      try {
+        const res = await fetch(`${OHR_NOTIFICATION_CONFIG.backendUrl}${path}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload || {})
+        });
+        const data = await res.json().catch(() => ({}));
+        return { ok: res.ok, status: res.status, data };
+      } catch (error) {
+        return { ok: false, status: 0, data: { error: error?.message || 'Falha de conexão com o backend de notificações.' } };
+      }
+    }
+
+    async function syncRhythmPrefsToBackend(prefs) {
+      const clientId = getOrCreateClientId();
+      return postToNotificationBackend('/prefs', {
+        clientId,
+        wakeTime: prefs.wakeTime,
+        sleepTime: prefs.sleepTime,
+        morning: !!prefs.morning,
+        night: !!prefs.night,
+        shema: !!prefs.shema,
+        rebbe: !!prefs.rebbe,
+        shabbat: !!prefs.shabbat,
+        notificationsEnabled: !!prefs.notificationsEnabled,
+        platform: /android/i.test(navigator.userAgent) ? 'android' : /iphone|ipad|ipod/i.test(navigator.userAgent) ? 'ios' : 'web'
+      });
+    }
+
+    function getOrCreateClientId() {
+      let id = localStorage.getItem('ohrClientId');
+      if (!id) {
+        id = 'ohr-' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+        localStorage.setItem('ohrClientId', id);
+      }
+      return id;
+    }
+
+    async function tryRegisterPushSubscription() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        return { ok: false, reason: 'push_unsupported' };
+      }
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        if (sub) {
+          await postToNotificationBackend('/subscribe', {
+            clientId: getOrCreateClientId(),
+            subscription: sub,
+          });
+          return { ok: true, existing: true };
+        }
+        return { ok: false, reason: 'subscription_missing' };
+      } catch (error) {
+        return { ok: false, reason: error?.message || 'subscription_error' };
+      }
+    }
+
+    async function testNotificationBridge() {
+      const prefs = getRhythmPrefs();
+      const backend = await postToNotificationBackend('/test-notification', {
+        clientId: getOrCreateClientId(),
+        prefs,
+        source: 'ohr-app'
+      });
+      if (backend.ok) {
+        showToast('O Ohr enviou um teste ao backend de notificações.');
+        return true;
+      }
+      sendLocalNotification('Teste do Ohr 🔔', 'Seu aparelho está pronto para receber lembretes sagrados do Ohr.', 'ohr-test');
+      showToast('Teste local executado. O push real será refinado conforme o backend avançar.');
+      return false;
+    }
+
+    async function saveRhythmFromUI() {
       const prefs = getRhythmPrefs();
       prefs.wakeTime = document.getElementById('wakeTime')?.value || prefs.wakeTime;
       prefs.sleepTime = document.getElementById('sleepTime')?.value || prefs.sleepTime;
@@ -1437,7 +1510,9 @@
       prefs.shabbat = !!document.getElementById('toggleShabbat')?.checked;
       saveRhythmPrefs(prefs);
       updateNotificationStatus();
-      showToast('Seu ritmo sagrado foi salvo.');
+      const syncResult = await syncRhythmPrefsToBackend(prefs);
+      if (syncResult.ok) showToast('Seu ritmo sagrado foi salvo e sincronizado com o Ohr.');
+      else showToast('Seu ritmo sagrado foi salvo neste aparelho. A sincronização externa será refinada em seguida.');
     }
 
     function minutesFromTimeString(timeStr) {
@@ -1885,9 +1960,8 @@
       document.getElementById('shareQuoteBtn')?.addEventListener('click', shareCurrentQuote);
       document.getElementById('nextQuoteBtn')?.addEventListener('click', () => { renderQuote(true); showToast('Nova frase revelada.'); });
       document.getElementById('enableNotificationsBtn')?.addEventListener('click', requestNotificationPermission);
-      document.getElementById('saveRhythmBtn')?.addEventListener('click', saveRhythmFromUI);
-      document.getElementById('testNotificationBtn')?.addEventListener('click', testNotificationFlow);
-      document.getElementById('installHintBtn')?.addEventListener('click', openInstallHint);
+      document.getElementById('saveRhythmBtn')?.addEventListener('click', () => { saveRhythmFromUI(); });
+      document.getElementById('testNotificationsBtn')?.addEventListener('click', testNotificationBridge);
 
       updateApp();
       updateParasha();
@@ -2446,201 +2520,6 @@
       }
     };
 
-
-    const OHR_NOTIFICATION_CONFIG = {
-      backendUrl: OHR_ASSISTANT_CONFIG.backendUrl,
-      deviceKey: 'ohrDeviceId',
-      pushStateKey: 'ohrPushState'
-    };
-
-    function getOhrDeviceId() {
-      let id = localStorage.getItem(OHR_NOTIFICATION_CONFIG.deviceKey);
-      if (!id) {
-        id = 'ohr-' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-        localStorage.setItem(OHR_NOTIFICATION_CONFIG.deviceKey, id);
-      }
-      return id;
-    }
-
-    function getPushState() {
-      try {
-        return JSON.parse(localStorage.getItem(OHR_NOTIFICATION_CONFIG.pushStateKey) || '{}');
-      } catch (e) {
-        return {};
-      }
-    }
-
-    function savePushState(state) {
-      localStorage.setItem(OHR_NOTIFICATION_CONFIG.pushStateKey, JSON.stringify(state || {}));
-    }
-
-    function urlBase64ToUint8Array(base64String) {
-      const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-      const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-      const rawData = atob(base64);
-      return Uint8Array.from([...rawData].map(ch => ch.charCodeAt(0)));
-    }
-
-    async function fetchPushConfig() {
-      try {
-        const res = await fetch(`${OHR_NOTIFICATION_CONFIG.backendUrl}/push/config`);
-        if (!res.ok) return { enabled: false };
-        return await res.json();
-      } catch (e) {
-        return { enabled: false };
-      }
-    }
-
-    async function syncRhythmPrefsToBackend(prefs) {
-      try {
-        await fetch(`${OHR_NOTIFICATION_CONFIG.backendUrl}/push/preferences`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            deviceId: getOhrDeviceId(),
-            prefs,
-            ua: navigator.userAgent || '',
-            platform: navigator.platform || '',
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || ''
-          })
-        });
-      } catch (e) {}
-    }
-
-    async function registerPushSubscription() {
-      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-        return { ok: false, reason: 'unsupported' };
-      }
-
-      const config = await fetchPushConfig();
-      if (!(config && config.enabled && config.publicKey)) {
-        return { ok: false, reason: 'backend-not-ready' };
-      }
-
-      const reg = await navigator.serviceWorker.ready;
-      let sub = await reg.pushManager.getSubscription();
-      if (!sub) {
-        sub = await reg.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(config.publicKey)
-        });
-      }
-
-      const prefs = getRhythmPrefs();
-      const res = await fetch(`${OHR_NOTIFICATION_CONFIG.backendUrl}/push/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          deviceId: getOhrDeviceId(),
-          subscription: sub,
-          prefs,
-          ua: navigator.userAgent || '',
-          platform: navigator.platform || '',
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || ''
-        })
-      });
-
-      if (!res.ok) {
-        return { ok: false, reason: 'subscribe-failed' };
-      }
-
-      savePushState({
-        subscribedAt: new Date().toISOString(),
-        endpoint: sub.endpoint,
-        mode: 'push'
-      });
-
-      return { ok: true, mode: 'push' };
-    }
-
-    async function trySyncNotificationMode() {
-      const prefs = getRhythmPrefs();
-      if (!(prefs.notificationsEnabled && Notification.permission === 'granted')) return;
-      const pushResult = await registerPushSubscription();
-      if (pushResult.ok) {
-        showToast('Notificações do Ohr fortalecidas para Android neste aparelho.');
-      } else if (pushResult.reason === 'backend-not-ready') {
-        showToast('Notificações locais ativas. O push real será ligado assim que o backend estiver pronto.');
-      }
-      await syncRhythmPrefsToBackend(prefs);
-      updateNotificationStatus();
-    }
-
-    async function requestNotificationPermission() {
-      if (!('Notification' in window)) {
-        showToast('Seu navegador não suporta notificações.');
-        return false;
-      }
-      const permission = await Notification.requestPermission();
-      const prefs = getRhythmPrefs();
-      prefs.notificationsEnabled = permission === 'granted';
-      saveRhythmPrefs(prefs);
-      if (permission === 'granted') {
-        await trySyncNotificationMode();
-      } else {
-        updateNotificationStatus();
-      }
-      showToast(permission === 'granted' ? 'Permissão concedida. O Ohr está preparando suas notificações.' : 'Permissão de notificação não concedida.');
-      return permission === 'granted';
-    }
-
-    function updateNotificationStatus() {
-      const prefs = getRhythmPrefs();
-      const enabled = ('Notification' in window) && prefs.notificationsEnabled && Notification.permission === 'granted';
-      const status = document.getElementById('notificationStatusText');
-      const preview = document.getElementById('lastPingPreview');
-      const pushState = getPushState();
-      if (status) {
-        status.textContent = !enabled
-          ? 'Notificações ainda não ativadas.'
-          : (pushState.mode === 'push'
-              ? 'Notificações Android fortalecidas via service worker.'
-              : 'Notificações locais ativas neste aparelho.');
-      }
-      if (preview) preview.textContent = `Despertar ${prefs.wakeTime} · Dormir ${prefs.sleepTime}`;
-      const box = document.getElementById('pushReadyBox');
-      if (box) {
-        box.innerHTML = enabled
-          ? `<strong>Status:</strong> ${pushState.mode === 'push' ? 'push inscrito no backend do Ohr.' : 'modo local ativo; push real entra quando o backend receber a camada final.'}`
-          : '<strong>Android:</strong> instale o Ohr na tela inicial e ative as notificações para a melhor experiência. <strong>iPhone:</strong> o Ohr tenta respeitar as permissões do sistema, mas o suporte pode variar conforme o Safari e a versão do iOS.';
-      }
-    }
-
-    async function saveRhythmFromUI() {
-      const prefs = getRhythmPrefs();
-      prefs.wakeTime = document.getElementById('wakeTime')?.value || prefs.wakeTime;
-      prefs.sleepTime = document.getElementById('sleepTime')?.value || prefs.sleepTime;
-      prefs.morning = !!document.getElementById('toggleMorning')?.checked;
-      prefs.night = !!document.getElementById('toggleNight')?.checked;
-      prefs.shema = !!document.getElementById('toggleShema')?.checked;
-      prefs.rebbe = !!document.getElementById('toggleRebbe')?.checked;
-      prefs.shabbat = !!document.getElementById('toggleShabbat')?.checked;
-      saveRhythmPrefs(prefs);
-      await syncRhythmPrefsToBackend(prefs);
-      updateNotificationStatus();
-      showToast('Seu ritmo sagrado foi salvo.');
-    }
-
-    async function testNotificationFlow() {
-      const ok = await requestNotificationPermission();
-      if (!ok) return;
-      sendLocalNotification('Teste do Ohr 🔔', 'Se esta mensagem apareceu, a base local do Ohr está viva neste aparelho.', 'ohr-test');
-      try {
-        await fetch(`${OHR_NOTIFICATION_CONFIG.backendUrl}/push/test`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ deviceId: getOhrDeviceId() })
-        });
-      } catch (e) {}
-    }
-
-    function openInstallHint() {
-      if (deferredInstallPrompt) {
-        deferredInstallPrompt.prompt();
-      } else {
-        showToast('No Android, abra o menu do navegador e escolha "Adicionar à tela inicial".');
-      }
-    }
 
     ohrAssistant.init();
     init();
