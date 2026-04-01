@@ -554,7 +554,7 @@
     .assistant-cta p{margin:0; color:var(--text-soft); font-size:13px; line-height:1.7}
     .assistant-cta-badge{display:inline-flex; gap:8px; align-items:center; margin-top:10px; padding:8px 12px; border-radius:999px; background:var(--gold-soft); color:var(--gold); border:1px solid var(--border); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase}
     .assistant-cta-icon{font-size:34px; filter:drop-shadow(0 0 12px rgba(217,174,85,.34))}
-    .assistant-screen{padding-bottom:180px}
+    .assistant-screen{padding-bottom:120px}
     .oa-shell{display:flex; flex-direction:column; gap:14px}
     .oa-counter{display:flex; align-items:center; gap:12px; background:linear-gradient(135deg, rgba(217,174,85,.10), rgba(255,255,255,.02)); border:1px solid var(--border); border-radius:20px; padding:14px; box-shadow:var(--shadow)}
     .oa-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#efc870);color:#132033;font-size:19px;box-shadow:0 0 14px rgba(217,174,85,.25)}
@@ -582,16 +582,7 @@
     .oa-typing-box span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:oaBounce 1.2s ease-in-out infinite}
     .oa-typing-box span:nth-child(2){animation-delay:.2s}.oa-typing-box span:nth-child(3){animation-delay:.4s}
     @keyframes oaBounce{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-5px);opacity:1}}
-    .oa-input-wrap{
-      position:fixed;
-      bottom:72px;
-      left:50%;
-      transform:translateX(-50%);
-      width:min(100%, 460px);
-      background:linear-gradient(to top, rgba(10,7,5,.98) 85%, transparent);
-      padding:14px 16px 10px;
-      z-index:15;
-    }
+    .oa-input-wrap{position:relative; bottom:auto; margin-top:14px; padding-top:0; background:transparent; z-index:1}
     .oa-input-inner{display:flex; gap:10px; padding:12px; border-radius:20px; background:var(--surface-strong); border:1px solid var(--border); box-shadow:var(--shadow)}
     .oa-input-inner.blocked{opacity:.45; pointer-events:none}
     #oaInput{flex:1; border:none; outline:none; resize:none; background:transparent; color:var(--text); min-height:26px; max-height:110px; font:inherit; line-height:1.6}
@@ -621,7 +612,7 @@
 
   
     /* Assistente Ohr — visual preservado do layout dedicado */
-    .assistant-screen{padding-bottom:180px}
+    .assistant-screen{padding-bottom:120px}
     .oa-shell{
       display:flex;flex-direction:column;min-height:calc(100dvh - 180px);gap:18px;
     }
@@ -729,14 +720,8 @@
     .oa-typing-box span:nth-child(3){animation-delay:.4s}
     @keyframes oaBounce{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-5px);opacity:1}}
     .oa-input-wrap{
-      position:fixed;
-      bottom:72px; /* Ajustado para ficar acima da .nav */
-      left:50%;
-      transform:translateX(-50%);
-      width:min(100%, 460px);
-      background:linear-gradient(to top, rgba(10,7,5,.98) 85%, transparent);
-      padding:14px 16px 10px;
-      z-index:15;
+      position:sticky;bottom:0;background:linear-gradient(to top, rgba(10,7,5,.98) 78%, transparent);
+      padding-top:14px;
     }
     .oa-input-inner{
       display:flex;gap:10px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);
@@ -828,7 +813,24 @@
       .oa-bubble{max-width:86%}
     }
 
-  </style>
+  
+    .oa-botpress-host{background:linear-gradient(180deg,rgba(15,12,8,.78),rgba(10,8,6,.92));border:1px solid rgba(201,168,76,.18);border-radius:26px;padding:22px 18px;box-shadow:0 20px 50px rgba(0,0,0,.24)}
+    .oa-bp-intro{padding:4px 2px 18px;text-align:center}
+    .oa-bp-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,.55);font-family:'Cinzel',serif;margin-bottom:8px}
+    .oa-bp-intro h3{margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1.02;color:#f5edd6}
+    .oa-bp-intro p{margin:0;color:rgba(245,237,214,.76);font-size:17px;line-height:1.58}
+    .oa-bp-actions{display:flex;justify-content:center;padding-bottom:10px}
+    .oa-launch{border:none;border-radius:18px;padding:16px 22px;min-width:260px;background:linear-gradient(135deg,var(--gold),#efc870);color:#162235;font-family:'Cinzel',serif;font-size:15px;font-weight:700;letter-spacing:1.5px;box-shadow:0 18px 40px rgba(201,168,76,.26);cursor:pointer}
+    .oa-launch:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+    .oa-bp-note{margin-top:10px;text-align:center;font-size:13px;color:rgba(245,237,214,.52);line-height:1.5}
+    .oa-chat{min-height:260px}
+    iframe[title="Botpress"]{border:none!important;border-radius:28px!important;box-shadow:0 30px 70px rgba(0,0,0,.38)!important}
+
+</style>
+
+<script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2026/04/01/09/20260401095148-X2HNB5BV.js" defer></script>
+
 </head>
 <body>
   <div class="backdrop"></div>
@@ -862,7 +864,7 @@
       </div>
 
       <div class="menu-version">
-        <strong>Versão 3.0.2.3</strong><br>
+        <strong>Versão 3.0.2.5</strong><br>
         Base viva do Ohr: backend de notificações conectado, ritmo espiritual sincronizado, frases compartilháveis, som contínuo e base Android-first para avisos sagrados ao longo do dia.
       </div>
     </aside>
@@ -880,7 +882,7 @@
       <div class="header">
         <p class="eyebrow">Shalom, Yisrael Yehuda</p>
         <h1 class="title">Ohr</h1>
-        <p class="op-mark">Op Leão em Ascensão 3.0.2.3</p>
+        <p class="op-mark">Op Leão em Ascensão 3.0.2.5</p>
         <p class="subtitle">Conexão diária com HaShem</p>
       </div>
 
@@ -1272,9 +1274,16 @@
         <div class="oa-ornament">✦ ✦ ✦</div>
 
         <div class="oa-chat" id="oaChatArea">
-          <div class="oa-welcome" id="oaWelcome">
-            <div style="font-size:16px;color:#C9A84C;margin-bottom:8px">“כִּי נֵר מִצְוָה וְתוֹרָה אוֹר”</div>
-            <div>Pois o mandamento é uma lamparina e a Torá é luz. Faça sua pergunta com sinceridade. O Assistente Ohr responde com base nas raízes que você definiu para o projeto.</div>
+          <div class="oa-botpress-host">
+            <div class="oa-bp-intro">
+              <div class="oa-bp-eyebrow">Assistente Ohr</div>
+              <h3>IA espiritual do aplicativo Ohr</h3>
+              <p>Converse com o Assistente Ohr com linguagem humana, reverência judaica e identidade preservada dentro do universo do Ohr.</p>
+            </div>
+            <div class="oa-bp-actions">
+              <button class="oa-launch" id="bp-toggle-chat" onclick="ohrAssistant.openBotpress()">Abrir Assistente Ohr</button>
+            </div>
+            <div class="oa-bp-note" id="oaBotpressStatus">O assistente abrirá em um painel próprio do Ohr. Você pode começar por uma pergunta frequente ou escrever a sua logo abaixo.</div>
           </div>
         </div>
 
@@ -2484,8 +2493,12 @@
     };
 
     const ohrAssistant = {
-      history: [],
       isLoading: false,
+      bpReady: false,
+      bpInitialized: false,
+      bpUserId: null,
+      seenUserMessages: new Set(),
+      pendingMessage: null,
       getTodayKey() {
         return OHR_ASSISTANT_CONFIG.storageKeyPrefix + new Date().toISOString().slice(0,10);
       },
@@ -2514,16 +2527,15 @@
       savePremiumData(data) {
         localStorage.setItem(OHR_ASSISTANT_CONFIG.premiumStorageKey, JSON.stringify(data));
       },
-      clearPremiumData() {
-        localStorage.removeItem(OHR_ASSISTANT_CONFIG.premiumStorageKey);
-      },
       updateCounterUI() {
         const dots = document.getElementById('oaCounterDots');
         const text = document.getElementById('oaCounterText');
         const badge = document.getElementById('oaPremiumBadge');
         const inputInner = document.getElementById('oaInputInner');
         const inputHint = document.getElementById('oaInputHint');
-        if (!dots || !text || !badge || !inputInner || !inputHint) return;
+        const launchBtn = document.getElementById('bp-toggle-chat');
+        const statusEl = document.getElementById('oaBotpressStatus');
+        if (!dots || !text || !badge || !inputInner || !inputHint || !launchBtn) return;
 
         if (this.hasActivePremium()) {
           const data = this.getPremiumData();
@@ -2532,6 +2544,8 @@
           text.textContent = data?.type === 'creator' ? 'Modo criador ativo — acesso ilimitado' : 'Ohr Premium ativo neste aparelho';
           inputInner.classList.remove('blocked');
           inputHint.textContent = 'Ohr Premium ativo — perguntas ilimitadas.';
+          launchBtn.disabled = false;
+          if (statusEl) statusEl.textContent = 'O Assistente Ohr está pronto para conversar livremente neste aparelho.';
           return;
         }
 
@@ -2548,10 +2562,14 @@
           text.textContent = 'Limite diário atingido';
           inputInner.classList.add('blocked');
           inputHint.textContent = 'Assine o Ohr Premium ou ative sua chave de acesso.';
+          launchBtn.disabled = true;
+          if (statusEl) statusEl.textContent = 'O limite diário foi alcançado neste aparelho. Ative sua chave ou assine para continuar.';
         } else {
           text.textContent = `${remaining} pergunta${remaining !== 1 ? 's' : ''} restante${remaining !== 1 ? 's' : ''} hoje`;
           inputInner.classList.remove('blocked');
           inputHint.textContent = 'As respostas são orientações espirituais gerais e não substituem um Rav.';
+          launchBtn.disabled = false;
+          if (statusEl) statusEl.textContent = 'O assistente abrirá em um painel próprio do Ohr. Você pode começar por uma pergunta frequente ou escrever a sua logo abaixo.';
         }
       },
       autoResize(el) {
@@ -2564,46 +2582,91 @@
           this.sendMessage();
         }
       },
+      ensureBotpressConfigured() {
+        if (!window.botpress || this.bpInitialized) return;
+        this.bpInitialized = true;
+        window.botpress.on('webchat:initialized', async () => {
+          try {
+            window.botpress.config({
+              configuration: {
+                botName: 'Assistente Ohr',
+                botDescription: 'IA espiritual do aplicativo Ohr',
+                color: '#C9A84C',
+                themeMode: 'dark',
+                variant: 'soft',
+                radius: 1.8,
+                headerVariant: 'glass',
+                composerPlaceholder: 'Escreva sua pergunta espiritual...',
+                footer: '',
+                storageLocation: 'localStorage'
+              },
+              user: {
+                name: 'Visitante do Ohr'
+              }
+            });
+            const user = await window.botpress.getUser();
+            this.bpUserId = user?.id || user?.userId || null;
+          } catch (e) {}
+        });
+        window.botpress.on('webchat:ready', async () => {
+          this.bpReady = true;
+          try {
+            const user = await window.botpress.getUser();
+            this.bpUserId = user?.id || user?.userId || this.bpUserId;
+          } catch (e) {}
+          if (this.pendingMessage) {
+            const queued = this.pendingMessage;
+            this.pendingMessage = null;
+            try { await window.botpress.sendMessage(queued); } catch (e) {}
+          }
+        });
+        window.botpress.on('message', (message) => {
+          if (this.hasActivePremium()) return;
+          const authorId = message?.authorId || message?.userId || message?.sender?.id || null;
+          const direction = message?.direction || message?.type || null;
+          const isUserMessage = (!!this.bpUserId && !!authorId && authorId === this.bpUserId) || direction === 'outgoing' || direction === 'user' || message?.sentByUser === true;
+          if (!isUserMessage) return;
+          const msgId = message?.id || `${authorId || 'u'}:${message?.payload?.text || message?.text || message?.preview || JSON.stringify(message).slice(0,60)}`;
+          if (this.seenUserMessages.has(msgId)) return;
+          this.seenUserMessages.add(msgId);
+          this.incrementCount();
+          this.updateCounterUI();
+          if (this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
+            setTimeout(() => {
+              try { window.botpress.close(); } catch (e) {}
+              this.showPaywall();
+            }, 180);
+          }
+        });
+      },
+      async openBotpress(initialText = '') {
+        if (!this.hasActivePremium() && this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
+          this.showPaywall();
+          return;
+        }
+        if (!window.botpress) {
+          const statusEl = document.getElementById('oaBotpressStatus');
+          if (statusEl) statusEl.textContent = 'O Assistente Ohr ainda está carregando. Tente novamente em alguns instantes.';
+          return;
+        }
+        this.ensureBotpressConfigured();
+        try {
+          window.botpress.open();
+        } catch (e) {}
+        if (initialText) {
+          if (this.bpReady && window.botpress.sendMessage) {
+            await window.botpress.sendMessage(initialText);
+          } else {
+            this.pendingMessage = initialText;
+          }
+        }
+      },
       useSuggestion(text) {
         if (!this.hasActivePremium() && this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
           this.showPaywall();
           return;
         }
-        const input = document.getElementById('oaInput');
-        if (!input) return;
-        input.value = text;
-        this.autoResize(input);
-        this.sendMessage();
-      },
-      appendMessage(role, text) {
-        const area = document.getElementById('oaChatArea');
-        if (!area) return;
-        document.getElementById('oaWelcome')?.remove();
-        const wrapper = document.createElement('div');
-        wrapper.className = `oa-msg ${role}`;
-        const avatar = document.createElement('div');
-        avatar.className = 'oa-msg-avatar';
-        avatar.textContent = role === 'assistant' ? '📜' : '🙏';
-        const bubble = document.createElement('div');
-        bubble.className = 'oa-bubble';
-        bubble.textContent = text;
-        wrapper.appendChild(avatar);
-        wrapper.appendChild(bubble);
-        area.appendChild(wrapper);
-        area.scrollTop = area.scrollHeight;
-      },
-      showTyping() {
-        const area = document.getElementById('oaChatArea');
-        if (!area) return;
-        const el = document.createElement('div');
-        el.id = 'oaTyping';
-        el.className = 'oa-typing';
-        el.innerHTML = '<div class="oa-msg-avatar" style="background:linear-gradient(135deg,var(--gold),#efc870);color:#132033">📜</div><div class="oa-typing-box"><span></span><span></span><span></span></div>';
-        area.appendChild(el);
-        area.scrollTop = area.scrollHeight;
-      },
-      removeTyping() {
-        document.getElementById('oaTyping')?.remove();
+        this.openBotpress(text);
       },
       async sendMessage() {
         if (this.isLoading) return;
@@ -2615,53 +2678,13 @@
         const sendBtn = document.getElementById('oaSendBtn');
         const text = (input?.value || '').trim();
         if (!text) return;
-
         this.isLoading = true;
         if (sendBtn) sendBtn.disabled = true;
-        this.appendMessage('user', text);
-        this.history.push({ role: 'user', content: text });
         if (input) {
           input.value = '';
           input.style.height = 'auto';
         }
-
-        if (!this.hasActivePremium()) {
-          this.incrementCount();
-          this.updateCounterUI();
-        }
-
-        this.showTyping();
-        try {
-          const premium = this.getPremiumData();
-          const payload = {
-            message: text,
-            history: this.history.slice(-8),
-            accessKey: premium?.key || null,
-            userMode: premium?.type || 'free'
-          };
-          const res = await fetch(`${OHR_ASSISTANT_CONFIG.backendUrl}/chat`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          const data = await res.json();
-          this.removeTyping();
-          if (!res.ok) {
-            const errText = data?.error || 'Houve uma falha ao consultar o backend do Ohr.';
-            this.appendMessage('assistant', `Que HaShem nos ajude — ${errText}`);
-          } else {
-            const reply = data.reply || 'HaShem me perdoe, não consegui responder agora. Tente novamente.';
-            this.appendMessage('assistant', reply);
-            this.history.push({ role: 'assistant', content: reply });
-            localStorage.setItem(OHR_ASSISTANT_CONFIG.conversationKey, JSON.stringify(this.history.slice(-20)));
-            if (!this.hasActivePremium() && this.getUsedCount() >= OHR_ASSISTANT_CONFIG.maxFree) {
-              setTimeout(() => this.showPaywall(), 1200);
-            }
-          }
-        } catch (error) {
-          this.removeTyping();
-          this.appendMessage('assistant', 'Que HaShem nos ajude — houve um erro de conexão com o backend do Ohr. Tente novamente em instantes.');
-        }
+        await this.openBotpress(text);
         this.isLoading = false;
         if (sendBtn) sendBtn.disabled = false;
       },
@@ -2686,13 +2709,16 @@
         const errorEl = document.getElementById('oaKeyError');
         const raw = (input?.value || '').trim();
         if (!raw) return;
-        if (errorEl) errorEl.classList.remove('visible');
+        if (errorEl) {
+          errorEl.textContent = 'Chave inválida ou expirada. Verifique e tente novamente.';
+          errorEl.classList.remove('visible');
+        }
 
         if (raw.toUpperCase() === OHR_ASSISTANT_CONFIG.creatorKey) {
           this.savePremiumData({ key: raw.toUpperCase(), type: 'creator', expiresAt: null, activatedAt: new Date().toISOString() });
           this.closePaywall();
           this.updateCounterUI();
-          this.appendMessage('assistant', 'Baruch HaShem! Modo criador ativado com sucesso. O acesso ilimitado do Ohr foi liberado neste aparelho.');
+          alert('Baruch HaShem! Modo criador ativado com sucesso neste aparelho.');
           return;
         }
 
@@ -2715,7 +2741,7 @@
           });
           this.closePaywall();
           this.updateCounterUI();
-          this.appendMessage('assistant', 'Baruch HaShem! Seu acesso ao Ohr Premium foi ativado com sucesso neste aparelho. Você agora pode perguntar sem limites enquanto sua chave estiver válida.');
+          alert('Baruch HaShem! Seu acesso ao Ohr Premium foi ativado com sucesso neste aparelho.');
         } catch (e) {
           if (errorEl) {
             errorEl.textContent = 'Não foi possível validar a chave agora. Tente novamente.';
@@ -2723,15 +2749,8 @@
           }
         }
       },
-      loadHistory() {
-        try {
-          this.history = JSON.parse(localStorage.getItem(OHR_ASSISTANT_CONFIG.conversationKey) || '[]');
-        } catch (e) {
-          this.history = [];
-        }
-      },
       init() {
-        this.loadHistory();
+        this.ensureBotpressConfigured();
         this.updateCounterUI();
       }
     };
