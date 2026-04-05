@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz da Torah — Ohr</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #8a6f2e;
+    --dark: #0a0a0f;
+    --dark-mid: #111118;
+    --dark-card: #15151f;
+    --dark-border: #1e1e2e;
+    --blue-deep: #0d1b3e;
+    --text: #e8dfc8;
+    --text-dim: #8a8070;
+    --correct: #4caf7d;
+    --wrong: #c94c4c;
+    --neutral: #4c7ac9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'EB Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(13,27,62,0.4) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--d) ease-in-out var(--delay) infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: var(--op); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 16px 80px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 32px 0 24px;
+    border-bottom: 1px solid var(--dark-border);
+    margin-bottom: 28px;
+  }
+
+  .header-star {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 12px rgba(201,168,76,0.6));
+  }
+
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* SCORE BOARD */
+  .scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .score-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .score-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .score-card.highlight::before { opacity: 1; }
+
+  .score-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    font-family: 'Cinzel', serif;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .score-value {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+
+  .score-value.correct-color { color: var(--correct); }
+  .score-value.wrong-color { color: var(--wrong); }
+
+  /* PROGRESS */
+  .progress-wrap {
+    margin-bottom: 24px;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--dark-border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 8px rgba(201,168,76,0.4);
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    position: relative;
+    animation: fadeUp 0.4s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .question-category {
+    font-size: 10px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    display: inline-block;
+    border: 1px solid var(--gold-dim);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .question-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .question-number {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* OPTIONS */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .option-btn {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    color: var(--text);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .option-btn:hover:not(:disabled)::before { opacity: 0.04; }
+  .option-btn:hover:not(:disabled) { border-color: var(--gold-dim); }
+
+  .option-letter {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 22px;
+    height: 22px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .option-text { position: relative; z-index: 1; line-height: 1.4; }
+
+  .option-btn.correct {
+    border-color: var(--correct);
+    background: rgba(76,175,125,0.08);
+  }
+  .option-btn.correct .option-letter {
+    background: var(--correct);
+    color: white;
+    border-color: var(--correct);
+  }
+
+  .option-btn.wrong {
+    border-color: var(--wrong);
+    background: rgba(201,76,76,0.08);
+  }
+  .option-btn.wrong .option-letter {
+    background: var(--wrong);
+    color: white;
+    border-color: var(--wrong);
+  }
+
+  .option-btn:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.5;
+    display: none;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .feedback.show { display: block; }
+
+  .feedback.correct-fb {
+    background: rgba(76,175,125,0.1);
+    border: 1px solid rgba(76,175,125,0.3);
+    color: #7dd4a8;
+  }
+
+  .feedback.wrong-fb {
+    background: rgba(201,76,76,0.1);
+    border: 1px solid rgba(201,76,76,0.3);
+    color: #e88080;
+  }
+
+  .feedback-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* POINT ANIMATION */
+  .point-pop {
+    position: fixed;
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 999;
+    animation: popUp 1.2s ease forwards;
+  }
+
+  @keyframes popUp {
+    0% { opacity: 1; transform: translateY(0) scale(0.8); }
+    30% { transform: translateY(-20px) scale(1.2); }
+    100% { opacity: 0; transform: translateY(-60px) scale(1); }
+  }
+
+  /* NEXT BUTTON */
+  .next-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    color: var(--dark);
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: none;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.2);
+  }
+
+  .next-btn.show { display: block; }
+  .next-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(201,168,76,0.35); }
+  .next-btn:active { transform: translateY(0); }
+
+  /* INCENTIVE MESSAGE */
+  .incentive {
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold-dim);
+    margin-bottom: 20px;
+    min-height: 20px;
+    transition: opacity 0.5s;
+  }
+
+  /* STREAK */
+  .streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold-dim);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    margin-bottom: 20px;
+    transition: all 0.3s;
+  }
+
+  .streak-badge.hot {
+    background: rgba(201,100,30,0.15);
+    border-color: #c9641e;
+    color: #e89050;
+  }
+
+  /* RESULT SCREEN */
+  .result-screen {
+    display: none;
+    text-align: center;
+    animation: fadeUp 0.5s ease;
+  }
+
+  .result-screen.show { display: block; }
+
+  .result-icon {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.5));
+  }
+
+  .result-title {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .result-verse {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    line-height: 1.6;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .result-stat {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 16px 10px;
+  }
+
+  .result-stat-value {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    color: var(--gold);
+    display: block;
+  }
+
+  .result-stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Cinzel', serif;
+  }
+
+  .restart-btn {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 12px;
+    padding: 14px 40px;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .restart-btn:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  /* DAILY COMPLETE */
+  .daily-done {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .daily-done.show { display: block; }
+
+  /* LEVEL BADGE */
+  .level-badge {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .level-text {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .level-name {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* Responsive */
+  @media (max-width: 420px) {
+    .question-text { font-size: 16px; }
+    .option-btn { font-size: 15px; padding: 14px 16px; }
+    .header h1 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+  <div class="header">
+    <span class="header-star">✡️</span>
+    <h1>Quiz da Torah</h1>
+    <p>10 perguntas por dia — teste seu conhecimento sagrado</p>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quizScreen">
+
+    <div class="level-badge">
+      <span class="level-text">Nível atual</span><br>
+      <span class="level-name" id="levelName">Iniciante</span>
+    </div>
+
+    <div class="scoreboard">
+      <div class="score-card highlight">
+        <span class="score-label">Pontos</span>
+        <span class="score-value" id="scoreDisplay">0</span>
+      </div>
+      <div class="score-card">
+        <span class="score-label">Acertos</span>
+        <span class="score-value correct-color" id="correctDisplay">0</span>
+      </div>
+      <div class="score-card">
+        <span class="score-label">Erros</span>
+        <span class="score-value wrong-color" id="wrongDisplay">0</span>
+      </div>
+    </div>
+
+    <div class="streak-badge" id="streakBadge">
+      🔥 Sequência: <span id="streakCount">0</span>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span>Pergunta <span id="qNum">1</span> de 10</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="incentive" id="incentiveMsg">"Quem aprende Torah por amor — sua alma floresce." — Talmud</div>
+
+    <div class="question-card" id="questionCard">
+      <span class="question-category" id="qCategory">Torah</span>
+      <span class="question-number" id="qNumber">#1</span>
+      <p class="question-text" id="questionText">Carregando pergunta...</p>
+    </div>
+
+    <div class="options" id="optionsContainer"></div>
+
+    <div class="feedback" id="feedbackBox">
+      <span class="feedback-title" id="feedbackTitle"></span>
+      <span id="feedbackText"></span>
+    </div>
+
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Próxima Pergunta →</button>
+
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div class="result-screen" id="resultScreen">
+    <span class="result-icon" id="resultIcon">🌟</span>
+    <h2 class="result-title" id="resultTitle">Que HaShem abençoe!</h2>
+    <p class="result-verse" id="resultVerse"></p>
+
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat-value" id="finalScore">0</span>
+        <span class="result-stat-label">Pontos</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-value" id="finalCorrect">0</span>
+        <span class="result-stat-label">Acertos</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat-value" id="finalWrong">0</span>
+        <span class="result-stat-label">Erros</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <span class="level-text">Nível alcançado</span><br>
+      <span class="level-name" id="resultLevel" style="font-size:20px;">—</span>
+    </div>
+
+    <button class="restart-btn" onclick="restartQuiz()">✦ Jogar Novamente ✦</button>
+    <p style="font-size:12px;color:var(--text-dim);margin-top:16px;font-style:italic;">Volte amanhã para novas 10 perguntas</p>
+  </div>
+
+</div>
+
+<script>
+// ===================== QUESTIONS DATABASE =====================
+const questions = [
+  // TORAH & TANACH
+  { cat: "Torah", q: "Qual foi o primeiro mandamento dado ao povo de Israel coletivamente?", opts: ["Honrar pai e mãe","Guardar o Shabat","Santificar o novo mês (Rosh Chodesh)","Não matar"], ans: 2, exp: "O primeiro mandamento coletivo foi 'Hachodesh hazeh lachem' — a santificação do novo mês, antes mesmo da saída do Egito." },
+  { cat: "Torah", q: "Quantas mitzvot (mandamentos) existem na Torah segundo a tradição?", opts: ["365","248","613","310"], ans: 2, exp: "613 mitzvot — 248 positivas (como os ossos do corpo) e 365 negativas (como os dias do ano solar)." },
+  { cat: "Torah", q: "Qual é o nome hebraico do livro de Gênesis?", opts: ["Shemot","Bereshit","Devarim","Vayikrá"], ans: 1, exp: "Bereshit — 'No princípio'. O primeiro livro da Torah começa com esta palavra." },
+  { cat: "Torah", q: "Qual tribo de Israel foi escolhida para o serviço no Templo (Beit HaMikdash)?", opts: ["Judá","Efraim","Levi","Binyamin"], ans: 2, exp: "A tribo de Levi foi escolhida por HaShem para o serviço sagrado no Mishkan e no Beit HaMikdash." },
+  { cat: "Torah", q: "Quantos livros compõem a Torah (Chumash)?", opts: ["3","5","7","10"], ans: 1, exp: "A Torah é composta por 5 livros: Bereshit, Shemot, Vayikrá, Bamidbar e Devarim." },
+  { cat: "Torah", q: "Qual é o significado do nome 'Israel'?", opts: ["Servidor de D-us","Amado por D-us","Aquele que lutou com D-us","Escolhido de D-us"], ans: 2, exp: "Israel significa 'aquele que lutou com D-us e com os homens e venceu' — nome dado a Yaakov após sua luta com o anjo." },
+  { cat: "Torah", q: "Onde HaShem revelou os Dez Mandamentos?", opts: ["Monte Carmel","Monte Sinai","Monte Moriá","Monte Nebo"], ans: 1, exp: "A Revelação ocorreu no Monte Sinai, 50 dias após a saída do Egito — evento celebrado em Shavuot." },
+  { cat: "Torah", q: "Qual era o ofício de Moisés antes de ser chamado por HaShem?", opts: ["Sacerdote","Comerciante","Pastor","Soldado"], ans: 2, exp: "Moshê era pastor das ovelhas de seu sogro Yitró quando HaShem apareceu a ele na sarça ardente." },
+  { cat: "Torah", q: "Quantos anos durou o período no deserto?", opts: ["20 anos","30 anos","40 anos","50 anos"], ans: 2, exp: "O povo de Israel wanderou no deserto por 40 anos — uma geração completa até entrar na Terra Prometida." },
+  { cat: "Torah", q: "Qual era o nome da esposa de Abraão?", opts: ["Rivkah","Rut","Leah","Sarah"], ans: 3, exp: "Sarah era a esposa de Avraham. Seu nome original era Sarai, alterado por HaShem para Sarah — 'princesa'." },
+
+  // TANACH
+  { cat: "Tanach", q: "Qual profeta foi engolido por um grande peixe?", opts: ["Elias","Jonas (Yonah)","Isaías","Ezequiel"], ans: 1, exp: "Yonah foi engolido por um grande peixe após fugir da missão de profetizar à cidade de Nínive." },
+  { cat: "Tanach", q: "Quem foi o primeiro rei de Israel?", opts: ["David","Saul (Shaul)","Salomão","Sansão"], ans: 1, exp: "Shaul foi ungido como primeiro rei de Israel pelo profeta Samuel (Shmuel) a pedido do povo." },
+  { cat: "Tanach", q: "Qual é o livro mais longo do Tanach?", opts: ["Tehilim (Salmos)","Yirmiyahu (Jeremias)","Bereshit","Yechezkel"], ans: 0, exp: "Tehilim (Salmos) é o livro mais longo com 150 salmos, a maioria atribuída ao Rei David." },
+  { cat: "Tanach", q: "Quem construiu o Primeiro Templo (Beit HaMikdash)?", opts: ["David","Moshê","Shlomo (Salomão)","Ezra"], ans: 2, exp: "O Rei Shlomo construiu o Primeiro Templo em Yerushalaim — seu pai David havia planejado, mas HaShem reservou a construção para Shlomo." },
+  { cat: "Tanach", q: "Qual rainha salvou o povo judeu na Pérsia?", opts: ["Débora","Rut","Esther","Miriam"], ans: 2, exp: "A Rainha Esther, com a orientação de Mordechai, salvou o povo judeu do decreto de extermínio de Hamã." },
+  { cat: "Tanach", q: "Qual foi a mulher que liderou Israel como juíza e profetisa?", opts: ["Esther","Miriam","Débora (Devorah)","Rut"], ans: 2, exp: "Devorah foi a única mulher a liderar Israel como juíza e profetisa — ela também liderou a batalha contra Sísara." },
+  { cat: "Tanach", q: "Qual salmo começa com 'HaShem é meu pastor'?", opts: ["Salmo 22","Salmo 23","Salmo 91","Salmo 150"], ans: 1, exp: "O Salmo 23 — 'Mizmor LeDavid, HaShem ro'i lo echsar' — é um dos mais conhecidos, composto pelo Rei David." },
+  { cat: "Tanach", q: "Quantos irmãos tinha Yosef (José)?", opts: ["10","11","12","9"], ans: 1, exp: "Yosef tinha 11 irmãos — juntos eram 12 filhos de Yaakov, que se tornaram as 12 tribos de Israel." },
+  { cat: "Tanach", q: "Em qual cidade nasceu o Rei David?", opts: ["Yerushalaim","Shchem","Beit Lechem","Chevron"], ans: 2, exp: "O Rei David nasceu em Beit Lechem (Belém), de onde também sua ancestral Rut havia chegado." },
+  { cat: "Tanach", q: "Qual é o último livro do Tanach na ordem judaica?", opts: ["Malaquias","Divrei HaYamim (Crônicas)","Ezra","Daniel"], ans: 1, exp: "Na ordem judaica, o Tanach termina com Divrei HaYamim — Crônicas." },
+
+  // BNEI NOACH
+  { cat: "Bnei Noach", q: "Quantas são as Leis de Noé (Sheva Mitzvot)?", opts: ["5","7","10","12"], ans: 1, exp: "São 7 leis noáquicas — estabelecidas por HaShem com Noé após o dilúvio para toda a humanidade." },
+  { cat: "Bnei Noach", q: "Qual das Leis de Noé proíbe o consumo de carne de animal vivo?", opts: ["Gezel","Ever min HaChai","Dinim","Shefichat Damim"], ans: 1, exp: "Ever min HaChai — proibição de consumir membro de animal ainda vivo, ensinando compaixão e sensibilidade à vida." },
+  { cat: "Bnei Noach", q: "O que significa 'Bnei Noach' em hebraico?", opts: ["Filhos de Israel","Filhos de Noé","Nações do mundo","Filhos do pacto"], ans: 1, exp: "Bnei Noach significa literalmente 'Filhos de Noé' — toda a humanidade descende de Noé após o dilúvio." },
+  { cat: "Bnei Noach", q: "O que é Avodah Zarah nas 7 Leis?", opts: ["Proibição de roubar","Proibição de blasfemar","Proibição de idolatria","Proibição de matar"], ans: 2, exp: "Avodah Zarah — a proibição da idolatria. É a lei mais fundamental, pois reconhece a soberania absoluta de HaShem." },
+  { cat: "Bnei Noach", q: "Qual lei noáquica obriga o estabelecimento de tribunais de justiça?", opts: ["Avodah Zarah","Gezel","Dinim","Gilui Arayot"], ans: 2, exp: "Dinim — a obrigação de estabelecer sistemas de justiça e tribunais para garantir a ordem moral na sociedade." },
+  { cat: "Bnei Noach", q: "Um Bnei Noach que cumpre as 7 leis tem parte no Mundo Vindouro (Olam HaBá)?", opts: ["Sim, segundo o Rambam","Não, apenas judeus têm","Apenas se converter","Depende do Rabino"], ans: 0, exp: "Sim — o Rambam em Halachot Melachim ensina que qualquer pessoa que observa as 7 leis é considerada 'chassid das nações' e tem parte no Olam HaBá." },
+  { cat: "Bnei Noach", q: "O que é 'Giyur'?", opts: ["Estudo da Torah","Conversão formal ao judaísmo","Uma festa judaica","Um tipo de oração"], ans: 1, exp: "Giyur é o processo formal de conversão ao judaísmo — um caminho espiritual profundo de renascimento da alma." },
+  { cat: "Bnei Noach", q: "Qual é o símbolo do pacto eterno de HaShem com Noé?", opts: ["A estrela de David","A Menorá","O arco-íris","O Mishkan"], ans: 2, exp: "O arco-íris é o sinal da aliança (brit) de HaShem com Noé — promessa de que não haverá outro dilúvio." },
+  { cat: "Bnei Noach", q: "Qual lei noáquica proíbe o assassinato?", opts: ["Gezel","Gilui Arayot","Shefichat Damim","Birkat HaShem"], ans: 2, exp: "Shefichat Damim — literalmente 'derramamento de sangue'. Toda vida humana é criada à imagem de HaShem." },
+  { cat: "Bnei Noach", q: "O que é 'Tikkun Olam'?", opts: ["Estudo do Talmud","Reparação e correção do mundo","Um tipo de oração chassídica","Uma festa judaica"], ans: 1, exp: "Tikkun Olam — 'consertar o mundo'. Missão compartilhada entre judeus e Bnei Noach de trazer justiça e luz ao mundo." },
+
+  // FILOSOFIA & PRINCÍPIOS
+  { cat: "Filosofia", q: "O que é 'Emunah'?", opts: ["Conhecimento da Torah","Fé profunda em HaShem","Oração da manhã","Um mandamento positivo"], ans: 1, exp: "Emunah é a fé profunda na existência e na providência de HaShem — base de toda a espiritualidade judaica." },
+  { cat: "Filosofia", q: "O que significa 'Teshuvá'?", opts: ["Oração do Shabat","Retorno e arrependimento","Estudo da Torah","Uma festa judaica"], ans: 1, exp: "Teshuvá significa retorno — voltar a HaShem através do arrependimento genuíno, mudança de comportamento e pedido de perdão." },
+  { cat: "Filosofia", q: "O que é 'Mussar'?", opts: ["Filosofia grega adaptada","Disciplina judaica de desenvolvimento do caráter","Um livro de orações","Uma escola talmúdica"], ans: 1, exp: "Mussar é a tradição judaica de ética e desenvolvimento interior — ensina que o trabalho espiritual começa com a transformação do caráter." },
+  { cat: "Filosofia", q: "Qual é o conceito judaico de providência divina individual?", opts: ["Hashgacha Klalit","Hashgacha Pratit","Bitachon","Hishtadlut"], ans: 1, exp: "Hashgacha Pratit — HaShem supervisionada cada detalhe da vida de cada ser humano individualmente, não apenas a humanidade em geral." },
+  { cat: "Filosofia", q: "O que é 'Bitachon'?", opts: ["Confiança ativa em HaShem","Estudo diário","Oração noturna","Uma lei da Torah"], ans: 0, exp: "Bitachon é a confiança ativa de que HaShem cuida de cada pessoa. É mais do que fé — é uma postura prática diante da vida." },
+  { cat: "Filosofia", q: "Segundo o Talmud, quem é considerado rico?", opts: ["Quem tem muito dinheiro","Quem tem família grande","Quem está satisfeito com o que tem","Quem estudou muito"], ans: 2, exp: "O Talmud (Avot 4:1) ensina: 'Quem é rico? Aquele que está satisfeito com o que tem' — eilu divrei..." },
+  { cat: "Filosofia", q: "O que é 'Tzedaká' segundo a filosofia judaica?", opts: ["Caridade opcional","Justiça — obrigação moral de compartilhar","Um tipo de oração","Uma festa de gratidão"], ans: 1, exp: "Tzedaká vem de Tzedek (justiça). Não é caridade opcional — é obrigação moral. Parte do dinheiro nunca pertenceu totalmente a você." },
+  { cat: "Filosofia", q: "O que significa 'Am Yisrael Chai'?", opts: ["Israel é eterno","O povo de Israel vive","Bendito seja Israel","Israel é forte"], ans: 1, exp: "Am Yisrael Chai — 'O povo de Israel vive'. Declaração de fé na sobrevivência eterna do povo judeu pela promessa de HaShem." },
+  { cat: "Filosofia", q: "O que é 'Chillul HaShem'?", opts: ["Santificação do nome de HaShem","Profanação do nome de HaShem","Estudo do Talmud","Uma bênção especial"], ans: 1, exp: "Chillul HaShem — profanação do Nome Divino. Qualquer ato de um judeu que envergonha a Torah ou o povo judeu perante outros." },
+  { cat: "Filosofia", q: "O que é 'Kiddush HaShem'?", opts: ["Uma bênção do vinho","Santificação do Nome de HaShem através das ações","Uma oração do Shabat","Um mandamento específico"], ans: 1, exp: "Kiddush HaShem — santificar o Nome de HaShem. Cada ato honesto, cada boa ação de um judeu é uma santificação perante o mundo." },
+
+  // CHASSIDUT & REBBES
+  { cat: "Chassidut", q: "Quem fundou o movimento Chassídico?", opts: ["Rabi Nachman de Breslov","O Vilna Gaon","Baal Shem Tov (Besht)","O Alter Rebbe"], ans: 2, exp: "O Baal Shem Tov (Rabi Israel ben Eliezer) fundou o Chassidismo no século XVIII, em Ukraine." },
+  { cat: "Chassidut", q: "Quem fundou o Chabad-Lubavitch?", opts: ["Baal Shem Tov","O Alter Rebbe (Rabi Schneur Zalman)","Rabi Nachman","O Maharal"], ans: 1, exp: "O Alter Rebbe — Rabi Schneur Zalman de Liadi — fundou o Chabad, cujo nome é acrônimo de Chochmá, Biná e Da'at." },
+  { cat: "Chassidut", q: "O que significa 'Hitbodedut'?", opts: ["Estudo do Talmud","Meditação e conversa pessoal com HaShem","Oração em comunidade","Jejum espiritual"], ans: 1, exp: "Hitbodedut — isolamento produtivo. Rabi Nachman de Breslov foi o grande defensor desta prática de conversa íntima com HaShem em suas próprias palavras." },
+  { cat: "Chassidut", q: "Qual é o livro fundamental do Chabad?", opts: ["Likutei Moharan","Tanya","Zohar","Kuzari"], ans: 1, exp: "O Tanya, escrito pelo Alter Rebbe, é o livro fundacional do Chassidismo Chabad — também chamado de 'Torah escrita do Chassidismo'." },
+  { cat: "Chassidut", q: "Rabi Nachman era bisneto de qual grande mestre?", opts: ["O Alter Rebbe","Rabi Akiva","Baal Shem Tov","O Maharal"], ans: 2, exp: "Rabi Nachman de Breslov era bisneto do Baal Shem Tov — fundador do Chassidismo." },
+  { cat: "Chassidut", q: "O que é 'Avodah' no contexto chassídico?", opts: ["Trabalho físico","Serviço espiritual e trabalho interior","Oração do Shabat","Estudo da Gemará"], ans: 1, exp: "Avodah — serviço. No Chassidismo, refere-se ao trabalho espiritual interior: oração com fervor, autoconhecimento e conexão com HaShem." },
+  { cat: "Chassidut", q: "Qual é o significado de 'Rebbe' no contexto chassídico?", opts: ["Simplesmente professor","Líder espiritual e guia da alma","Juiz rabínico","Título acadêmico"], ans: 1, exp: "Rebbe é o líder espiritual chassídico — não apenas um professor de Torah, mas um guia que conhece a alma de seus seguidores." },
+  { cat: "Chassidut", q: "O que é 'Farbrengen' no Chabad?", opts: ["Uma oração especial","Uma reunião espiritual de inspiração e fortalecimento","Uma festa de Rosh HaShaná","Um estudo do Talmud"], ans: 1, exp: "Farbrengen é uma reunião chassídica de inspiração — onde se compartilha Torah, histórias, canções (niggunim) e fortalecimento espiritual." },
+  { cat: "Chassidut", q: "O que é 'Bitul' no pensamento chassídico?", opts: ["Alegria intensa","Anulação do ego diante de HaShem","Tristeza espiritual","Estudo intensivo"], ans: 1, exp: "Bitul — anulação. A consciência de que diante de HaShem o ego humano é nada. Princípio central do Chassidismo Chabad." },
+  { cat: "Chassidut", q: "Qual é a cidade de peregrinação dos seguidores de Breslov até hoje?", opts: ["Tzfat","Berdychiv","Uman","Medzibizh"], ans: 2, exp: "Uman, na Ucrânia — onde Rabi Nachman de Breslov está enterrado. Milhares de Breslovers peregrinam para lá em Rosh HaShaná." },
+
+  // TALMUD & HALACHÁ
+  { cat: "Talmud", q: "Qual é a diferença entre Mishná e Gemará?", opts: ["São a mesma coisa","Mishná é a lei oral codificada; Gemará é o debate e análise sobre ela","Mishná é mais antiga que a Gemará","Gemará foi escrita antes da Mishná"], ans: 1, exp: "A Mishná foi codificada por Rabi Yehudá HaNassi. A Gemará é o extenso debate dos Amoraim sobre a Mishná. Juntos formam o Talmud." },
+  { cat: "Talmud", q: "Quantas ordens (sedarim) tem a Mishná?", opts: ["4","5","6","7"], ans: 2, exp: "A Mishná tem 6 ordens (Shishah Sedarim) — daí o Talmud ser chamado de 'Shas' (acrônimo de Shishah Sedarim)." },
+  { cat: "Talmud", q: "Quem codificou a Mishná?", opts: ["Rabi Akiva","Rabi Yehudá HaNassi","Hillel","Shammai"], ans: 1, exp: "Rabi Yehudá HaNassi codificou a Mishná por volta do ano 200 E.C. para preservar a Torah Oral que corria risco de ser esquecida." },
+  { cat: "Talmud", q: "O que é o Shulchan Aruch?", opts: ["Um livro de filosofia","A codificação definitiva da Halachá pelo Rav Yosef Karo","Um comentário da Torah","Um livro chassídico"], ans: 1, exp: "O Shulchan Aruch — 'Mesa Posta' — foi escrito pelo Rav Yosef Karo no século XVI e é a codificação definitiva da lei judaica." },
+  { cat: "Talmud", q: "Qual é o tratado talmúdico que discute a ética e os princípios morais?", opts: ["Berachot","Sanhedrin","Pirkei Avot","Bava Metzia"], ans: 2, exp: "Pirkei Avot — 'Capítulos dos Pais' — é o tratado mais filosófico e ético do Talmud, estudado amplamente até hoje." },
+  { cat: "Talmud", q: "O que é Aggadah no Talmud?", opts: ["Discussões legais","Narrativas, histórias e ensinamentos filosóficos","Comentários bíblicos","Leis do Shabat"], ans: 1, exp: "Aggadah são as partes narrativas e filosóficas do Talmud — histórias, parábolas e ensinamentos espirituais — em contraste com a Halachá (lei)." },
+  { cat: "Talmud", q: "Quem foi Rambam?", opts: ["Um Rebbe chassídico","Maimônides — o maior codificador do judaísmo medieval","Um profeta bíblico","O autor do Tanya"], ans: 1, exp: "Rambam — Rabi Moshe ben Maimon (Maimônides) — foi o maior filósofo e codificador do judaísmo, autor do Mishneh Torah e do Guia dos Perplexos." },
+  { cat: "Talmud", q: "O que é a Gemará de Yerushalmi?", opts: ["O Talmud de Babilônia","O Talmud de Jerusalém — compilado na Terra de Israel","Um comentário do Rashi","Uma parte da Mishná"], ans: 1, exp: "O Talmud Yerushalmi foi compilado na Terra de Israel. O Talmud Bavli (Babilônia) é mais extenso e é a referência principal da Halachá." },
+  { cat: "Talmud", q: "Qual é o princípio 'Pikuach Nefesh'?", opts: ["Proibição de trabalho no Shabat","A preservação da vida humana que supera quase todas as outras leis","Uma lei de kashrut","Um princípio de tzedaká"], ans: 1, exp: "Pikuach Nefesh — preservação da vida. Este princípio supera quase todas as leis da Torah, pois a vida humana tem valor supremo." },
+  { cat: "Talmud", q: "O que é 'Daat Torah'?", opts: ["Conhecimento da Bíblia","A visão e orientação de grandes Talmidei Chachamim sobre assuntos contemporâneos","Um título rabínico","Um nível de estudo"], ans: 1, exp: "Daat Torah — a 'visão da Torah'. Representa a orientação de grandes sábios que enxergam a realidade através das lentes da Torah." },
+
+  // FESTAS JUDAICAS
+  { cat: "Festas", q: "Qual festa celebra a entrega da Torah no Monte Sinai?", opts: ["Pessach","Sukkot","Shavuot","Rosh HaShaná"], ans: 2, exp: "Shavuot — celebrada 50 dias após Pessach, commemorating the giving of the Torah at Sinai. É a 'conclusão' da saída do Egito." },
+  { cat: "Festas", q: "O que é Rosh HaShaná?", opts: ["Ano Novo Judaico — julgamento de todas as almas","Festa das colheitas","Comemoração do Templo","Festa da libertação do Egito"], ans: 0, exp: "Rosh HaShaná — cabeça do ano. É o Dia do Julgamento, quando HaShem julga todas as almas. É seguido pelos 10 Dias de Teshuvá." },
+  { cat: "Festas", q: "Qual instrumento é soprado em Rosh HaShaná?", opts: ["Harpa","Shofar","Flauta","Tambor"], ans: 1, exp: "O Shofar — feito de chifre de carneiro — é soprado em Rosh HaShaná para despertar as almas ao Teshuvá e ao julgamento." },
+  { cat: "Festas", q: "O que é Yom Kippur?", opts: ["Festa das tendas","O Dia do Perdão — o mais sagrado do calendário judaico","Comemoração de Purim","Início do ano novo"], ans: 1, exp: "Yom Kippur — Dia das Expiações. O dia mais sagrado do judaísmo, de jejum total e busca do perdão diante de HaShem." },
+  { cat: "Festas", q: "Qual festa judaica celebra a saída do Egito?", opts: ["Shavuot","Sukkot","Purim","Pessach"], ans: 3, exp: "Pessach celebra o Êxodo do Egito — a libertação da escravidão. É celebrado com o Seder e a proibição do chametz (fermento)." },
+  { cat: "Festas", q: "O que é Chanukah?", opts: ["Festa do Ano Novo","Festa das luzes — commemorating the Maccabean victory and the miracle of the oil","Festa das colheitas","O dia da entrega da Torah"], ans: 1, exp: "Chanukah — Festa das Luzes. Comemora a vitória dos Macabeus sobre os gregos e o milagre do azeite que durou 8 dias no Templo." },
+  { cat: "Festas", q: "O que é o Seder de Pessach?", opts: ["Um tipo de jejum","Refeição ritual que narra a saída do Egito através da Hagadá","Uma oração especial","Uma dança festiva"], ans: 1, exp: "O Seder é a refeição ritual de Pessach — conduzida com a Hagadá, narrando o Êxodo com símbolos, canções e alimentos especiais." },
+  { cat: "Festas", q: "Qual é o mês mais alegre no calendário judaico segundo a tradição?", opts: ["Nissan","Tishrei","Adar","Elul"], ans: 2, exp: "Adar — 'Mi shenichnás Adar marbim besimchá' — quem entra em Adar multiplica a alegria. É o mês de Purim." },
+  { cat: "Festas", q: "O que é Sukkot?", opts: ["Festa das tendas — commemorating the clouds of glory in the desert","Ano Novo Judaico","Festa das luzes","O dia do arrependimento"], ans: 0, exp: "Sukkot — Festa das Tendas. Lembra as nuvens de glória que protegeram Israel no deserto. É celebrada habitando uma suká por 7 dias." },
+  { cat: "Festas", q: "O que é Tu BiShvat?", opts: ["Ano Novo das Árvores","Uma festa de inverno","Comemorção do Templo","Festa da primavera"], ans: 0, exp: "Tu BiShvat — Rosh HaShaná LaIlanot, o Ano Novo das Árvores. Celebrado no 15 de Shvat, com a tradição de comer frutas de Israel." },
+
+  // SHABAT
+  { cat: "Shabat", q: "Quando começa o Shabat?", opts: ["Sábado ao amanhecer","Sexta-feira ao pôr do sol","Sexta-feira ao meio-dia","Sábado ao meio-dia"], ans: 1, exp: "O Shabat começa na sexta-feira ao pôr do sol — pois o dia judaico começa à noite, como em Bereshit: 'Foi tarde e foi manhã'." },
+  { cat: "Shabat", q: "O que é 'Melacha' no contexto do Shabat?", opts: ["Oração especial","Trabalho criativo proibido no Shabat","Uma bênção especial","Um tipo de comida"]  , ans: 1, exp: "Melacha — categoria de trabalho criativo proibido no Shabat. Há 39 categorias principais de Melacha derivadas da construção do Mishkan." },
+  { cat: "Shabat", q: "O que é Kidush no Shabat?", opts: ["Uma dança festiva","Bênção sobre o vinho para santificar o Shabat","Uma oração da manhã","Um tipo de comida especial"], ans: 1, exp: "Kidush — santificação. A bênção recitada sobre o vinho na sexta-feira à noite e no Shabat de dia para santificar o dia." },
+  { cat: "Shabat", q: "Quantas velas são acesas normalmente para o Shabat?", opts: ["1","2","7","10"], ans: 1, exp: "2 velas são acesas — representando os dois aspectos do Shabat: Zachor (lembrar) e Shamor (guardar), os dois verbos usados para o Shabat na Torah." },
+  { cat: "Shabat", q: "O que são os 'Zemirot' do Shabat?", opts: ["Leis do Shabat","Canções tradicionais cantadas durante as refeições do Shabat","Orações especiais","Textos do Talmud"], ans: 1, exp: "Zemirot são canções tradicionais judaicas cantadas durante as refeições do Shabat — elevando a refeição física a um ato espiritual." },
+  { cat: "Shabat", q: "O que é 'Havdalah'?", opts: ["Oração de abertura do Shabat","Cerimônia de encerramento do Shabat — separação entre sagrado e cotidiano","Uma bênção especial","Uma refeição do Shabat"], ans: 1, exp: "Havdalah — separação. Cerimônia realizada ao fim do Shabat, com vinho, especiarias e vela de múltiplas chamas, separando o sagrado do cotidiano." },
+  { cat: "Shabat", q: "O que são os 'Chalot' do Shabat?", opts: ["Velas especiais","Dois pães trançados usados nas refeições do Shabat","Canções do Shabat","Tecidos do Shabat"], ans: 1, exp: "Chalot — os dois pães trançados cobertos na mesa do Shabat, lembrando o maná duplo que caía no deserto antes do Shabat." },
+
+  // HISTÓRIA JUDAICA
+  { cat: "História", q: "Quando foi destruído o Primeiro Templo (Beit HaMikdash)?", opts: ["586 a.E.C. pelo Rei Nevuchadnetzar","70 E.C. pelos romanos","135 E.C. por Adriano","200 a.E.C. pelos gregos"], ans: 0, exp: "O Primeiro Templo foi destruído em 586 a.E.C. pelo Rei babilônico Nevuchadnetzar, e o povo foi levado ao exílio em Bavel." },
+  { cat: "História", q: "Quando foi destruído o Segundo Templo?", opts: ["586 a.E.C.","70 E.C. pelos romanos","135 E.C.","200 E.C."], ans: 1, exp: "O Segundo Templo foi destruído em 70 E.C. pelas forças romanas sob Tito — evento lamentado no Tisha BeAv até hoje." },
+  { cat: "História", q: "O que foi a Inquisição Espanhola para os judeus?", opts: ["Uma festa medieval","Perseguição que forçou conversão ou expulsão em 1492","Uma era de paz","Um período de estudo"], ans: 1, exp: "Em 1492, judeus da Espanha foram forçados a converter ao Cristianismo ou expulsos — um dos maiores traumas da história judaica." },
+  { cat: "História", q: "O que foi o Holocausto (Shoá)?", opts: ["Uma guerra entre nações","O genocídio de 6 milhões de judeus pelo regime nazista","Um período de exílio","Uma perseguição medieval"], ans: 1, exp: "A Shoá foi o genocídio sistemático de 6 milhões de judeus — dois terços dos judeus europeus — pelo regime nazista entre 1933-1945." },
+  { cat: "História", q: "Em que ano foi fundado o Estado de Israel?", opts: ["1945","1947","1948","1950"], ans: 2, exp: "O Estado de Israel foi proclamado em 14 de maio de 1948 — 5 de Iyar de 5708 no calendário hebraico." },
+  { cat: "História", q: "O que foi o Exílio de Bavel (Galut Bavel)?", opts: ["Exílio no Egito","Exílio na Pérsia","Exílio na Babilônia após a destruição do Primeiro Templo","Exílio na Grécia"], ans: 2, exp: "Galut Bavel — o exílio na Babilônia após a destruição do Primeiro Templo por Nevuchadnetzar em 586 a.E.C. Durou 70 anos." },
+  { cat: "História", q: "Quem foi Rashi?", opts: ["Um Rebbe chassídico","O maior comentarista medieval da Torah e do Talmud","Um rei de Israel","Um profeta"], ans: 1, exp: "Rashi — Rabi Shlomo Itzhaki (1040-1105) — é o comentarista mais fundamental da Torah e do Talmud, estudado por todas as gerações." },
+  { cat: "História", q: "O que foi o movimento Haskalah?", opts: ["O Chassidismo","O Iluminismo Judaico do século XVIII-XIX","A fundação do Estado de Israel","A codificação do Talmud"], ans: 1, exp: "Haskalah foi o Iluminismo Judaico — movimento que promoveu a integração dos judeus na sociedade europeia, causando debates sobre identidade e modernidade." },
+  { cat: "História", q: "Quem foi Theodor Herzl?", opts: ["Um grande Rabi","O fundador do Sionismo moderno","Um Rebbe chassídico","O autor do Tanya"], ans: 1, exp: "Theodor Herzl foi o fundador do Sionismo moderno — sua obra 'O Estado Judeu' (1896) inaugurou o movimento pelo retorno à Terra de Israel." },
+  { cat: "História", q: "O que é o Muro das Lamentações (Kotel)?", opts: ["Uma muralha romana","O único muro remanescente do Segundo Templo — local sagrado de oração","Uma fronteira de Israel","Um monumento medieval"], ans: 1, exp: "O Kotel (Muro Ocidental) é o único muro remanescente do Segundo Templo. É o local mais sagrado onde judeus podem orar hoje." },
+
+  // ORAÇÕES & MITZVOT
+  { cat: "Orações", q: "O que é o Shemá Yisrael?", opts: ["Uma oração do Shabat","A declaração fundamental da fé judaica na Unidade de HaShem","Uma bênção das refeições","Uma oração chassídica"], ans: 1, exp: "Shemá Yisrael — 'Escuta Israel, HaShem é nosso Deus, HaShem é Um'. É a declaração central de fé judaica, recitada pela manhã e à noite." },
+  { cat: "Orações", q: "O que é a Amidá (Shmoneh Esreh)?", opts: ["Uma oração sentado","A oração central do judaísmo — 18 (ou 19) bênçãos recitadas de pé","Uma bênção do vinho","Uma oração do Shabat"], ans: 1, exp: "A Amidá ('de pé') é a oração central do judaísmo — 18 bênçãos originais (depois 19), recitada três vezes ao dia." },
+  { cat: "Orações", q: "O que é Shacharit?", opts: ["Oração da tarde","Oração da noite","Oração da manhã","Oração do Shabat"], ans: 2, exp: "Shacharit é a oração da manhã — a mais elaborada das três orações diárias, correspondendo ao sacrifício da manhã no Templo." },
+  { cat: "Orações", q: "O que é Minchá?", opts: ["Oração da manhã","Oração da tarde","Oração da noite","Oração de Rosh HaShaná"], ans: 1, exp: "Minchá é a oração da tarde — correspondendo ao sacrifício vespertino no Templo. Pode ser recitada desde o meio-dia até o pôr do sol." },
+  { cat: "Orações", q: "O que é Maariv (Arvit)?", opts: ["Oração da manhã","Oração da tarde","Oração da noite","Oração especial do Shabat"], ans: 2, exp: "Maariv é a oração da noite — a terceira das três orações diárias obrigatórias do judaísmo." },
+  { cat: "Orações", q: "O que são Tefillin?", opts: ["Franjas do Tallit","Pequenas caixas com versículos da Torah usadas durante a oração","Véu de oração","Um tipo de bênção"], ans: 1, exp: "Tefillin — pequenas caixas de couro contendo versículos da Torah, amarradas no braço e na cabeça durante a oração matinal de dias úteis." },
+  { cat: "Orações", q: "O que é o Tallit?", opts: ["Uma oração especial","O manto de oração com Tzitzit nas pontas","Um livro de orações","Uma bênção especial"], ans: 1, exp: "Tallit é o manto de oração judaico — com Tzitzit (franjas) nos quatro cantos, lembrando os mandamentos da Torah." },
+  { cat: "Orações", q: "O que são Tzitzit?", opts: ["Canções judaicas","Franjas especiais nas 4 pontas de uma veste — lembretes dos mandamentos","Um tipo de oração","Um ornamento do Templo"], ans: 1, exp: "Tzitzit — franjas nos quatro cantos da veste. A Torah ordena usá-las para 'lembrar de todos os mandamentos de HaShem'." },
+  { cat: "Orações", q: "O que é Modeh Ani?", opts: ["Uma oração do Shabat","A oração de gratidão recitada ao acordar, agradecendo a HaShem por devolver a alma","Uma bênção das refeições","Uma oração de Rosh HaShaná"], ans: 1, exp: "Modeh Ani — 'Sou grato diante de Ti, Rei vivo e eterno, por haver devolvido minha alma com misericórdia'. Primeira oração do dia." },
+  { cat: "Orações", q: "O que é a Birkat HaMazon?", opts: ["Uma oração da manhã","A bênção recitada após as refeições","Uma oração especial do Shabat","Uma bênção do vinho"], ans: 1, exp: "Birkat HaMazon — bênção após as refeições. Ordenada pela Torah (Devarim 8:10) — 'Comerás, te fartarás e abençoarás HaShem'." },
+
+  // TERRA DE ISRAEL
+  { cat: "Eretz Israel", q: "Qual é o nome hebraico de Jerusalém?", opts: ["Tzion","Yerushalaim","Shchem","Chevron"], ans: 1, exp: "Yerushalaim — Jerusalém. Seu nome pode ser entendido como 'cidade de paz' (ir shalom). David a estabeleceu como capital de Israel." },
+  { cat: "Eretz Israel", q: "Qual é a montanha em Yerushalaim onde estava o Beit HaMikdash?", opts: ["Monte das Oliveiras","Monte Moriah (Har HaBayit)","Monte Sião","Monte Carmel"], ans: 1, exp: "Har HaBayit — Monte do Templo. É o Monte Moriah onde Avraham levou Itzchak para o Akeidah, e onde foram construídos os dois Templos." },
+  { cat: "Eretz Israel", q: "Qual cidade é chamada 'Cidade dos Patriarcas' em Israel?", opts: ["Yerushalaim","Tzfat","Chevron","Beit Shean"], ans: 2, exp: "Chevron (Hebron) — onde está a Mearát HaMachpelá, o túmulo dos Patriarcas e Matriarcas: Avraham, Sarah, Itzchak, Rivkah, Yaakov e Leah." },
+  { cat: "Eretz Israel", q: "Qual cidade de Israel é conhecida como centro da Kabbala?", opts: ["Yerushalaim","Beit Shean","Tzfat (Safed)","Tiberíades"], ans: 2, exp: "Tzfat (Safed) — no norte de Israel — é o centro histórico da Kabbala. O Ari HaKadosh (Rabi Itzchak Luria) viveu e ensinou lá no século XVI." },
+  { cat: "Eretz Israel", q: "O que é a Mearát HaMachpelá?", opts: ["Um antigo templo","O túmulo dos Patriarcas em Chevron","Uma sinagoga histórica","Uma fortaleza romana"], ans: 1, exp: "Mearát HaMachpelá — a Caverna da Machpelá em Chevron. Avraham a comprou de Efron o Hitita para sepultar Sarah — o primeiro patrimônio judeu na Terra." },
+
+  // KABBALA & MISTICISMO
+  { cat: "Kabbala", q: "O que é o Zohar?", opts: ["Um livro de orações","O texto central da Kabbala judaica, atribuído a Rabi Shimon Bar Yochai","Um comentário do Talmud","Um livro de história judaica"], ans: 1, exp: "O Zohar é o texto central da Kabbala — atribuído a Rabi Shimon Bar Yochai do século II. Foi 'publicado' por Rabi Moshe de León no século XIII." },
+  { cat: "Kabbala", q: "O que são as 'Sefirot' na Kabbala?", opts: ["Festas judaicas","10 atributos/emanações divinas que descrevem como HaShem interage com o mundo","Livros sagrados","Orações especiais"], ans: 1, exp: "As Sefirot são 10 atributos divinos (Keter, Chochmá, Biná, Chesed, Guevurá, Tiferet, Netzach, Hod, Yesod, Malchut) — o mapa da realidade espiritual." },
+  { cat: "Kabbala", q: "Quem foi o Ari HaKadosh?", opts: ["Um Rebbe chassídico","Rabi Itzchak Luria — o maior cabalista de Tzfat no século XVI","O autor do Zohar","Um profeta bíblico"], ans: 1, exp: "O Ari — Rabi Itzchak Luria (1534-1572) — revolucionou a Kabbala com ensinamentos sobre Tzimtzum, Shevirat HaKelim e Tikkun." },
+  { cat: "Kabbala", q: "O que é 'Tzimtzum' na Kabbala?", opts: ["Uma festa judaica","A contração/retração de HaShem para criar espaço para o mundo","Um tipo de oração","Um nível espiritual"], ans: 1, exp: "Tzimtzum — a 'contração' primordial de HaShem para criar espaço onde o mundo pudesse existir. Conceito central do Ari HaKadosh." },
+  { cat: "Kabbala", q: "O que é a 'Neshamá'?", opts: ["O corpo físico","A alma — o nível mais elevado da alma humana","Uma oração especial","Um mandamento"], ans: 1, exp: "Neshamá é um dos níveis da alma judaica — a parte mais elevada e divina da alma humana, que permanece conectada a HaShem." },
+
+  // PERSONALIDADES
+  { cat: "Personalidades", q: "Quem foi Rabi Akiva?", opts: ["Um rei de Israel","O grande sábio que começou a estudar Torah aos 40 anos — mártir romano","Um Rebbe chassídico","O fundador do Talmud"], ans: 1, exp: "Rabi Akiva foi um dos maiores Tanaim — começou a estudar Torah aos 40 anos, analfabeto, e tornou-se um dos maiores sábios da história. Foi martirizado pelos romanos." },
+  { cat: "Personalidades", q: "Quem foi Hillel HaZaken?", opts: ["Um rei de Israel","Um grande sábio que resumiu a Torah em uma frase","O fundador do Chassidismo","Um profeta"], ans: 1, exp: "Hillel HaZaken disse: 'O que é odioso para você, não faça ao seu próximo — isso é toda a Torah. O restante é comentário. Vá e aprenda.'" },
+  { cat: "Personalidades", q: "O que Rabi Nachman de Breslov é conhecido principalmente por ensinar?", opts: ["Leis do Shabat","Alegria, Hitbodedut e fé simples em HaShem","Filosofia racional","Leis de Kashrut"], ans: 1, exp: "Rabi Nachman é o mestre da Simchá (alegria), do Hitbodedut e da fé simples e total em HaShem — seus ensinamentos revolucionaram o mundo espiritual." },
+  { cat: "Personalidades", q: "Quem foi o Vilna Gaon (Gra)?", opts: ["Um Rebbe chassídico","Rabi Eliyahu de Vilna — o maior Talmudista dos tempos modernos","O fundador do Chabad","Um filósofo medieval"], ans: 1, exp: "O Vilna Gaon — Rabi Eliyahu de Vilna (1720-1797) — foi o maior Talmudista dos tempos modernos, mestre de todos os ramos da Torah." },
+
+  // EXTRA — PERGUNTAS MAIS DIFÍCEIS
+  { cat: "Avançado", q: "O que é 'Ayin Hara' (olho mau) no contexto judaico?", opts: ["Uma bênção especial","Uma força espiritual negativa gerada por inveja excessiva","Um tipo de maldição mágica","Uma doença física"], ans: 1, exp: "Ayin Hara é uma força espiritual negativa — gerada por inveja ou atenção excessiva. O judaísmo toma isso a sério como uma realidade espiritual." },
+  { cat: "Avançado", q: "Quantas letras tem o alfabeto hebraico?", opts: ["20","22","24","26"], ans: 1, exp: "O alfabeto hebraico (Aleph-Bet) tem 22 letras — cada uma com valor numérico e significado espiritual profundo na tradição judaica." },
+  { cat: "Avançado", q: "O que é 'Lashon Hara'?", opts: ["Uma língua estrangeira","Falar mal de outras pessoas — proibição grave na Torah","Uma bênção especial","Uma lei de kashrut"], ans: 1, exp: "Lashon Hara — 'língua do mal'. Falar negativamente sobre outra pessoa, mesmo que verdadeiro, é uma das transgressões mais graves no judaísmo." },
+  { cat: "Avançado", q: "O que é 'Kavod HaBriot'?", opts: ["Honra às autoridades","Dignidade e respeito devidos a todo ser humano por ser criado à imagem de HaShem","Uma lei talmúdica específica","Uma festa judaica"], ans: 1, exp: "Kavod HaBriot — dignidade das criaturas. Todo ser humano, por ser criado à imagem de HaShem, merece respeito fundamental." },
+  { cat: "Avançado", q: "O que é 'Ahavat Israel'?", opts: ["Amor pela Terra de Israel","Amor pelo próximo judeu — mandamento central do judaísmo","Uma oração específica","Um ensinamento chassídico"], ans: 1, exp: "Ahavat Israel — amor pelo próximo judeu. O Baal Shem Tov ensinou que antes de amar a HaShem, é preciso amar Seu povo." },
+  { cat: "Avançado", q: "Qual é o mandamento mais citado na Torah segundo os sábios?", opts: ["Guardar o Shabat","Honrar pai e mãe","Amar o próximo como a si mesmo (V'ahavta l'reiacha kamocha)","Não roubar"], ans: 2, exp: "Rabi Akiva disse: 'V'ahavta l'reiacha kamocha — ama o teu próximo como a ti mesmo — este é o grande princípio da Torah'." },
+  { cat: "Avançado", q: "O que é 'Chesed'?", opts: ["Julgamento divino","Bondade amorosa — um dos pilares do mundo segundo Pirkei Avot","Estudo da Torah","Uma festa judaica"], ans: 1, exp: "Chesed — bondade amorosa. Pirkei Avot ensina que o mundo se sustenta sobre três pilares: Torah, Avodah e Gemilut Chassadim (atos de bondade)." },
+  { cat: "Avançado", q: "O que é 'Gueulah' (Redenção)?", opts: ["Uma oração especial","A redenção final do mundo com a vinda do Mashiach","Uma festa judaica","Um conceito filosófico abstrato"], ans: 1, exp: "Gueulah — Redenção. A crença na redenção final do mundo com a vinda do Mashiach é um dos 13 princípios de fé do Rambam." },
+  { cat: "Avançado", q: "O que é 'Olam HaBá'?", opts: ["O mundo atual","O Mundo Vindouro — a realidade espiritual após esta vida","Uma era messiânica na Terra","Um nível da alma"], ans: 1, exp: "Olam HaBá — o Mundo Vindouro. A recompensa espiritual após esta vida, onde a alma goza da presença divina. Central na escatologia judaica." },
+  { cat: "Avançado", q: "O que é a 'Akedah' (Ligadura de Itzchak)?", opts: ["Uma batalha bíblica","O teste de Avraham ao oferecer Itzchak — símbolo da fé absoluta em HaShem","Um ritual do Templo","Uma festa judaica"], ans: 1, exp: "Akedah — a ligadura de Itzchak no Monte Moriah. O maior teste de Avraham, que demonstrou fé absoluta. É relembrada no sopro do Shofar em Rosh HaShaná." }
+];
+
+// ===================== INCENTIVE MESSAGES =====================
+const incentiveMessages = [
+  '"Quem aprende Torah por amor — sua alma floresce." — Talmud',
+  '"O estudo da Torah equivale a todas as outras mitzvot juntas." — Pirkei Avot',
+  '"Ilumina os olhos do seu coração com as palavras da Torah." — Rabi Nachman',
+  '"Um judeu não cai — ele se levanta." — Provérbio chassídico',
+  '"Cada palavra de Torah é uma centelha de D-us dentro de você."',
+  '"A Torah é a nossa vida e o comprimento dos nossos dias." — Siddur',
+  '"Que tua busca por conhecimento nunca cesse." — Ohr',
+  '"HaShem Se alegra quando você aprende com empenho." — Talmud',
+  '"A ignorância é inimiga da fé. O conhecimento é seu aliado." — Mussar',
+  '"Sábio é aquele que aprende de todo ser humano." — Pirkei Avot 4:1'
+];
+
+const resultMessages = [
+  { min: 0, max: 3, icon: '📖', title: 'Continue estudando!', verse: '"O início da sabedoria é o desejo de aprender." — Mishlei' },
+  { min: 4, max: 5, icon: '🕯️', title: 'Uma centelha acesa!', verse: '"Cada passo em direção à luz conta diante de HaShem."' },
+  { min: 6, max: 7, icon: '✡️', title: 'Bom desempenho!', verse: '"Quem estuda Torah por seu próprio bem — merece muitas coisas." — Avot 6:1' },
+  { min: 8, max: 9, icon: '⭐', title: 'Excelente, Talmid Chacham!', verse: '"A sabedoria que você porta é um presente sagrado. Não a guarde — compartilhe-a."' },
+  { min: 10, max: 10, icon: '🌟', title: 'Perfeito! Que HaShem te abençoe!', verse: '"Feliz aquele que encontrou sabedoria, aquele que alcançou entendimento." — Mishlei 3:13' }
+];
+
+const levels = [
+  { min: 0, name: 'Iniciante', emoji: '📖' },
+  { min: 30, name: 'Aprendiz', emoji: '🕯️' },
+  { min: 80, name: 'Estudante', emoji: '✡️' },
+  { min: 150, name: 'Talmid', emoji: '⭐' },
+  { min: 250, name: 'Talmid Chacham', emoji: '🌟' },
+  { min: 400, name: 'Sábio', emoji: '👑' },
+  { min: 600, name: 'Mestre da Torah', emoji: '🔱' }
+];
+
+// ===================== STATE =====================
+let totalScore = 0;
+let sessionCorrect = 0;
+let sessionWrong = 0;
+let streak = 0;
+let currentQuestion = 0;
+let dailyCount = 0;
+let usedQuestions = [];
+let sessionQuestions = [];
+let answered = false;
+
+// Load from localStorage
+function loadState() {
+  const saved = localStorage.getItem('ohr_quiz');
+  if (saved) {
+    const s = JSON.parse(saved);
+    totalScore = s.totalScore || 0;
+    usedQuestions = s.usedQuestions || [];
+    const lastDate = s.lastDate || '';
+    const today = new Date().toDateString();
+    if (lastDate !== today) {
+      dailyCount = 0;
+    } else {
+      dailyCount = s.dailyCount || 0;
+    }
+  }
+}
+
+function saveState() {
+  localStorage.setItem('ohr_quiz', JSON.stringify({
+    totalScore,
+    usedQuestions,
+    dailyCount,
+    lastDate: new Date().toDateString()
+  }));
+}
+
+function getLevel() {
+  for (let i = levels.length - 1; i >= 0; i--) {
+    if (totalScore >= levels[i].min) return levels[i];
+  }
+  return levels[0];
+}
+
+// ===================== INIT =====================
+function init() {
+  loadState();
+  generateStars();
+  prepareSession();
+  updateScoreDisplay();
+  updateLevelDisplay();
+  showQuestion();
+}
+
+function generateStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.setProperty('--d', (3 + Math.random() * 5) + 's');
+    s.style.setProperty('--delay', (Math.random() * 5) + 's');
+    s.style.setProperty('--op', (0.2 + Math.random() * 0.6).toFixed(2));
+    container.appendChild(s);
+  }
+}
+
+function prepareSession() {
+  // Pick 10 random questions, avoiding recently used
+  let pool = questions.map((q, i) => i).filter(i => !usedQuestions.includes(i));
+  if (pool.length < 10) {
+    usedQuestions = [];
+    pool = questions.map((q, i) => i);
+  }
+  sessionQuestions = [];
+  while (sessionQuestions.length < 10 && pool.length > 0) {
+    const idx = Math.floor(Math.random() * pool.length);
+    sessionQuestions.push(pool[idx]);
+    pool.splice(idx, 1);
+  }
+  usedQuestions.push(...sessionQuestions);
+  currentQuestion = 0;
+  sessionCorrect = 0;
+  sessionWrong = 0;
+  streak = 0;
+}
+
+function showQuestion() {
+  answered = false;
+  const qIdx = sessionQuestions[currentQuestion];
+  const q = questions[qIdx];
+
+  document.getElementById('qCategory').textContent = q.cat;
+  document.getElementById('qNumber').textContent = '#' + (currentQuestion + 1);
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('qNum').textContent = currentQuestion + 1;
+
+  const pct = (currentQuestion / 10) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = Math.round(pct) + '%';
+
+  // Shuffle options
+  const opts = q.opts.map((text, i) => ({ text, original: i }));
+  const shuffled = [...opts].sort(() => Math.random() - 0.5);
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  shuffled.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.dataset.original = opt.original;
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="option-text">${opt.text}</span>`;
+    btn.onclick = () => selectAnswer(btn, q, opt.original, shuffled);
+    container.appendChild(btn);
+  });
+
+  document.getElementById('feedbackBox').className = 'feedback';
+  document.getElementById('nextBtn').className = 'next-btn';
+
+  // Random incentive
+  const inc = incentiveMessages[Math.floor(Math.random() * incentiveMessages.length)];
+  document.getElementById('incentiveMsg').textContent = inc;
+
+  // Streak badge
+  updateStreakBadge();
+
+  // Animate card
+  document.getElementById('questionCard').style.animation = 'none';
+  requestAnimationFrame(() => {
+    document.getElementById('questionCard').style.animation = 'fadeUp 0.4s ease';
+  });
+}
+
+function selectAnswer(btn, q, selectedIdx, shuffled) {
+  if (answered) return;
+  answered = true;
+
+  const isCorrect = selectedIdx === q.ans;
+  const buttons = document.querySelectorAll('.option-btn');
+
+  buttons.forEach(b => {
+    b.disabled = true;
+    const orig = parseInt(b.dataset.original);
+    if (orig === q.ans) b.classList.add('correct');
+    else if (b === btn && !isCorrect) b.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('feedbackBox');
+  const fbTitle = document.getElementById('feedbackTitle');
+  const fbText = document.getElementById('feedbackText');
+
+  let points = 0;
+  if (isCorrect) {
+    streak++;
+    sessionCorrect++;
+    points = streak >= 3 ? 2 : 1;
+    totalScore += points;
+    fb.className = 'feedback correct-fb show';
+    fbTitle.textContent = points === 2 ? '✦ Correto! +2 pontos (sequência!)' : '✦ Correto! +1 ponto';
+    fbText.textContent = q.exp;
+    showPointPop('+' + points, true);
+  } else {
+    streak = 0;
+    sessionWrong++;
+    totalScore = Math.max(0, totalScore - 2);
+    points = -2;
+    fb.className = 'feedback wrong-fb show';
+    fbTitle.textContent = '✦ Incorreto — -2 pontos';
+    fbText.textContent = q.exp;
+    showPointPop('-2', false);
+  }
+
+  updateScoreDisplay();
+  updateLevelDisplay();
+  updateStreakBadge();
+
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion >= 10) {
+    showResult();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResult() {
+  dailyCount++;
+  saveState();
+
+  document.getElementById('quizScreen').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.className = 'result-screen show';
+
+  const pct = (sessionCorrect / 10) * 100;
+  const msg = resultMessages.find(m => sessionCorrect >= m.min && sessionCorrect <= m.max);
+
+  document.getElementById('resultIcon').textContent = msg.icon;
+  document.getElementById('resultTitle').textContent = msg.title;
+  document.getElementById('resultVerse').textContent = msg.verse;
+  document.getElementById('finalScore').textContent = totalScore;
+  document.getElementById('finalCorrect').textContent = sessionCorrect;
+  document.getElementById('finalWrong').textContent = sessionWrong;
+  document.getElementById('resultLevel').textContent = getLevel().emoji + ' ' + getLevel().name;
+}
+
+function restartQuiz() {
+  document.getElementById('resultScreen').className = 'result-screen';
+  document.getElementById('quizScreen').style.display = 'block';
+  prepareSession();
+  sessionCorrect = 0;
+  sessionWrong = 0;
+  streak = 0;
+  updateScoreDisplay();
+  updateLevelDisplay();
+  showQuestion();
+}
+
+function updateScoreDisplay() {
+  document.getElementById('scoreDisplay').textContent = totalScore;
+  document.getElementById('correctDisplay').textContent = sessionCorrect;
+  document.getElementById('wrongDisplay').textContent = sessionWrong;
+}
+
+function updateLevelDisplay() {
+  const lv = getLevel();
+  document.getElementById('levelName').textContent = lv.emoji + ' ' + lv.name;
+}
+
+function updateStreakBadge() {
+  const badge = document.getElementById('streakBadge');
+  document.getElementById('streakCount').textContent = streak;
+  badge.className = streak >= 3 ? 'streak-badge hot' : 'streak-badge';
+}
+
+function showPointPop(text, correct) {
+  const pop = document.createElement('div');
+  pop.className = 'point-pop';
+  pop.textContent = text;
+  pop.style.color = correct ? '#4caf7d' : '#c94c4c';
+  pop.style.top = '45%';
+  pop.style.left = '50%';
+  pop.style.transform = 'translateX(-50%)';
+  document.body.appendChild(pop);
+  setTimeout(() => pop.remove(), 1200);
+}
+
+init();
+</script>
+</body>
+</html>
