@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escola Torah — Ohr</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #8a6f2e;
+    --dark: #0a0a0f;
+    --dark-mid: #111118;
+    --dark-card: #15151f;
+    --dark-border: #1e1e2e;
+    --text: #e8dfc8;
+    --text-dim: #8a8070;
+    --blue-acc: #3a5fa0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'EB Garamond', serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.07) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 16px 80px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 32px 0 28px;
+    border-bottom: 1px solid var(--dark-border);
+    margin-bottom: 28px;
+  }
+
+  .header-icon {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 14px rgba(201,168,76,0.5));
+  }
+
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* DAY BADGE */
+  .day-badge {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .day-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid var(--gold-dim);
+    border-radius: 24px;
+    padding: 8px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  /* WEEK NAV */
+  .week-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .week-tab {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+
+  .week-tab:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .week-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.07); }
+
+  .week-icon { display: block; font-size: 18px; margin-bottom: 4px; }
+
+  /* TODAY CARD */
+  .today-card {
+    background: var(--dark-card);
+    border: 1px solid var(--gold-dim);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    position: relative;
+    animation: fadeUp 0.5s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .today-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-dim));
+  }
+
+  .today-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--dark-border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .today-meta {}
+
+  .today-tag {
+    font-size: 10px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .today-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .today-icon-big {
+    font-size: 36px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 10px rgba(201,168,76,0.3));
+  }
+
+  .today-body {
+    padding: 20px 24px;
+  }
+
+  .hebrew-highlight {
+    font-size: 20px;
+    color: var(--gold);
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 14px;
+  }
+
+  .lesson-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .lesson-text strong {
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  .key-point {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+
+  .key-point-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .key-point-text {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .source-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.5px;
+  }
+
+  /* LESSONS LIST */
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 14px;
+    padding-left: 4px;
+  }
+
+  .lessons-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .lesson-item {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lesson-item:hover { border-color: var(--gold-dim); }
+  .lesson-item.active { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+  .lesson-item.today-item { border-color: var(--gold); }
+
+  .lesson-num {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 28px;
+    text-align: center;
+  }
+
+  .lesson-icon-sm {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .lesson-info { flex: 1; }
+
+  .lesson-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .lesson-week-tag {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'Cinzel', serif;
+  }
+
+  .lesson-arrow {
+    color: var(--gold-dim);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .today-marker {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    background: var(--gold);
+    color: var(--dark);
+    border-radius: 8px;
+    padding: 2px 8px;
+    letter-spacing: 1px;
+  }
+
+  /* EXPANDED LESSON */
+  .expanded-lesson {
+    display: none;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: -4px;
+    margin-bottom: 8px;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .expanded-lesson.show { display: block; }
+  .expanded-lesson .lesson-text { font-size: 15px; }
+  .expanded-lesson .key-point { background: rgba(201,168,76,0.04); }
+
+  /* PROGRESS */
+  .progress-section {
+    margin-bottom: 24px;
+  }
+
+  .progress-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .prog-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .prog-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .prog-value {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+  }
+
+  .prog-bar {
+    height: 3px;
+    background: var(--dark-border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(201,168,76,0.3);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <span class="header-icon">📜</span>
+    <h1>Escola Torah</h1>
+    <p>Uma lição por dia — 28 dias de sabedoria sagrada</p>
+  </div>
+
+  <div class="day-badge">
+    <div class="day-inner">
+      📅 Dia <span id="currentDayDisplay">1</span> de 28 &nbsp;·&nbsp; <span id="weekLabel">Semana 1</span>
+    </div>
+  </div>
+
+  <!-- WEEK TABS -->
+  <div class="week-tabs">
+    <div class="week-tab active" onclick="selectWeek(1)" id="wtab1">
+      <span class="week-icon">🌿</span>7 Leis de Noé
+    </div>
+    <div class="week-tab" onclick="selectWeek(2)" id="wtab2">
+      <span class="week-icon">✡️</span>Judaísmo
+    </div>
+    <div class="week-tab" onclick="selectWeek(3)" id="wtab3">
+      <span class="week-icon">📖</span>Figuras
+    </div>
+    <div class="week-tab" onclick="selectWeek(4)" id="wtab4">
+      <span class="week-icon">🕯️</span>Festas e Shabat
+    </div>
+  </div>
+
+  <!-- TODAY'S LESSON -->
+  <div id="todaySection">
+    <p class="section-title">✦ Lição de Hoje</p>
+    <div class="today-card" id="todayCard">
+      <div class="today-header">
+        <div class="today-meta">
+          <span class="today-tag" id="todayTag">Semana 1 · Dia 1</span>
+          <span class="today-title" id="todayTitle">Carregando...</span>
+        </div>
+        <span class="today-icon-big" id="todayIcon">📜</span>
+      </div>
+      <div class="today-body">
+        <span class="hebrew-highlight" id="todayHebrew"></span>
+        <p class="lesson-text" id="todayText"></p>
+        <div class="key-point" id="todayKeyPoint">
+          <span class="key-point-title">✦ Ponto Central</span>
+          <span class="key-point-text" id="todayKey"></span>
+        </div>
+        <span class="source-tag">📚 Fonte: <span id="todaySource"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-card">
+      <div class="prog-row">
+        <span class="prog-label">Progresso do Ciclo</span>
+        <span class="prog-value" id="progValue">1 / 28</span>
+      </div>
+      <div class="prog-bar">
+        <div class="prog-fill" id="progFill" style="width:3.5%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSONS LIST -->
+  <div id="lessonsSection">
+    <p class="section-title" id="lessonsSectionTitle">✦ Semana 1 — As 7 Leis de Noé</p>
+    <div class="lessons-grid" id="lessonsList"></div>
+  </div>
+
+</div>
+
+<script>
+const lessons = [
+  // SEMANA 1 — 7 LEIS DE NOÉ
+  {
+    week: 1, day: 1, icon: '🌍', title: 'Quem são os Bnei Noach?',
+    hebrew: 'בְּנֵי נֹחַ — Bnei Noach',
+    text: 'Toda a humanidade descende de Noé (Noach) após o dilúvio. Por isso, cada ser humano é chamado de <strong>Ben Noach</strong> — Filho de Noé. HaShem estabeleceu com Noé uma aliança eterna, representada pelo arco-íris, prometendo nunca mais destruir o mundo por meio de um dilúvio. Junto com essa aliança, HaShem deu à humanidade <strong>7 leis universais</strong> — as Sheva Mitzvot Bnei Noach — para guiar a vida de todos os seres humanos, independentemente de sua origem ou religião.',
+    key: 'Você não precisa nascer judeu para ter uma conexão profunda com HaShem. As 7 Leis são o seu caminho sagrado.',
+    source: 'Talmud Bavli, Sanhedrin 56a'
+  },
+  {
+    week: 1, day: 2, icon: '🚫', title: '1ª Lei: Proibição da Idolatria',
+    hebrew: 'עֲבוֹדָה זָרָה — Avodah Zarah',
+    text: 'A primeira e mais fundamental das 7 Leis é a proibição da idolatria. <strong>HaShem é Um e Único</strong> — não há outro poder no universo além d\'Ele. Idolatria não se limita a adorar estátuas. Inclui também colocar o dinheiro, o poder, o ego ou qualquer outra coisa no lugar de HaShem. Reconhecer a soberania absoluta de HaShem é o ato espiritual mais elevado que um ser humano pode realizar.',
+    key: 'Cada vez que você recusa curvar-se ao que não é HaShem, você santifica Seu Nome no mundo.',
+    source: 'Rambam, Halachot Melachim 9:1'
+  },
+  {
+    week: 1, day: 3, icon: '🗣️', title: '2ª Lei: Proibição da Blasfêmia',
+    hebrew: 'בִּרְכַּת הַשֵּׁם — Birkat HaShem',
+    text: 'O Nome de HaShem é sagrado e deve ser tratado com a mais profunda reverência. A <strong>blasfêmia</strong> — o uso desrespeitoso do Nome Divino — é uma rebelião contra o Criador. Nossas palavras têm poder imenso: elas constroem ou destroem, elevam ou rebaixam. A boca que HaShem nos deu deve ser instrumento de louvor, gratidão, verdade e bênção — nunca de profanação.',
+    key: 'Antes de falar, pergunte-se: estas palavras constroem ou destroem? Honram ou profanam?',
+    source: 'Talmud Bavli, Sanhedrin 56a; Shulchan Aruch YD 340'
+  },
+  {
+    week: 1, day: 4, icon: '🩸', title: '3ª Lei: Proibição do Assassinato',
+    hebrew: 'שְׁפִיכַת דָּמִים — Shefichat Damim',
+    text: 'Cada vida humana é uma <strong>centelha divina</strong> — criada à imagem de HaShem (Tzelem Elohim). O Talmud ensina: "Quem destrói uma única alma, é como se tivesse destruído um mundo inteiro. Quem salva uma única alma, é como se tivesse salvo um mundo inteiro." Esta lei não proíbe apenas o assassinato físico — inclui qualquer ato que intencionalmente cause dano irreparável à vida de outro.',
+    key: '"Cada pessoa contém um mundo inteiro." — Talmud Bavli, Sanhedrin 37a',
+    source: 'Bereshit 9:6; Talmud Bavli, Sanhedrin 37a'
+  },
+  {
+    week: 1, day: 5, icon: '⚖️', title: '4ª Lei: Proibição do Roubo',
+    hebrew: 'גֶּזֶל — Gezel',
+    text: 'A propriedade do próximo é sagrada. O roubo, em qualquer forma — subtrair bens, enganar em negócios, reter salário — é uma violação da ordem divina. HaShem deseja que vivamos em <strong>sociedade justa</strong>, onde cada um respeita o direito do outro. Cada transação honesta, cada palavra verdadeira em negócios é uma forma de santificar o Nome de HaShem no mundo cotidiano.',
+    key: 'Sua integridade nos negócios é sua oração mais visível ao mundo.',
+    source: 'Rambam, Halachot Melachim 9:9'
+  },
+  {
+    week: 1, day: 6, icon: '👨‍👩‍👧', title: '5ª e 6ª Leis: Família e Compaixão',
+    hebrew: 'גִּלּוּי עֲרָיוֹת / אֵבֶר מִן הַחַי',
+    text: 'A <strong>5ª lei</strong> proíbe a imoralidade sexual — adultério, incesto e relações proibidas — pois a família é o pilar da civilização. HaShem nos deu a sexualidade como dom sagrado, para ser expresso com santidade e propósito. A <strong>6ª lei</strong> (Ever min HaChai) proíbe consumir carne de animal vivo — ensinando compaixão profunda por toda criação. Mesmo quando temos permissão para comer carne, devemos fazê-lo com sensibilidade e respeito pela vida.',
+    key: 'Santidade no lar e compaixão pelas criaturas — estes são sinais de um ser humano elevado.',
+    source: 'Rambam, Halachot Melachim 9:5-7'
+  },
+  {
+    week: 1, day: 7, icon: '🏛️', title: '7ª Lei: Estabelecer Justiça',
+    hebrew: 'דִּינִים — Dinim',
+    text: 'A 7ª e última lei é a obrigação de <strong>estabelecer tribunais de justiça</strong> — sistemas que garantam a aplicação das outras leis e a punição dos malfeitores. Onde há justiça, há paz. Onde há paz, HaShem pode ser revelado. Esta lei transforma as 6 anteriores de princípios individuais em responsabilidade coletiva. Você não apenas vive bem — você contribui para que a sociedade ao seu redor também viva com retidão.',
+    key: '"O mundo se sustenta sobre três pilares: Torah, Avodá e Gemilut Chassadim." — Avot 1:2',
+    source: 'Rambam, Halachot Melachim 9:14'
+  },
+
+  // SEMANA 2 — CONCEITOS DO JUDAÍSMO
+  {
+    week: 2, day: 8, icon: '🕍', title: 'O que é o Judaísmo?',
+    hebrew: 'יַהֲדוּת — Yahadut',
+    text: 'O judaísmo não é apenas uma religião — é um <strong>sistema completo de vida</strong>. Abrange ética, família, comunidade, estudo, alimentação, tempo sagrado e relacionamento com HaShem. O povo judeu recebeu no Monte Sinai não apenas leis, mas uma missão: ser <strong>Or LaGoyim</strong> — luz para as nações. Esta missão não é de superioridade — é de responsabilidade e serviço ao mundo.',
+    key: 'O judaísmo não separa o sagrado do cotidiano — ele santifica o cotidiano.',
+    source: 'Shemot 19:6; Yeshayahu 42:6'
+  },
+  {
+    week: 2, day: 9, icon: '📜', title: 'Torah: A Lei Escrita e Oral',
+    hebrew: 'תּוֹרָה שֶׁבִּכְתָב וְשֶׁבְּעַל פֶּה',
+    text: 'A Torah tem duas dimensões: <strong>Torah Shebichtav</strong> (Lei Escrita) — os 5 livros de Moshê — e <strong>Torah Shebe\'al Peh</strong> (Lei Oral) — as explicações transmitidas oralmente de geração em geração, codificadas no Talmud. Ambas foram recebidas no Sinai. Sem a Torah Oral, a escrita não pode ser compreendida ou aplicada corretamente. As duas são inseparáveis.',
+    key: 'A Torah Oral é a chave que abre a Torah Escrita. Sem ela, as palavras ficam sem vida.',
+    source: 'Talmud Bavli, Shabbat 31a'
+  },
+  {
+    week: 2, day: 10, icon: '🙏', title: 'Emunah: A Fé Judaica',
+    hebrew: 'אֱמוּנָה — Emunah',
+    text: '<strong>Emunah</strong> não é uma crença cega — é uma <strong>certeza experiencial</strong> na existência e na providência de HaShem. O Rambam codificou os 13 Princípios da Fé judaica, incluindo: a existência de HaShem, Sua unicidade, que Ele não tem corpo, que apenas Ele merece ser adorado, que a Torah é verdadeira, e que o Mashiach virá. Emunah é a base sobre a qual toda a vida judaica é construída.',
+    key: '"Eu creio com fé perfeita..." — Abertura dos 13 Princípios do Rambam',
+    source: 'Rambam, Peirush HaMishnayot, Sanhedrin Cap. 10'
+  },
+  {
+    week: 2, day: 11, icon: '💫', title: 'Teshuvá: O Poder do Retorno',
+    hebrew: 'תְּשׁוּבָה — Teshuvá',
+    text: '<strong>Teshuvá</strong> significa retorno — voltar a HaShem através do arrependimento genuíno. O Rambam ensina que a Teshuvá completa inclui: reconhecer o erro, sentir arrependimento genuíno, pedir perdão a quem foi prejudicado, confessar diante de HaShem, e tomar a decisão firme de não repetir. A Teshuvá é um dos maiores presentes que HaShem deu à humanidade — a capacidade de recomeçar.',
+    key: 'Nenhuma alma está tão distante que não possa retornar. HaShem aguarda com braços abertos.',
+    source: 'Rambam, Halachot Teshuvá 2:2'
+  },
+  {
+    week: 2, day: 12, icon: '⚡', title: 'Mitzvot: Os Mandamentos',
+    hebrew: 'מִצְווֹת — Mitzvot',
+    text: 'A Torah contém <strong>613 mitzvot</strong> — 248 positivas (o que fazer) e 365 negativas (o que não fazer). Para o povo judeu, cumprir as mitzvot não é um fardo — é uma forma de conexão íntima com HaShem. Cada mitzvá é um fio que une o ser humano ao Criador. Os Bnei Noach têm 7 mitzvot universais. Cada ser humano tem seu próprio conjunto de responsabilidades divinas.',
+    key: 'Uma mitzvá é uma abraço divino disfarçado de mandamento.',
+    source: 'Talmud Bavli, Makkot 23b'
+  },
+  {
+    week: 2, day: 13, icon: '🧠', title: 'Talmud Torah: O Estudo Sagrado',
+    hebrew: 'תַּלְמוּד תּוֹרָה — Talmud Torah',
+    text: 'O estudo da Torah é em si mesmo uma mitzvá — e uma das mais fundamentais. O Talmud ensina que o estudo da Torah <strong>equivale a todas as outras mitzvot juntas</strong>, pois o conhecimento é o que torna possível cumprir as demais. O povo judeu criou a maior taxa de alfabetização da história justamente porque o estudo é sagrado. Para os Bnei Noach, estudar as 7 leis e os fundamentos da Torah é um ato de serviço divino.',
+    key: '"Anule seu desejo diante do desejo Dele." — Avot 2:4. O estudo te transforma.',
+    source: 'Pirkei Avot 1:15; Talmud Bavli, Shabbat 127a'
+  },
+  {
+    week: 2, day: 14, icon: '💰', title: 'Tzedaká: Justiça e Generosidade',
+    hebrew: 'צְדָקָה — Tzedaká',
+    text: '<strong>Tzedaká</strong> vem de <em>Tzedek</em> — justiça. Não é caridade opcional — é uma obrigação moral. Parte do dinheiro que passa pelas suas mãos nunca foi completamente seu — foi colocado ali para chegar a quem precisa. O Rambam lista 8 níveis de Tzedaká, sendo o mais elevado aquele que torna a pessoa autossuficiente, sem que ela saiba quem ajudou. A generosidade genuína abre canais espirituais de bênção que a avareza nunca pode criar.',
+    key: '"Quem doa para os pobres, empresta a HaShem." — Mishlei 19:17',
+    source: 'Rambam, Halachot Matanot Aniyim 10:1-14'
+  },
+
+  // SEMANA 3 — FIGURAS DA TORAH
+  {
+    week: 3, day: 15, icon: '👴', title: 'Avraham: O Pai da Fé',
+    hebrew: 'אַבְרָהָם אָבִינוּ — Avraham Avinu',
+    text: 'Avraham foi o primeiro monoteísta da história — o homem que descobriu HaShem por conta própria em um mundo de idolatria. Ele foi testado 10 vezes e passou em todas. O maior teste foi a <strong>Akedah</strong> — quando HaShem pediu que ele oferecesse seu filho Itzchak como sacrifício. Avraham caminhou para o Monte Moriah com fé inabalável. HaShem interveio e um carneiro foi oferecido no lugar. Avraham é o pai de todos os que têm fé.',
+    key: '"Avraham creu em HaShem, e isso lhe foi contado como justiça." — Bereshit 15:6',
+    source: 'Bereshit 12-22; Pirkei Avot 5:3'
+  },
+  {
+    week: 3, day: 16, icon: '👑', title: 'David HaMelech: O Rei Poeta',
+    hebrew: 'דָּוִד הַמֶּלֶךְ — David HaMelech',
+    text: 'O Rei David foi o maior dos reis de Israel — guerreiro, poeta, músico e místico. Autor da maior parte dos 150 Salmos (Tehilim), David expressou toda a gama das emoções humanas diante de HaShem: alegria, sofrimento, arrependimento, gratidão e esperança. Apesar de seus erros — e ele os teve — David nunca abandonou HaShem. Sua capacidade de Teshuvá é um modelo eterno. O Mashiach descenderá de sua linhagem.',
+    key: '"HaShem é meu pastor, nada me faltará." — Tehilim 23:1',
+    source: 'Shmuel I-II; Tehilim'
+  },
+  {
+    week: 3, day: 17, icon: '🌊', title: 'Moshê Rabenu: O Maior Profeta',
+    hebrew: 'מֹשֶׁה רַבֵּנוּ — Moshê Rabenu',
+    text: '<strong>Moshê Rabenu</strong> — "nosso Mestre Moisés" — é o maior profeta que existiu. Nasceu escravo no Egito, fugiu para o deserto, foi chamado por HaShem na sarça ardente e liderou o Êxodo — a saída do Egito. No Monte Sinai, Moshê recebeu toda a Torah — escrita e oral — de HaShem. O Talmud diz que nenhum profeta antes ou depois de Moshê atingiu seu nível de profecia. Sua humildade é lendária — a Torah o chama de "o mais humilde de todos os homens".',
+    key: '"E não surgiu mais em Israel profeta como Moshê, que HaShem conheceu face a face." — Devarim 34:10',
+    source: 'Shemot 3 — Devarim 34'
+  },
+  {
+    week: 3, day: 18, icon: '🎭', title: 'Esther e Mordechai: Fé no Oculto',
+    hebrew: 'אֶסְתֵּר וּמָרְדֳּכַי — Esther uMordechai',
+    text: 'Em Shushan, capital da Pérsia, o povo judeu enfrentou um decreto de extermínio por Hamã. <strong>Mordechai</strong> recusou curvar-se diante do mal. <strong>Esther</strong>, rainha do império, arriscou sua vida aproximando-se do rei sem ser convocada. Antes de agir, ela pediu três dias de jejum e oração de todo o povo. A salvação veio — não por um milagre aberto, mas pela mão invisível de HaShem tecendo a história. Purim celebra esta providência oculta até hoje.',
+    key: '"Quem sabe se não foi precisamente para um momento como este que você chegou?" — Esther 4:14',
+    source: 'Meguilat Esther; Talmud Bavli, Meguilá'
+  },
+  {
+    week: 3, day: 19, icon: '🔥', title: 'Eliyahu HaNavi: O Profeta do Zelo',
+    hebrew: 'אֵלִיָּהוּ הַנָּבִיא — Eliyahu HaNavi',
+    text: '<strong>Eliyahu</strong> foi o profeta do zelo por HaShem — em um período em que Israel havia abandonado a Torah para adorar Baal. No Monte Carmel, ele desafiou os 450 profetas de Baal sozinho — e o fogo de HaShem desceu dos céus. Eliyahu é o único profeta bíblico que subiu aos céus em vida, em uma carruagem de fogo. Ele aparece na cadeira vazia do Seder de Pessach e anuncia a chegada do Mashiach.',
+    key: '"Respondei-me, HaShem, respondei-me!" — Eliyahu no Monte Carmel (Melachim I 18:37)',
+    source: 'Melachim I 17-19; Malachi 3:23'
+  },
+  {
+    week: 3, day: 20, icon: '🌾', title: 'Rut: A Bnei Noach que se tornou mãe da realeza',
+    hebrew: 'רוּת — Rut',
+    text: '<strong>Rut</strong> era moabita — não judia — que escolheu acompanhar sua sogra Naomi de volta à Terra de Israel após a morte do marido. Suas palavras tornaram-se eternas: <em>"Onde você for, eu irei. Onde você morrer, eu morrerei. Seu povo é o meu povo, e seu Deus é o meu Deus."</em> Rut converteu-se ao judaísmo com fé pura. Ela se tornou a bisavó do Rei David — e ancestral do Mashiach. Sua história é lida em Shavuot.',
+    key: 'A fé de Rut não veio do nascimento — veio da escolha. A escolha vale mais que a origem.',
+    source: 'Meguilat Rut; Talmud Bavli, Yevamot 47b'
+  },
+  {
+    week: 3, day: 21, icon: '🧙', title: 'Rabi Akiva: Do Zero à Grandeza',
+    hebrew: 'רַבִּי עֲקִיבָא — Rabi Akiva',
+    text: '<strong>Rabi Akiva</strong> começou a estudar Torah aos 40 anos, analfabeto, pastor de ovelhas. Sua esposa Raquel acreditou nele quando ninguém mais acreditava. Ele tornou-se um dos maiores sábios de toda a história judaica — com 24.000 alunos. Foi martirizado pelos romanos enquanto recitava o Shemá, morrendo com "Echad" — Um — nos lábios. Sua vida é a prova eterna de que nunca é tarde para começar, e que a grandeza espiritual não tem pré-requisitos de nascimento.',
+    key: '"Amado é o ser humano, pois foi criado à imagem [de HaShem]." — Rabi Akiva, Avot 3:14',
+    source: 'Talmud Bavli, Ketuvot 62b; Berachot 61b'
+  },
+
+  // SEMANA 4 — FESTAS E SHABAT
+  {
+    week: 4, day: 22, icon: '🕯️', title: 'Shabat: O Palácio no Tempo',
+    hebrew: 'שַׁבָּת — Shabat',
+    text: 'O <strong>Shabat</strong> começa na sexta-feira ao pôr do sol e termina no sábado à noite, com Havdalah. É o único mandamento do Decálogo que santifica o <em>tempo</em> — não um lugar ou objeto. O filósofo Heschel chamou o Shabat de "uma catedral no tempo". É um dia de descanso criativo, família, estudo e alegria espiritual — proibido de melacha (trabalho criativo). Para os Bnei Noach, o Shabat não é obrigatório, mas sua beleza pode ser apreciada como inspiração.',
+    key: '"Mais do que Israel guardou o Shabat, o Shabat guardou Israel." — Achad Ha\'am',
+    source: 'Bereshit 2:1-3; Shemot 20:8-11'
+  },
+  {
+    week: 4, day: 23, icon: '🌙', title: 'Rosh HaShaná: O Julgamento',
+    hebrew: 'רֹאשׁ הַשָּׁנָה — Rosh HaShaná',
+    text: '<strong>Rosh HaShaná</strong> — o Ano Novo Judaico — é o Dia do Julgamento, quando HaShem julga todas as almas. O Shofar é soprado para despertar os corações ao Teshuvá. Os 10 dias entre Rosh HaShaná e Yom Kippur são os <strong>Aseret Yemei Teshuvá</strong> — 10 Dias de Arrependimento. São os dias mais intensos do calendário judaico. O símbolo deste período é a maçã com mel — desejo de um ano doce e bom.',
+    key: '"Teshuvá, Tefilá e Tzedaká afastam o decreto severo." — Liturgia de Rosh HaShaná',
+    source: 'Talmud Bavli, Rosh HaShaná 16a'
+  },
+  {
+    week: 4, day: 24, icon: '✨', title: 'Yom Kippur: O Dia mais Sagrado',
+    hebrew: 'יוֹם כִּפּוּר — Yom Kippur',
+    text: '<strong>Yom Kippur</strong> — o Dia das Expiações — é o dia mais sagrado do calendário judaico. É um dia de jejum total (25 horas), sem comer, beber, banhar-se ou usar sapatos de couro. É o dia em que HaShem sela o julgamento de cada alma. O Zohar ensina que Yom Kippur, em seu nível espiritual mais elevado, toca o mesmo ponto de alegria profunda que Purim — porque em ambos a proximidade com HaShem é máxima, cada um por um caminho diferente.',
+    key: '"Perante HaShem vocês se purificarão." — Vayikrá 16:30',
+    source: 'Vayikrá 16; Talmud Bavli, Yoma'
+  },
+  {
+    week: 4, day: 25, icon: '🍷', title: 'Pessach: A Libertação Eterna',
+    hebrew: 'פֶּסַח — Pessach',
+    text: '<strong>Pessach</strong> celebra o Êxodo do Egito — a maior narrativa de libertação da história. A noite do Seder é conduzida com a Hagadá, contando a história através de símbolos: o maror (ervas amargas) representa a amargura da escravidão; a matzá representa a pressa da saída; o vinho, a alegria da libertação. Cada geração é obrigada a sentir como se ela mesma tivesse saído do Egito — pois a libertação da escravidão espiritual é uma tarefa de toda geração.',
+    key: '"Em cada geração, cada pessoa é obrigada a ver a si mesma como se tivesse saído do Egito." — Hagadah',
+    source: 'Shemot 12; Hagadah shel Pessach'
+  },
+  {
+    week: 4, day: 26, icon: '📜', title: 'Shavuot: A Entrega da Torah',
+    hebrew: 'שָׁבוּעוֹת — Shavuot',
+    text: '<strong>Shavuot</strong> é celebrado 50 dias após Pessach — comemorando a entrega da Torah no Monte Sinai. É a "conclusão" espiritual da saída do Egito: a liberdade física do Pessach encontra seu propósito na Torah de Shavuot. Costuma-se estudar Torah a noite toda (Tikkun Leil Shavuot). O livro de Rut é lido nesta festa — pois Rut recebeu a Torah através da conversão, assim como o povo recebeu a Torah no Sinai.',
+    key: '"Na origem, HaShem queria dar a Torah a todas as nações — apenas Israel a aceitou." — Midrash',
+    source: 'Shemot 19-20; Meguilat Rut'
+  },
+  {
+    week: 4, day: 27, icon: '🕍', title: 'Chanukah: A Vitória da Luz',
+    hebrew: 'חֲנֻכָּה — Chanukah',
+    text: '<strong>Chanukah</strong> — Festa das Luzes — comemora a vitória dos Macabeus sobre o exército grego no século II a.E.C. e o milagre do azeite: um jarro de azeite puro, suficiente para um dia, durou <strong>oito dias</strong> no Templo reconquistado. O Rambam ensina que a mitzvá da Chanukiyah deve ser colocada à porta ou na janela — para publicar o milagre ao mundo inteiro (Pirsumei Nisa). A luz não se guarda — ela se irradia.',
+    key: '"Uma pequena luz expulsa muita escuridão." — Ensinamento chassídico',
+    source: 'Talmud Bavli, Shabbat 21b; Rambam, Halachot Chanukah 3:3'
+  },
+  {
+    week: 4, day: 28, icon: '🎭', title: 'Purim: O Milagre Oculto',
+    hebrew: 'פּוּרִים — Purim',
+    text: '<strong>Purim</strong> celebra a salvação do povo judeu na Pérsia através de Esther e Mordechai. O Meguilat Esther é o único livro da Bíblia onde o Nome de HaShem não aparece explicitamente — porque o milagre foi oculto nos bastidores da história. Quatro mitzvot marcam o dia: ouvir o Meguilá, enviar porções de alimento (Mishloach Manot), dar presentes aos pobres (Matanot LaEvyonim) e fazer a refeição festiva (Seudát Purim). O Zohar ensina que Purim toca o nível espiritual mais alto do calendário.',
+    key: '"Se você chegou até aqui, não foi por acaso. HaShem te preparou para este momento."',
+    source: 'Meguilat Esther; Talmud Bavli, Meguilá 7b'
+  }
+];
+
+const weekTitles = [
+  '',
+  '✦ Semana 1 — As 7 Leis de Noé',
+  '✦ Semana 2 — Conceitos do Judaísmo',
+  '✦ Semana 3 — Figuras da Torah',
+  '✦ Semana 4 — Festas e Shabat'
+];
+
+// STATE
+let currentDay = 1;
+let selectedWeek = 1;
+let expandedLesson = null;
+
+function loadDay() {
+  const saved = localStorage.getItem('ohr_escola');
+  if (saved) {
+    const s = JSON.parse(saved);
+    const lastDate = s.lastDate || '';
+    const today = new Date().toDateString();
+    if (lastDate !== today && s.currentDay < 28) {
+      currentDay = (s.currentDay % 28) + 1;
+      localStorage.setItem('ohr_escola', JSON.stringify({ currentDay, lastDate: today }));
+    } else {
+      currentDay = s.currentDay || 1;
+    }
+  } else {
+    localStorage.setItem('ohr_escola', JSON.stringify({ currentDay: 1, lastDate: new Date().toDateString() }));
+  }
+}
+
+function init() {
+  loadDay();
+  updateDayDisplay();
+  renderTodayLesson();
+  renderWeek(selectedWeek);
+  updateProgress();
+}
+
+function updateDayDisplay() {
+  document.getElementById('currentDayDisplay').textContent = currentDay;
+  const lesson = lessons[currentDay - 1];
+  document.getElementById('weekLabel').textContent = 'Semana ' + lesson.week;
+}
+
+function renderTodayLesson() {
+  const lesson = lessons[currentDay - 1];
+  document.getElementById('todayTag').textContent = 'Semana ' + lesson.week + ' · Dia ' + lesson.day;
+  document.getElementById('todayTitle').textContent = lesson.title;
+  document.getElementById('todayIcon').textContent = lesson.icon;
+  document.getElementById('todayHebrew').textContent = lesson.hebrew;
+  document.getElementById('todayText').innerHTML = lesson.text;
+  document.getElementById('todayKey').textContent = lesson.key;
+  document.getElementById('todaySource').textContent = lesson.source;
+}
+
+function selectWeek(w) {
+  selectedWeek = w;
+  document.querySelectorAll('.week-tab').forEach((t, i) => {
+    t.className = 'week-tab' + (i + 1 === w ? ' active' : '');
+  });
+  renderWeek(w);
+  expandedLesson = null;
+}
+
+function renderWeek(w) {
+  const list = document.getElementById('lessonsList');
+  document.getElementById('lessonsSectionTitle').textContent = weekTitles[w];
+  list.innerHTML = '';
+  const weekLessons = lessons.filter(l => l.week === w);
+  weekLessons.forEach(lesson => {
+    const isToday = lesson.day === currentDay;
+    const item = document.createElement('div');
+    item.className = 'lesson-item' + (isToday ? ' today-item' : '');
+    item.id = 'lesson-item-' + lesson.day;
+    item.innerHTML = `
+      <span class="lesson-num">Dia ${lesson.day}</span>
+      <span class="lesson-icon-sm">${lesson.icon}</span>
+      <div class="lesson-info">
+        <span class="lesson-name">${lesson.title}</span>
+        <span class="lesson-week-tag">${lesson.hebrew}</span>
+      </div>
+      ${isToday ? '<span class="today-marker">HOJE</span>' : ''}
+      <span class="lesson-arrow">›</span>
+    `;
+    item.onclick = () => toggleLesson(lesson.day);
+    list.appendChild(item);
+
+    // Expanded container
+    const exp = document.createElement('div');
+    exp.className = 'expanded-lesson';
+    exp.id = 'exp-' + lesson.day;
+    exp.innerHTML = `
+      <span class="hebrew-highlight">${lesson.hebrew}</span>
+      <p class="lesson-text">${lesson.text}</p>
+      <div class="key-point">
+        <span class="key-point-title">✦ Ponto Central</span>
+        <span class="key-point-text">${lesson.key}</span>
+      </div>
+      <span class="source-tag">📚 ${lesson.source}</span>
+    `;
+    list.appendChild(exp);
+  });
+}
+
+function toggleLesson(day) {
+  const exp = document.getElementById('exp-' + day);
+  const item = document.getElementById('lesson-item-' + day);
+  if (expandedLesson === day) {
+    exp.className = 'expanded-lesson';
+    item.classList.remove('active');
+    expandedLesson = null;
+  } else {
+    if (expandedLesson) {
+      document.getElementById('exp-' + expandedLesson).className = 'expanded-lesson';
+      document.getElementById('lesson-item-' + expandedLesson)?.classList.remove('active');
+    }
+    exp.className = 'expanded-lesson show';
+    item.classList.add('active');
+    expandedLesson = day;
+    setTimeout(() => exp.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+}
+
+function updateProgress() {
+  const pct = ((currentDay - 1) / 28) * 100;
+  document.getElementById('progFill').style.width = Math.max(3.5, pct) + '%';
+  document.getElementById('progValue').textContent = currentDay + ' / 28';
+}
+
+init();
+</script>
+</body>
+</html>
